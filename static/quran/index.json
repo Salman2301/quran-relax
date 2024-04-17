@@ -1,0 +1,807 @@
+[
+  {
+    "id": "sq.nahi",
+    "lang": "Albanian",
+    "name": "Efendi Nahi",
+    "tran": "Hasan Efendi Nahi",
+    "dl": "https://tanzil.net/trans/sq.nahi?type=txt-2"
+  },
+  {
+    "id": "sq.mehdiu",
+    "lang": "Albanian",
+    "name": "Feti Mehdiu",
+    "tran": "Feti Mehdiu",
+    "dl": "https://tanzil.net/trans/sq.mehdiu?type=txt-2"
+  },
+  {
+    "id": "sq.ahmeti",
+    "lang": "Albanian",
+    "name": "Sherif Ahmeti",
+    "tran": "Sherif Ahmeti",
+    "dl": "https://tanzil.net/trans/sq.ahmeti?type=txt-2"
+  },
+  {
+    "id": "ber.mensur",
+    "lang": "Amazigh",
+    "name": "At Mensur",
+    "tran": "Ramdane At Mansour *",
+    "dl": "https://tanzil.net/trans/ber.mensur?type=txt-2"
+  },
+  {
+    "id": "ar.jalalayn",
+    "lang": "Arabic",
+    "name": "تفسير الجلالين",
+    "tran": "Jalal ad-Din al-Mahalli and Jalal ad-Din as-Suyuti *",
+    "dl": "https://tanzil.net/trans/ar.jalalayn?type=txt-2"
+  },
+  {
+    "id": "ar.muyassar",
+    "lang": "Arabic",
+    "name": "تفسير المیسر",
+    "tran": "King Fahad Quran Complex *",
+    "dl": "https://tanzil.net/trans/ar.muyassar?type=txt-2"
+  },
+  {
+    "id": "am.sadiq",
+    "lang": "Amharic ",
+    "name": "ሳዲቅ & ሳኒ ሐቢብ",
+    "tran": "Muhammed Sadiq and Muhammed Sani Habib *",
+    "dl": "https://tanzil.net/trans/am.sadiq?type=txt-2"
+  },
+  {
+    "id": "az.mammadaliyev",
+    "lang": "Azerbaijani",
+    "name": "Məmmədəliyev & Bünyadov",
+    "tran": "Vasim Mammadaliyev and Ziya Bunyadov * †",
+    "dl": "https://tanzil.net/trans/az.mammadaliyev?type=txt-2"
+  },
+  {
+    "id": "az.musayev",
+    "lang": "Azerbaijani",
+    "name": "Musayev",
+    "tran": "Alikhan Musayev",
+    "dl": "https://tanzil.net/trans/az.musayev?type=txt-2"
+  },
+  {
+    "id": "bn.hoque",
+    "lang": "Bengali",
+    "name": "জহুরুল হক",
+    "tran": "Zohurul Hoque *",
+    "dl": "https://tanzil.net/trans/bn.hoque?type=txt-2"
+  },
+  {
+    "id": "bn.bengali",
+    "lang": "Bengali",
+    "name": "মুহিউদ্দীন খান",
+    "tran": "Muhiuddin Khan",
+    "dl": "https://tanzil.net/trans/bn.bengali?type=txt-2"
+  },
+  {
+    "id": "bs.korkut",
+    "lang": "Bosnian",
+    "name": "Korkut",
+    "tran": "Besim Korkut *",
+    "dl": "https://tanzil.net/trans/bs.korkut?type=txt-2"
+  },
+  {
+    "id": "bs.mlivo",
+    "lang": "Bosnian",
+    "name": "Mlivo",
+    "tran": "Mustafa Mlivo",
+    "dl": "https://tanzil.net/trans/bs.mlivo?type=txt-2"
+  },
+  {
+    "id": "bg.theophanov",
+    "lang": "Bulgarian",
+    "name": "Теофанов",
+    "tran": "Tzvetan Theophanov",
+    "dl": "https://tanzil.net/trans/bg.theophanov?type=txt-2"
+  },
+  {
+    "id": "zh.jian",
+    "lang": "Chinese",
+    "name": "Ma Jian",
+    "tran": "Ma Jian",
+    "dl": "https://tanzil.net/trans/zh.jian?type=txt-2"
+  },
+  {
+    "id": "zh.majian",
+    "lang": "Chinese",
+    "name": "Ma Jian (Traditional)",
+    "tran": "Ma Jian",
+    "dl": "https://tanzil.net/trans/zh.majian?type=txt-2"
+  },
+  {
+    "id": "cs.hrbek",
+    "lang": "Czech",
+    "name": "Hrbek",
+    "tran": "Preklad I. Hrbek",
+    "dl": "https://tanzil.net/trans/cs.hrbek?type=txt-2"
+  },
+  {
+    "id": "cs.nykl",
+    "lang": "Czech",
+    "name": "Nykl",
+    "tran": "A. R. Nykl",
+    "dl": "https://tanzil.net/trans/cs.nykl?type=txt-2"
+  },
+  {
+    "id": "dv.divehi",
+    "lang": "Divehi",
+    "name": "ދިވެހި",
+    "tran": "Office of the President of Maldives",
+    "dl": "https://tanzil.net/trans/dv.divehi?type=txt-2"
+  },
+  {
+    "id": "nl.keyzer",
+    "lang": "Dutch",
+    "name": "Keyzer",
+    "tran": "Salomo Keyzer ",
+    "dl": "https://tanzil.net/trans/nl.keyzer?type=txt-2"
+  },
+  {
+    "id": "nl.leemhuis",
+    "lang": "Dutch",
+    "name": "Leemhuis",
+    "tran": "Fred Leemhuis",
+    "dl": "https://tanzil.net/trans/nl.leemhuis?type=txt-2"
+  },
+  {
+    "id": "nl.siregar",
+    "lang": "Dutch",
+    "name": "Siregar",
+    "tran": "Sofian S. Siregar",
+    "dl": "https://tanzil.net/trans/nl.siregar?type=txt-2"
+  },
+  {
+    "id": "en.ahmedali",
+    "lang": "English",
+    "name": "Ahmed Ali",
+    "tran": "Ahmed Ali *",
+    "dl": "https://tanzil.net/trans/en.ahmedali?type=txt-2"
+  },
+  {
+    "id": "en.ahmedraza",
+    "lang": "English",
+    "name": "Ahmed Raza Khan",
+    "tran": "Ahmed Raza Khan *",
+    "dl": "https://tanzil.net/trans/en.ahmedraza?type=txt-2"
+  },
+  {
+    "id": "en.arberry",
+    "lang": "English",
+    "name": "Arberry",
+    "tran": "A. J. Arberry *",
+    "dl": "https://tanzil.net/trans/en.arberry?type=txt-2"
+  },
+  {
+    "id": "en.daryabadi",
+    "lang": "English",
+    "name": "Daryabadi",
+    "tran": "Abdul Majid Daryabadi *",
+    "dl": "https://tanzil.net/trans/en.daryabadi?type=txt-2"
+  },
+  {
+    "id": "en.hilali",
+    "lang": "English",
+    "name": "Hilali & Khan",
+    "tran": "Muhammad Taqi-ud-Din al-Hilali and Muhammad Muhsin Khan *",
+    "dl": "https://tanzil.net/trans/en.hilali?type=txt-2"
+  },
+  {
+    "id": "en.itani",
+    "lang": "English",
+    "name": "Itani",
+    "tran": "Talal Itani",
+    "dl": "https://tanzil.net/trans/en.itani?type=txt-2"
+  },
+  {
+    "id": "en.maududi",
+    "lang": "English",
+    "name": "Maududi",
+    "tran": "Abul Ala Maududi *",
+    "dl": "https://tanzil.net/trans/en.maududi?type=txt-2"
+  },
+  {
+    "id": "en.mubarakpuri",
+    "lang": "English",
+    "name": "Mubarakpuri",
+    "tran": "Safi-ur-Rahman al-Mubarakpuri *",
+    "dl": "https://tanzil.net/trans/en.mubarakpuri?type=txt-2"
+  },
+  {
+    "id": "en.pickthall",
+    "lang": "English",
+    "name": "Pickthall",
+    "tran": "Mohammed Marmaduke William Pickthall *",
+    "dl": "https://tanzil.net/trans/en.pickthall?type=txt-2"
+  },
+  {
+    "id": "en.qarai",
+    "lang": "English",
+    "name": "Qarai",
+    "tran": "Ali Quli Qarai",
+    "dl": "https://tanzil.net/trans/en.qarai?type=txt-2"
+  },
+  {
+    "id": "en.qaribullah",
+    "lang": "English",
+    "name": "Qaribullah & Darwish",
+    "tran": "Hasan al-Fatih Qaribullah and Ahmad Darwish",
+    "dl": "https://tanzil.net/trans/en.qaribullah?type=txt-2"
+  },
+  {
+    "id": "en.sahih",
+    "lang": "English",
+    "name": "Saheeh International",
+    "tran": "Saheeh International *",
+    "dl": "https://tanzil.net/trans/en.sahih?type=txt-2"
+  },
+  {
+    "id": "en.sarwar",
+    "lang": "English",
+    "name": "Sarwar",
+    "tran": "Muhammad Sarwar *",
+    "dl": "https://tanzil.net/trans/en.sarwar?type=txt-2"
+  },
+  {
+    "id": "en.shakir",
+    "lang": "English",
+    "name": "Shakir",
+    "tran": "Mohammad Habib Shakir *",
+    "dl": "https://tanzil.net/trans/en.shakir?type=txt-2"
+  },
+  {
+    "id": "en.transliteration",
+    "lang": "English",
+    "name": "Transliteration",
+    "tran": "English Transliteration",
+    "dl": "https://tanzil.net/trans/en.transliteration?type=txt-2"
+  },
+  {
+    "id": "en.wahiduddin",
+    "lang": "English",
+    "name": "Wahiduddin Khan",
+    "tran": "Wahiduddin Khan *",
+    "dl": "https://tanzil.net/trans/en.wahiduddin?type=txt-2"
+  },
+  {
+    "id": "en.yusufali",
+    "lang": "English",
+    "name": "Yusuf Ali",
+    "tran": "Abdullah Yusuf Ali *",
+    "dl": "https://tanzil.net/trans/en.yusufali?type=txt-2"
+  },
+  {
+    "id": "fr.hamidullah",
+    "lang": "French",
+    "name": "Hamidullah",
+    "tran": "Muhammad Hamidullah *",
+    "dl": "https://tanzil.net/trans/fr.hamidullah?type=txt-2"
+  },
+  {
+    "id": "de.aburida",
+    "lang": "German",
+    "name": "Abu Rida",
+    "tran": "Abu Rida Muhammad ibn Ahmad ibn Rassoul",
+    "dl": "https://tanzil.net/trans/de.aburida?type=txt-2"
+  },
+  {
+    "id": "de.bubenheim",
+    "lang": "German",
+    "name": "Bubenheim & Elyas",
+    "tran": "A. S. F. Bubenheim and N. Elyas *",
+    "dl": "https://tanzil.net/trans/de.bubenheim?type=txt-2"
+  },
+  {
+    "id": "de.khoury",
+    "lang": "German",
+    "name": "Khoury",
+    "tran": "Adel Theodor Khoury *",
+    "dl": "https://tanzil.net/trans/de.khoury?type=txt-2"
+  },
+  {
+    "id": "de.zaidan",
+    "lang": "German",
+    "name": "Zaidan",
+    "tran": "Amir Zaidan",
+    "dl": "https://tanzil.net/trans/de.zaidan?type=txt-2"
+  },
+  {
+    "id": "ha.gumi",
+    "lang": "Hausa",
+    "name": "Gumi",
+    "tran": "Abubakar Mahmoud Gumi",
+    "dl": "https://tanzil.net/trans/ha.gumi?type=txt-2"
+  },
+  {
+    "id": "hi.farooq",
+    "lang": "Hindi",
+    "name": "फ़ारूक़ ख़ान & अहमद",
+    "tran": "Muhammad Farooq Khan and Muhammad Ahmed  ",
+    "dl": "https://tanzil.net/trans/hi.farooq?type=txt-2"
+  },
+  {
+    "id": "hi.hindi",
+    "lang": "Hindi",
+    "name": "फ़ारूक़ ख़ान & नदवी",
+    "tran": "Suhel Farooq Khan and Saifur Rahman Nadwi",
+    "dl": "https://tanzil.net/trans/hi.hindi?type=txt-2"
+  },
+  {
+    "id": "id.indonesian",
+    "lang": "Indonesian",
+    "name": "Bahasa Indonesia",
+    "tran": "Indonesian Ministry of Religious Affairs",
+    "dl": "https://tanzil.net/trans/id.indonesian?type=txt-2"
+  },
+  {
+    "id": "id.muntakhab",
+    "lang": "Indonesian",
+    "name": "Quraish Shihab",
+    "tran": "Muhammad Quraish Shihab et al. *",
+    "dl": "https://tanzil.net/trans/id.muntakhab?type=txt-2"
+  },
+  {
+    "id": "id.jalalayn",
+    "lang": "Indonesian",
+    "name": "Tafsir Jalalayn",
+    "tran": "Jalal ad-Din al-Mahalli and Jalal ad-Din as-Suyuti *",
+    "dl": "https://tanzil.net/trans/id.jalalayn?type=txt-2"
+  },
+  {
+    "id": "it.piccardo",
+    "lang": "Italian",
+    "name": "Piccardo",
+    "tran": "Hamza Roberto Piccardo *",
+    "dl": "https://tanzil.net/trans/it.piccardo?type=txt-2"
+  },
+  {
+    "id": "ja.japanese",
+    "lang": "Japanese",
+    "name": "Japanese",
+    "tran": "Unknown",
+    "dl": "https://tanzil.net/trans/ja.japanese?type=txt-2"
+  },
+  {
+    "id": "ko.korean",
+    "lang": "Korean",
+    "name": "Korean",
+    "tran": "Unknown",
+    "dl": "https://tanzil.net/trans/ko.korean?type=txt-2"
+  },
+  {
+    "id": "ku.asan",
+    "lang": "Kurdish",
+    "name": "ته‌فسیری ئاسان",
+    "tran": "Burhan Muhammad-Amin",
+    "dl": "https://tanzil.net/trans/ku.asan?type=txt-2"
+  },
+  {
+    "id": "ms.basmeih",
+    "lang": "Malay",
+    "name": "Basmeih",
+    "tran": "Abdullah Muhammad Basmeih",
+    "dl": "https://tanzil.net/trans/ms.basmeih?type=txt-2"
+  },
+  {
+    "id": "ml.abdulhameed",
+    "lang": "Malayalam",
+    "name": "അബ്ദുല്‍ ഹമീദ് & പറപ്പൂര്‍",
+    "tran": "Cheriyamundam Abdul Hameed and Kunhi Mohammed Parappoor",
+    "dl": "https://tanzil.net/trans/ml.abdulhameed?type=txt-2"
+  },
+  {
+    "id": "ml.karakunnu",
+    "lang": "Malayalam",
+    "name": "കാരകുന്ന് & എളയാവൂര്",
+    "tran": "Muhammad Karakunnu and Vanidas Elayavoor *",
+    "dl": "https://tanzil.net/trans/ml.karakunnu?type=txt-2"
+  },
+  {
+    "id": "no.berg",
+    "lang": "Norwegian",
+    "name": "Einar Berg",
+    "tran": "Einar Berg",
+    "dl": "https://tanzil.net/trans/no.berg?type=txt-2"
+  },
+  {
+    "id": "ps.abdulwali",
+    "lang": "Pashto",
+    "name": "عبدالولي",
+    "tran": "Abdulwali Khan",
+    "dl": "https://tanzil.net/trans/ps.abdulwali?type=txt-2"
+  },
+  {
+    "id": "fa.ansarian",
+    "lang": "Persian",
+    "name": "انصاریان",
+    "tran": "Hussain Ansarian *",
+    "dl": "https://tanzil.net/trans/fa.ansarian?type=txt-2"
+  },
+  {
+    "id": "fa.ayati",
+    "lang": "Persian",
+    "name": "آیتی",
+    "tran": "AbdolMohammad Ayati *",
+    "dl": "https://tanzil.net/trans/fa.ayati?type=txt-2"
+  },
+  {
+    "id": "fa.bahrampour",
+    "lang": "Persian",
+    "name": "بهرام‌پور",
+    "tran": "Abolfazl Bahrampour *",
+    "dl": "https://tanzil.net/trans/fa.bahrampour?type=txt-2"
+  },
+  {
+    "id": "fa.gharaati",
+    "lang": "Persian",
+    "name": "قرائتی",
+    "tran": "Mohsen Gharaati *",
+    "dl": "https://tanzil.net/trans/fa.gharaati?type=txt-2"
+  },
+  {
+    "id": "fa.ghomshei",
+    "lang": "Persian",
+    "name": "الهی قمشه‌ای",
+    "tran": "Mahdi Elahi Ghomshei *",
+    "dl": "https://tanzil.net/trans/fa.ghomshei?type=txt-2"
+  },
+  {
+    "id": "fa.khorramdel",
+    "lang": "Persian",
+    "name": "خرمدل",
+    "tran": "Mostafa Khorramdel *",
+    "dl": "https://tanzil.net/trans/fa.khorramdel?type=txt-2"
+  },
+  {
+    "id": "fa.khorramshahi",
+    "lang": "Persian",
+    "name": "خرمشاهی",
+    "tran": "Baha'oddin Khorramshahi *",
+    "dl": "https://tanzil.net/trans/fa.khorramshahi?type=txt-2"
+  },
+  {
+    "id": "fa.sadeqi",
+    "lang": "Persian",
+    "name": "صادقی تهرانی",
+    "tran": "Mohammad Sadeqi Tehrani *",
+    "dl": "https://tanzil.net/trans/fa.sadeqi?type=txt-2"
+  },
+  {
+    "id": "fa.safavi",
+    "lang": "Persian",
+    "name": "صفوی",
+    "tran": "Sayyed Mohammad Reza Safavi *",
+    "dl": "https://tanzil.net/trans/fa.safavi?type=txt-2"
+  },
+  {
+    "id": "fa.fooladvand",
+    "lang": "Persian",
+    "name": "فولادوند",
+    "tran": "Mohammad Mahdi Fooladvand *",
+    "dl": "https://tanzil.net/trans/fa.fooladvand?type=txt-2"
+  },
+  {
+    "id": "fa.mojtabavi",
+    "lang": "Persian",
+    "name": "مجتبوی",
+    "tran": "Sayyed Jalaloddin Mojtabavi *",
+    "dl": "https://tanzil.net/trans/fa.mojtabavi?type=txt-2"
+  },
+  {
+    "id": "fa.moezzi",
+    "lang": "Persian",
+    "name": "معزی",
+    "tran": "Mohammad Kazem Moezzi",
+    "dl": "https://tanzil.net/trans/fa.moezzi?type=txt-2"
+  },
+  {
+    "id": "fa.makarem",
+    "lang": "Persian",
+    "name": "مکارم شیرازی",
+    "tran": "Naser Makarem Shirazi *",
+    "dl": "https://tanzil.net/trans/fa.makarem?type=txt-2"
+  },
+  {
+    "id": "pl.bielawskiego",
+    "lang": "Polish",
+    "name": "Bielawskiego",
+    "tran": "Józefa Bielawskiego",
+    "dl": "https://tanzil.net/trans/pl.bielawskiego?type=txt-2"
+  },
+  {
+    "id": "pt.elhayek",
+    "lang": "Portuguese",
+    "name": "El-Hayek",
+    "tran": "Samir El-Hayek ",
+    "dl": "https://tanzil.net/trans/pt.elhayek?type=txt-2"
+  },
+  {
+    "id": "ro.grigore",
+    "lang": "Romanian",
+    "name": "Grigore",
+    "tran": "George Grigore",
+    "dl": "https://tanzil.net/trans/ro.grigore?type=txt-2"
+  },
+  {
+    "id": "ru.abuadel",
+    "lang": "Russian",
+    "name": "Абу Адель",
+    "tran": "Abu Adel",
+    "dl": "https://tanzil.net/trans/ru.abuadel?type=txt-2"
+  },
+  {
+    "id": "ru.muntahab",
+    "lang": "Russian",
+    "name": "Аль-Мунтахаб",
+    "tran": "Ministry of Awqaf, Egypt",
+    "dl": "https://tanzil.net/trans/ru.muntahab?type=txt-2"
+  },
+  {
+    "id": "ru.kalam",
+    "lang": "Russian",
+    "name": "Калям Шариф",
+    "tran": "Muslim Religious Board of the Republiс of Tatarstan *",
+    "dl": "https://tanzil.net/trans/ru.kalam?type=txt-2"
+  },
+  {
+    "id": "ru.krachkovsky",
+    "lang": "Russian",
+    "name": "Крачковский",
+    "tran": "Ignaty Yulianovich Krachkovsky *",
+    "dl": "https://tanzil.net/trans/ru.krachkovsky?type=txt-2"
+  },
+  {
+    "id": "ru.kuliev",
+    "lang": "Russian",
+    "name": "Кулиев",
+    "tran": "Elmir Kuliev",
+    "dl": "https://tanzil.net/trans/ru.kuliev?type=txt-2"
+  },
+  {
+    "id": "ru.kuliev-alsaadi",
+    "lang": "Russian",
+    "name": "Кулиев + ас-Саади",
+    "tran": "Elmir Kuliev (with Abd ar-Rahman as-Saadi's commentaries)",
+    "dl": "https://tanzil.net/trans/ru.kuliev-alsaadi?type=txt-2"
+  },
+  {
+    "id": "ru.osmanov",
+    "lang": "Russian",
+    "name": "Османов",
+    "tran": "Magomed-Nuri Osmanovich Osmanov",
+    "dl": "https://tanzil.net/trans/ru.osmanov?type=txt-2"
+  },
+  {
+    "id": "ru.porokhova",
+    "lang": "Russian",
+    "name": "Порохова",
+    "tran": "V. Porokhova",
+    "dl": "https://tanzil.net/trans/ru.porokhova?type=txt-2"
+  },
+  {
+    "id": "ru.sablukov",
+    "lang": "Russian",
+    "name": "Саблуков",
+    "tran": "Gordy Semyonovich Sablukov",
+    "dl": "https://tanzil.net/trans/ru.sablukov?type=txt-2"
+  },
+  {
+    "id": "sd.amroti",
+    "lang": "Sindhi",
+    "name": "امروٽي",
+    "tran": "Taj Mehmood Amroti",
+    "dl": "https://tanzil.net/trans/sd.amroti?type=txt-2"
+  },
+  {
+    "id": "so.abduh",
+    "lang": "Somali",
+    "name": "Abduh",
+    "tran": "Mahmud Muhammad Abduh",
+    "dl": "https://tanzil.net/trans/so.abduh?type=txt-2"
+  },
+  {
+    "id": "es.bornez",
+    "lang": "Spanish",
+    "name": "Bornez",
+    "tran": "Raúl González Bórnez *",
+    "dl": "https://tanzil.net/trans/es.bornez?type=txt-2"
+  },
+  {
+    "id": "es.cortes",
+    "lang": "Spanish",
+    "name": "Cortes",
+    "tran": "Julio Cortes ",
+    "dl": "https://tanzil.net/trans/es.cortes?type=txt-2"
+  },
+  {
+    "id": "es.garcia",
+    "lang": "Spanish",
+    "name": "Garcia",
+    "tran": "Muhammad Isa García *",
+    "dl": "https://tanzil.net/trans/es.garcia?type=txt-2"
+  },
+  {
+    "id": "sw.barwani",
+    "lang": "Swahili",
+    "name": "Al-Barwani",
+    "tran": "Ali Muhsin Al-Barwani",
+    "dl": "https://tanzil.net/trans/sw.barwani?type=txt-2"
+  },
+  {
+    "id": "sv.bernstrom",
+    "lang": "Swedish",
+    "name": "Bernström",
+    "tran": "Knut Bernström",
+    "dl": "https://tanzil.net/trans/sv.bernstrom?type=txt-2"
+  },
+  {
+    "id": "tg.ayati",
+    "lang": "Tajik",
+    "name": "Оятӣ",
+    "tran": "AbdolMohammad Ayati",
+    "dl": "https://tanzil.net/trans/tg.ayati?type=txt-2"
+  },
+  {
+    "id": "ta.tamil",
+    "lang": "Tamil",
+    "name": "ஜான் டிரஸ்ட்",
+    "tran": "Jan Turst Foundation",
+    "dl": "https://tanzil.net/trans/ta.tamil?type=txt-2"
+  },
+  {
+    "id": "tt.nugman",
+    "lang": "Tatar",
+    "name": "Yakub Ibn Nugman",
+    "tran": "Yakub Ibn Nugman",
+    "dl": "https://tanzil.net/trans/tt.nugman?type=txt-2"
+  },
+  {
+    "id": "th.thai",
+    "lang": "Thai",
+    "name": "ภาษาไทย",
+    "tran": "King Fahad Quran Complex",
+    "dl": "https://tanzil.net/trans/th.thai?type=txt-2"
+  },
+  {
+    "id": "tr.golpinarli",
+    "lang": "Turkish",
+    "name": "Abdulbakî Gölpınarlı",
+    "tran": "Abdulbaki Golpinarli",
+    "dl": "https://tanzil.net/trans/tr.golpinarli?type=txt-2"
+  },
+  {
+    "id": "tr.bulac",
+    "lang": "Turkish",
+    "name": "Alİ Bulaç",
+    "tran": "Alİ Bulaç",
+    "dl": "https://tanzil.net/trans/tr.bulac?type=txt-2"
+  },
+  {
+    "id": "tr.transliteration",
+    "lang": "Turkish",
+    "name": "Çeviriyazı",
+    "tran": "Muhammet Abay",
+    "dl": "https://tanzil.net/trans/tr.transliteration?type=txt-2"
+  },
+  {
+    "id": "tr.diyanet",
+    "lang": "Turkish",
+    "name": "Diyanet İşleri",
+    "tran": "Diyanet Isleri",
+    "dl": "https://tanzil.net/trans/tr.diyanet?type=txt-2"
+  },
+  {
+    "id": "tr.vakfi",
+    "lang": "Turkish",
+    "name": "Diyanet Vakfı",
+    "tran": "Diyanet Vakfi",
+    "dl": "https://tanzil.net/trans/tr.vakfi?type=txt-2"
+  },
+  {
+    "id": "tr.yuksel",
+    "lang": "Turkish",
+    "name": "Edip Yüksel",
+    "tran": "Edip Yüksel",
+    "dl": "https://tanzil.net/trans/tr.yuksel?type=txt-2"
+  },
+  {
+    "id": "tr.yazir",
+    "lang": "Turkish",
+    "name": "Elmalılı Hamdi Yazır",
+    "tran": "Elmalili Hamdi Yazir",
+    "dl": "https://tanzil.net/trans/tr.yazir?type=txt-2"
+  },
+  {
+    "id": "tr.ozturk",
+    "lang": "Turkish",
+    "name": "Öztürk",
+    "tran": "Yasar Nuri Ozturk *",
+    "dl": "https://tanzil.net/trans/tr.ozturk?type=txt-2"
+  },
+  {
+    "id": "tr.yildirim",
+    "lang": "Turkish",
+    "name": "Suat Yıldırım",
+    "tran": "Suat Yildirim",
+    "dl": "https://tanzil.net/trans/tr.yildirim?type=txt-2"
+  },
+  {
+    "id": "tr.ates",
+    "lang": "Turkish",
+    "name": "Süleyman Ateş",
+    "tran": "Suleyman Ates",
+    "dl": "https://tanzil.net/trans/tr.ates?type=txt-2"
+  },
+  {
+    "id": "ur.maududi",
+    "lang": "Urdu",
+    "name": "ابوالاعلی مودودی",
+    "tran": "Abul A'ala Maududi *",
+    "dl": "https://tanzil.net/trans/ur.maududi?type=txt-2"
+  },
+  {
+    "id": "ur.kanzuliman",
+    "lang": "Urdu",
+    "name": "احمد رضا خان",
+    "tran": "Ahmed Raza Khan *",
+    "dl": "https://tanzil.net/trans/ur.kanzuliman?type=txt-2"
+  },
+  {
+    "id": "ur.ahmedali",
+    "lang": "Urdu",
+    "name": "احمد علی",
+    "tran": "Ahmed Ali *",
+    "dl": "https://tanzil.net/trans/ur.ahmedali?type=txt-2"
+  },
+  {
+    "id": "ur.jalandhry",
+    "lang": "Urdu",
+    "name": "جالندہری",
+    "tran": "Fateh Muhammad Jalandhry",
+    "dl": "https://tanzil.net/trans/ur.jalandhry?type=txt-2"
+  },
+  {
+    "id": "ur.qadri",
+    "lang": "Urdu",
+    "name": "طاہر القادری",
+    "tran": "Tahir ul Qadri *",
+    "dl": "https://tanzil.net/trans/ur.qadri?type=txt-2"
+  },
+  {
+    "id": "ur.jawadi",
+    "lang": "Urdu",
+    "name": "علامہ جوادی",
+    "tran": "Syed Zeeshan Haider Jawadi",
+    "dl": "https://tanzil.net/trans/ur.jawadi?type=txt-2"
+  },
+  {
+    "id": "ur.junagarhi",
+    "lang": "Urdu",
+    "name": "محمد جوناگڑھی",
+    "tran": "Muhammad Junagarhi *",
+    "dl": "https://tanzil.net/trans/ur.junagarhi?type=txt-2"
+  },
+  {
+    "id": "ur.najafi",
+    "lang": "Urdu",
+    "name": "محمد حسین نجفی",
+    "tran": "Muhammad Hussain Najafi  *",
+    "dl": "https://tanzil.net/trans/ur.najafi?type=txt-2"
+  },
+  {
+    "id": "ug.saleh",
+    "lang": "Uyghur",
+    "name": "محمد صالح",
+    "tran": "Muhammad Saleh",
+    "dl": "https://tanzil.net/trans/ug.saleh?type=txt-2"
+  },
+  {
+    "id": "uz.sodik",
+    "lang": "Uzbek",
+    "name": "Мухаммад Содик",
+    "tran": "Muhammad Sodik Muhammad Yusuf",
+    "dl": "https://tanzil.net/trans/uz.sodik?type=txt-2"
+  }
+]
