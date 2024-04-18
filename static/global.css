@@ -6,27 +6,39 @@
 }
 
 body {
-  font-family: sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  color: #333; /* Default text color */
+	font-family: cursive;
+	font-size: 16px;
+	line-height: 1.6;
+	color: #333; /* Default text color */
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: sans-serif;
-  font-weight: bold;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: cursive;
+	/* font-weight: bold; */
 }
 
 h1 {
-  font-size: 32px;
-  margin-bottom: 20px;
+	font-size: 32px;
+	margin-bottom: 20px;
 }
 
 h2 {
-  font-size: 24px;
-  margin-bottom: 15px;
+	font-size: 24px;
+	margin-bottom: 15px;
 }
 
 p {
-  margin-bottom: 15px;
+	margin-bottom: 15px;
+}
+
+button {
+	background-color: transparent;
+	border: none;
+	outline: none;
+	cursor: pointer;
 }

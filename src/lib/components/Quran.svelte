@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import Setting from './Setting.svelte';
 
 	interface Surah {
 		line: string;
@@ -30,7 +31,7 @@
 			fetch('/quran/quran-simple.txt').then((res) => res.text())
 		]);
 
-		const translation = quranData.split('\n');
+		const translation = quranData.split('\n').splice(0, 500); // load only first 500 verse
 		let currSurah = 0;
 		surahs = translation.map((l) => {
 			const [surah, ayah, line] = l.split('|');
@@ -50,6 +51,8 @@
 	});
 </script>
 
+<Setting />
+
 <div class="quran-container">
 	{#each surahs as surah}
 		{#if surah.isNewSurah}
@@ -58,7 +61,8 @@
 			{@const surahMean = currSurahInfo.meaning.en}
 			<div style="z-index:{100 + surah.surah};" class="surah-header">
 				<h4 class="surah-title">
-					{surah.surah}{")"} {surahTitle} ({surahMean})
+					{surah.surah}{')'}
+					{surahTitle} ( {surahMean} )
 				</h4>
 			</div>
 		{/if}
