@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import Setting from './Setting.svelte';
 	import {
+	setFromStore,
 		themeBackgroundColor,
 		themeFontColor,
 		themeFontFamily,
@@ -13,8 +14,8 @@
 
 	interface Surah {
 		line: string;
-		surah: number;
-		ayah: number;
+		surah_num: number;
+		ayah_num: number;
 		isNewSurah: boolean;
 	}
 
@@ -35,6 +36,7 @@
 	let surahInfo: SurahInfo[] = [];
 
 	onMount(async () => {
+		setFromStore();
 		const [surahInfoData, quranData] = await Promise.all([
 			fetch('/quran/surah-info.json').then((res) => res.json()),
 			fetch('/quran/quran-simple.txt').then((res) => res.text())
@@ -51,8 +53,8 @@
 			}
 			return {
 				line,
-				surah: Number(surah),
-				ayah: Number(ayah),
+				surah_num: Number(surah),
+				ayah_num: Number(ayah),
 				isNewSurah
 			};
 		});
@@ -72,31 +74,31 @@
 	})}
 >
 	{#each surahs as surah}
-		<div id="surah-{surah.surah}"></div>
+		<div id="surah-{surah.surah_num}"></div>
 		{#if surah.isNewSurah}
-			{@const currSurahInfo = surahInfo[surah.surah - 1]}
+			{@const currSurahInfo = surahInfo[surah.surah_num - 1]}
 			{@const surahTitle = currSurahInfo.title}
 			{@const surahMean = currSurahInfo.meaning.en}
-			<div style="z-index:{100 + surah.surah};" class="surah-header">
-				{#if surah.surah > 1}
-					<a href="#surah-{surah.surah - 1}" style="color:white">
+			<div style="z-index:{100 + surah.surah_num};" class="surah-header">
+				{#if surah.surah_num > 1}
+					<a href="#surah-{surah.surah_num - 1}" style="color:white">
 						<CaretLeftIcon size="15" />
 					</a>
 				{/if}
 				<h4 class="surah-title">
-					{surah.surah}{')'}
+					{surah.surah_num}{')'}
 					{surahTitle} ( {surahMean} )
 				</h4>
 
-				{#if surah.surah <= 114}
-					<a href="#surah-{surah.surah + 1}" style="color:white">
+				{#if surah.surah_num <= 114}
+					<a href="#surah-{surah.surah_num + 1}" style="color:white">
 						<CaretRightIcon size="16" />
 					</a>
 				{/if}
 			</div>
 		{/if}
 		<h1 style="direction:rtl">
-			<span class="ayah">{surah.ayah}</span>
+			<span class="ayah">{surah.ayah_num}</span>
 			<span class="verse">{surah.line}</span>
 		</h1>
 	{/each}
@@ -145,7 +147,7 @@
 	.ayah {
 		font-size: max(calc(var(--theme-font-size) - 14px), 10px);
 		color: var(--theme-font-color);
-		opacity: 0.5;
+		opacity: 0.8;
 		align-self: center;
 	}
 	.verse {
