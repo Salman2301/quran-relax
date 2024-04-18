@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CaretLeftIcon, CaretRightIcon } from 'svelte-uicons/rounded/regular';
+	import { ArrowTurnDownLeftIcon, ArrowTurnDownRightIcon, CaretLeftIcon, CaretRightIcon } from 'svelte-uicons/rounded/regular';
 
 	import { onMount } from 'svelte';
 	import Setting from './Setting.svelte';
@@ -12,11 +12,12 @@
 	} from '$lib/stores/theme.store';
 	import { obj2str } from '$lib/utils/obj';
 
-	interface Surah {
+	interface Ayah {
 		line: string;
 		surah_num: number;
 		ayah_num: number;
 		isNewSurah: boolean;
+		translate: { language: string; id: string; surah: string }[];
 	}
 
 	interface SurahInfo {
@@ -32,19 +33,22 @@
 		recitation: string;
 	}
 
-	let surahs: Surah[] = [];
+	let ayahs: Ayah[] = [];
 	let surahInfo: SurahInfo[] = [];
 
 	onMount(async () => {
 		setFromStore();
-		const [surahInfoData, quranData] = await Promise.all([
+		const [surahInfoData, quranSimpleData, ...translation] = await Promise.all([
 			fetch('/quran/surah-info.json').then((res) => res.json()),
-			fetch('/quran/quran-simple.txt').then((res) => res.text())
+			fetch('/quran/quran-simple.txt').then((res) => res.text()),
+			fetch('/quran/trans/en.maududi.txt').then((res) => res.text()).then(line=>line.split("\n").map(line=>line.split("|")[2])),
+			fetch('/quran/trans/ta.tamil.txt').then((res) => res.text()).then(line=>line.split("\n").map(line=>line.split("|")[2]))
 		]);
 
-		const translation = quranData.split('\n').splice(0, 500); // load only first 500 verse
+		console.log({ translation })
+		const quranData = quranSimpleData.split('\n').splice(0, 50000); // load only first 500 verse
 		let currSurah = 0;
-		surahs = translation.map((l) => {
+		ayahs = quranData.map((l, index) => {
 			const [surah, ayah, line] = l.split('|');
 			let isNewSurah = false;
 			if (currSurah !== Number(surah)) {
@@ -53,6 +57,18 @@
 			}
 			return {
 				line,
+				translate: [
+					{
+						language: "en",
+						id: "some-id",
+						surah: translation[0][index]
+					},
+					{
+						language: "en",
+						id: "some-id",
+						surah: translation[1][index]
+					}
+				],
 				surah_num: Number(surah),
 				ayah_num: Number(ayah),
 				isNewSurah
@@ -73,33 +89,41 @@
 		'--theme-font-size': $themeFontSize
 	})}
 >
-	{#each surahs as surah}
-		<div id="surah-{surah.surah_num}"></div>
-		{#if surah.isNewSurah}
-			{@const currSurahInfo = surahInfo[surah.surah_num - 1]}
+	{#each ayahs as ayah}
+		<div id="surah-{ayah.surah_num}"></div>
+		{#if ayah.isNewSurah}
+			{@const currSurahInfo = surahInfo[ayah.surah_num - 1]}
 			{@const surahTitle = currSurahInfo.title}
 			{@const surahMean = currSurahInfo.meaning.en}
-			<div style="z-index:{100 + surah.surah_num};" class="surah-header">
-				{#if surah.surah_num > 1}
-					<a href="#surah-{surah.surah_num - 1}" style="color:white">
+			<div style="z-index:{100 + ayah.surah_num};" class="surah-header">
+				{#if ayah.surah_num > 1}
+					<a href="#surah-{ayah.surah_num - 1}" style="color:white">
 						<CaretLeftIcon size="15" />
 					</a>
 				{/if}
 				<h4 class="surah-title">
-					{surah.surah_num}{')'}
+					{ayah.surah_num}{')'}
 					{surahTitle} ( {surahMean} )
 				</h4>
 
-				{#if surah.surah_num <= 114}
-					<a href="#surah-{surah.surah_num + 1}" style="color:white">
+				{#if ayah.surah_num < 114}
+					<a href="#surah-{ayah.surah_num + 1}" style="color:white">
 						<CaretRightIcon size="16" />
 					</a>
 				{/if}
 			</div>
 		{/if}
 		<h1 style="direction:rtl">
-			<span class="ayah">{surah.ayah_num}</span>
-			<span class="verse">{surah.line}</span>
+			<span class="ayah-num">{ayah.ayah_num}</span>
+			<span class="verse">
+				<p>{ayah.line}</p>
+				{#each ayah.translate as currTranslate}
+					<p class="verse-translation">
+						<span><ArrowTurnDownLeftIcon size="14" /></span>
+						{currTranslate.surah}
+					</p>
+				{/each}
+			</span>
 		</h1>
 	{/each}
 </div>
@@ -128,6 +152,7 @@
 		gap: 4px;
 		justify-content: center;
 		align-items: center;
+		margin-bottom: 10px;
 	}
 	.surah-title {
 		color: var(--theme-font-color);
@@ -144,16 +169,29 @@
 		padding: 0 10px;
 		gap: 4px;
 	}
-	.ayah {
-		font-size: max(calc(var(--theme-font-size) - 14px), 10px);
+	.ayah-num {
+		font-size: max(calc(var(--theme-font-size) - 14px), 14px);
 		color: var(--theme-font-color);
 		opacity: 0.8;
-		align-self: center;
+		align-self: start;
+		/* padding-top: 10px; */
+		border: 1px solid var(--theme-font-color);
+		border-radius: 100%;
+		width: 30px;
+		min-width: 30px;
+		height: 30px;
+		min-height: 30px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 	.verse {
 		color: var(--theme-font-color);
 		font-size: var(--theme-font-size);
-		text-align: center;
+		text-align: right;
 		font-family: var(--theme-font-family);
+	}
+	.verse-translation {
+		opacity: 0.8;
 	}
 </style>
