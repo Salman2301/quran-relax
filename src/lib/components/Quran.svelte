@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { CaretLeftIcon, CaretRightIcon } from 'svelte-uicons/rounded/regular';
+
 	import { onMount } from 'svelte';
 	import Setting from './Setting.svelte';
 	import {
@@ -70,15 +72,27 @@
 	})}
 >
 	{#each surahs as surah}
+		<div id="surah-{surah.surah}"></div>
 		{#if surah.isNewSurah}
 			{@const currSurahInfo = surahInfo[surah.surah - 1]}
 			{@const surahTitle = currSurahInfo.title}
 			{@const surahMean = currSurahInfo.meaning.en}
 			<div style="z-index:{100 + surah.surah};" class="surah-header">
+				{#if surah.surah > 1}
+					<a href="#surah-{surah.surah - 1}" style="color:white">
+						<CaretLeftIcon size="15" />
+					</a>
+				{/if}
 				<h4 class="surah-title">
 					{surah.surah}{')'}
 					{surahTitle} ( {surahMean} )
 				</h4>
+
+				{#if surah.surah <= 114}
+					<a href="#surah-{surah.surah + 1}" style="color:white">
+						<CaretRightIcon size="16" />
+					</a>
+				{/if}
 			</div>
 		{/if}
 		<h1 style="direction:rtl">
@@ -108,12 +122,17 @@
 		text-align: center;
 		border-bottom: 1px solid;
 		border-bottom-color: var(--theme-font-color);
+		display: flex;
+		gap: 4px;
+		justify-content: center;
+		align-items: center;
 	}
 	.surah-title {
 		color: var(--theme-font-color);
 		margin: 0;
 		font-family: var(--theme-font-family);
-		padding-top: 10px;
+		/* padding-top: 10px; */
+		width: 500px;
 	}
 	h1 {
 		display: flex;

@@ -6,16 +6,22 @@
 		themeFontSize
 	} from '$lib/stores/theme.store';
 
-	let showPopup: boolean = true;
+	let showPopup: boolean = false;
 
 	function handleKeyDown(e: KeyboardEvent) {
 		if (e.key === 'Escape') showPopup = false;
+	}
+	function handleOpen() {
+		showPopup = true;
+	}
+	function handleClose() {
+		showPopup = false;
 	}
 </script>
 
 <div class="pos-bottom">
 	<div class="container">
-		<button on:click={() => (showPopup = true)} type="button">
+		<button on:click={handleOpen} type="button">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="48"
@@ -90,7 +96,7 @@
 			<div class="popup-content">
 				<div class="popup-header">
 					<h3>Settings</h3>
-					<button class="close-btn" on:click={() => (showPopup = false)}>
+					<button class="close-btn" on:click={handleClose}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="21"
