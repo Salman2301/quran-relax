@@ -1,6 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Setting from './Setting.svelte';
+	import {
+		themeBackgroundColor,
+		themeFontColor,
+		themeFontFamily,
+		themeFontSize
+	} from '$lib/stores/theme.store';
+	import { obj2str } from '$lib/utils/obj';
 
 	interface Surah {
 		line: string;
@@ -53,7 +60,15 @@
 
 <Setting />
 
-<div class="quran-container">
+<div
+	class="quran-container"
+	style={obj2str({
+		'--theme-background-color': $themeBackgroundColor,
+		'--theme-font-color': $themeFontColor,
+		'--theme-font-family': $themeFontFamily,
+		'--theme-font-size': $themeFontSize
+	})}
+>
 	{#each surahs as surah}
 		{#if surah.isNewSurah}
 			{@const currSurahInfo = surahInfo[surah.surah - 1]}
@@ -81,27 +96,25 @@
 		justify-content: center;
 		height: 100%;
 		width: 100%;
-		background-color: #212121;
+		background-color: var(--theme-background-color);
+		font-family: var(--theme-font-family);
 	}
 	.surah-header {
 		position: sticky;
 		top: 0;
-		background: #212121;
+		background: var(--theme-background-color);
 		width: 100%;
 		height: 40px;
 		text-align: center;
-		border-bottom: 1px solid white;
+		border-bottom: 1px solid;
+		border-bottom-color: var(--theme-font-color);
 	}
 	.surah-title {
-		color: white;
-		font-size: 14px;
+		color: var(--theme-font-color);
 		margin: 0;
+		font-family: var(--theme-font-family);
 		padding-top: 10px;
 	}
-	/* hr {
-		color: white;
-		width: 100%;
-	} */
 	h1 {
 		display: flex;
 		align-items: center;
@@ -111,13 +124,15 @@
 		gap: 4px;
 	}
 	.ayah {
-		font-size: 14px;
-		color: #666;
-		align-self: flex-start;
-		padding-top: 14px;
+		font-size: max(calc(var(--theme-font-size) - 14px), 10px);
+		color: var(--theme-font-color);
+		opacity: 0.5;
+		align-self: center;
 	}
 	.verse {
-		color: white;
+		color: var(--theme-font-color);
+		font-size: var(--theme-font-size);
 		text-align: center;
+		font-family: var(--theme-font-family);
 	}
 </style>
