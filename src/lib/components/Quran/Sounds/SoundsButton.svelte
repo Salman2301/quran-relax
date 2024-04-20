@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { soundStore } from '$lib/stores/sound.store';
 	import { createEventDispatcher } from 'svelte';
+	import SoundControls from '$lib/components/SoundControls/SoundControls.svelte';
+
 	import type { SoundsData } from './data';
 
 	export let data: SoundsData | null = null;
@@ -47,7 +49,11 @@
 				class:active={$soundStore[data.id].active}
 			>{data.name}</div>
 			<div class="producer"><div></div>{data.producer}</div>
-			controls
+			<SoundControls
+				volume={$soundStore[data.id].volume}
+				speed={$soundStore[data.id].speed}
+				reverb={$soundStore[data.id].reverb}
+			/>
 		</div>
 	{:else}
 		<button class="button" />
@@ -76,10 +82,9 @@
 	.hover-container {
 		position: absolute;
 		width: 270px;
-		height: 280px;
 		background-color: #343434;
 		border-color: 1px solid red;
-		padding: 10px;
+		padding: 20px 10px;
 		border-radius: 10px;
 		margin-top: 10px;
 	}
@@ -115,6 +120,7 @@
 		justify-content: end;
 		gap:4px;
 		align-items: center;
+		margin-bottom: 20px;
 	}
 	.producer div {
 		width: 16px;
