@@ -21,6 +21,7 @@
     width: 580px;
     height: 350px;
     padding: 10px 20px;
+    padding-bottom: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -66,7 +67,7 @@
   }
   .next-verse {
     text-align: center;
-    font-size: 18px;
+    font-size: 13px;
     font-weight: 300;
 
 		white-space: nowrap;

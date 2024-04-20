@@ -43,7 +43,11 @@
 			class:left-shift={['wind', 'river', 'ocean'].includes(data.id)}
 			on:mouseleave={handleMouseLeave}
 		>
-			<div class="id">{data.id}</div>
+			<div class="header">
+				<span>{data.id}</span>
+				<button on:click={toggle}>{$soundStore[data.id].active ? "ON": "MUTE"}</button>
+				
+			</div>
 			<div
 				class="name"
 				class:active={$soundStore[data.id].active}
@@ -96,10 +100,25 @@
 	.hover-container.hidden {
 		display: none;
 	}
-	.hover-container .id {
+	.hover-container .header {
 		text-transform: capitalize;
 		font-size: 10px;
 		font-weight: bold;
+	}
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+
+	.header button {
+		background-color: #4c7eff;
+		color: white;
+		font-size: 10px;
+		width: 40px;
+		padding: 4px 8px;
+		border-radius: 4px;
 	}
 	.name {
 		color: #ccc;
@@ -123,10 +142,11 @@
 		gap:4px;
 		align-items: center;
 		margin-bottom: 20px;
+		color: #ccc;
 	}
 	.producer div {
 		width: 16px;
 		height: 1px;
-		background-color: white;
+		background-color: #ccc;
 	} 
 </style>

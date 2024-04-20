@@ -67,6 +67,7 @@
 	<button on:click={handleNext}>
 		<ControlNext />
 	</button>
+
 	<button on:click={handleReplay} class="replay" class:active={controlPlayer.replay_mode !== 'off'}>
 		<ControlReplay />
 		{#if controlPlayer.replay_mode !== 'off'}
@@ -126,6 +127,11 @@
     top: 40px;
     left: 20px;
     margin-top: 10px;
+    width: 100px;
+    /* border: 1px solid #ccc; */
+  }
+  input {
+    width: 100%;
   }
   .control-container:hover > .volume-controls > .container-volume-slider {
     display: block;
