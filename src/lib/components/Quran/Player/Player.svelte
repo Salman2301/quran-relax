@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { showSidebar } from "$lib/components/Sidebar/sidebar.store";
+
 </script>
 
 <div class="container">
@@ -7,8 +9,10 @@
     <div class="verse">بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</div>
     <div class="translate">1. English translation below</div>
     <div class="reciter">
-      <div class="reciter-dash"></div>
-      <span>Recitation Full Name</span>
+      <button on:click={()=>($showSidebar="reciter")}>
+        <div class="reciter-dash"></div>
+        <span>Recitation Full Name</span>
+      </button>
     </div>
   </div>
 	<div class="next-verse">English translation below</div>
@@ -26,7 +30,11 @@
     flex-direction: column;
     justify-content: space-between;
   }
-  .reciter {
+  .reciter  {
+    display: flex;
+    justify-content: end;
+  }
+  .reciter  button {
     display: flex;
     align-items: center;
     justify-content: end;

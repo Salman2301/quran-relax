@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let volume:number = 50;
+  export let volume:number = 0.5;
   export let speed:number = 1;
   export let reverb:number = 0.1;
 </script>
