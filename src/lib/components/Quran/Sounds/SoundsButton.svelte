@@ -40,7 +40,7 @@
 		<div
 			class="hover-container"
 			class:hidden={!hover}
-			class:left-shift={['campfire', 'river', 'ocean'].includes(data.id)}
+			class:left-shift={['wind', 'river', 'ocean'].includes(data.id)}
 			on:mouseleave={handleMouseLeave}
 		>
 			<div class="id">{data.id}</div>

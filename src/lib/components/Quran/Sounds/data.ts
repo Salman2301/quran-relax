@@ -13,22 +13,28 @@ const data: SoundsData[] = [
     id: "rain"
   },
   {
-    name: "Wind Outside | Sound Ambient",
-    producer: "SoundsForYou",
-    duration: "1:29",
-    id: "wind"
-  },
-  {
     name: "Natural Thunder",
     producer: "SoundsForYou",
     duration: "1:08",
     id: "thunder"
   },
   {
+    name: "Evening birds singing in spring. Background sounds of nature",
+    producer: "White_Records",
+    duration: "1:33",
+    id: "bird"
+  },
+  {
     name: "Campfire Crackling | Fireplace Sound",
     producer: "SoundsForYou",
     duration: "2:19",
     id: "campfire"
+  },
+  {
+    name: "Wind Outside | Sound Ambient",
+    producer: "SoundsForYou",
+    duration: "1:29",
+    id: "wind"
   },
   {
     name: "Calm River Ambience | Loop",

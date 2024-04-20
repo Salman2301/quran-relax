@@ -18,6 +18,6 @@
     flex-direction: column;
   }
   .sound-container {
-    margin: 10px 0px;
+    margin: 30px 0px;
   }
 </style>
