@@ -5,11 +5,19 @@
 </script>
 
 <div class="container">
-  <Sounds />
+  <div class="sound-container">
+    <Sounds />
+  </div>
   <Player />
   <PlayerControls />
 </div>
 
 <style lang="postcss">
-
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+  .sound-container {
+    margin: 10px 0px;
+  }
 </style>

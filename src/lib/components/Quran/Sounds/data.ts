@@ -1,4 +1,11 @@
-export const data = [
+export interface SoundsData {
+  name: string;
+  producer: string;
+  duration: string;
+  id: string;
+}
+
+const data: SoundsData[] = [
   {
     name: "Light Rain Ambient",
     producer: "SoundsForYou",
@@ -36,3 +43,5 @@ export const data = [
     id: "ocean"
   }
 ]
+
+export default data;
