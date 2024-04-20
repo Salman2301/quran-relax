@@ -34,7 +34,7 @@
 			on:click={toggle}
 			on:mouseenter={handleMouseEnter}
 		>
-			<img src="/sounds/{data.id}.svg" alt="Play {data.name}" />
+			<img src="/images/sounds/{data.id}.svg" alt="Play {data.name}" />
 		</button>
 
 		<div

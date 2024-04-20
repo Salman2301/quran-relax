@@ -138,7 +138,7 @@
 		{#each data as item}
 			<button on:click={() => selectReciter(item.reciter_id)}>
 				<img
-					src="/reciters/{item.reciter_id}.png"
+					src="/images/reciters/{item.reciter_id}.png"
 					alt="quran reciter {item.name}"
 					class:active={$currentReciter === item.reciter_id}
 				/>
