@@ -11,7 +11,6 @@
     river: false,
     ocean: false,
   };
-
   
   function hideAll() {
     for( const [currId, v] of Object.entries(hoverSound) ) {
