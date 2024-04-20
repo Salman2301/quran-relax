@@ -82,11 +82,13 @@
 	.hover-container {
 		position: absolute;
 		width: 270px;
-		background-color: #343434;
+		background-color: #1b1c21;
 		border-color: 1px solid red;
 		padding: 20px 10px;
 		border-radius: 10px;
 		margin-top: 10px;
+		border: 1px solid white;
+		box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
 	}
 	.left-shift {
 		margin-left: -230px;

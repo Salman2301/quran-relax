@@ -8,8 +8,12 @@
   <div class="sound-container">
     <Sounds />
   </div>
-  <Player />
-  <PlayerControls />
+  <div class="player-container">  
+    <Player />
+  </div>
+  <div class="player-control-container">
+    <PlayerControls />
+  </div>
 </div>
 
 <style lang="postcss">
@@ -19,5 +23,16 @@
   }
   .sound-container {
     margin: 30px 0px;
+  }
+  .player-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .player-control-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
   }
 </style>

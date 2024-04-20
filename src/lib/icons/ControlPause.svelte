@@ -1,0 +1,25 @@
+<svg width="31" height="44" viewBox="0 0 31 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<rect
+		x="11.0897"
+		y="43.7988"
+		width="10.1397"
+		height="43.6788"
+		transform="rotate(180 11.0897 43.7988)"
+		fill="currentcolor"
+	/>
+	<rect
+		x="30.5892"
+		y="43.7988"
+		width="10.1397"
+		height="43.6788"
+		transform="rotate(180 30.5892 43.7988)"
+		fill="currentcolor"
+	/>
+</svg>
+
+<style lang="postcss">
+	svg {
+		scale: 0.6;
+		cursor: pointer;
+	}
+</style>

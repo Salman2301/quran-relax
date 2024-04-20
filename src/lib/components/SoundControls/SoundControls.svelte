@@ -8,7 +8,7 @@
   <div class="volume-container">
     <div class="label">
       <span>Volume</span>
-      <span class="control-value">{volume*100}%</span>
+      <span class="control-value">{Math.round(volume*10000)/100}%</span>
     </div>
     <input type="range" bind:value={volume} min="0" max="1" step="0.01" />
   </div>
