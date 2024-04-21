@@ -1,13 +1,13 @@
-<svg width="45" height="44" viewBox="0 0 45 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="69" height="60" viewBox="0 0 69 60" fill="none" xmlns="http://www.w3.org/2000/svg">
 	<path
-		d="M26.3052 2.97388L12.8023 13.8864H2V30.2552H12.8023L26.3052 41.1677V2.97388Z"
+		d="M32.3052 11L18.8023 21.9125H8V38.2813H18.8023L32.3052 49.1938V11Z"
 		stroke="currentcolor"
 		stroke-width="4"
 		stroke-linecap="round"
 		stroke-linejoin="round"
 	/>
 	<path
-		d="M38.4578 12.5089C40.9777 15.0415 42.3933 18.4761 42.3933 22.0573C42.3933 25.6385 40.9777 29.0731 38.4578 31.6058"
+		d="M44.4578 21C46.9777 23.5327 48.3933 26.9673 48.3933 30.5485C48.3933 34.1297 46.9777 37.5642 44.4578 40.0969"
 		stroke="currentcolor"
 		stroke-width="4"
 		stroke-linecap="round"

@@ -1,21 +1,20 @@
 <script lang="ts">
-	import { soundStore } from '$lib/stores/sound.store';
+	import { soundStore } from '$lib/stores/soundEffects.store';
 	import { createEventDispatcher } from 'svelte';
-	import SoundControls from '$lib/components/SoundControls/SoundControls.svelte';
+	import { initMixer } from '$lib/utils/audio';
 
+	import SoundControls from '$lib/components/SoundControls/SoundControls.svelte';
 	import type { SoundsData } from './data';
-	import { getMixer } from '$lib/utils/audio';
 
 	export let data: SoundsData | null = null;
 	export let hover: boolean = false;
 
 	const dispatch = createEventDispatcher();
 
-	let mixer;
 	async function toggle() {
 		if (!data) return;
 		$soundStore[data.id].active = !$soundStore[data.id].active;
-		(await getMixer())[$soundStore[data.id].active ? "play" : "stop"](data.id);
+		(await initMixer()).setIsPlayingSoundEffect(data.id, $soundStore[data.id].active);
 	}
 
 	function handleMouseEnter() {
@@ -26,7 +25,6 @@
 	function handleMouseLeave() {
 		hover = false;
 	}
-	
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -49,14 +47,13 @@
 		>
 			<div class="header">
 				<span>{data.id}</span>
-				<button on:click={toggle}>{$soundStore[data.id].active ? "ON": "MUTE"}</button>
-				
+				<button on:click={toggle}>{$soundStore[data.id].active ? 'ON' : 'MUTE'}</button>
 			</div>
-			<div
-				class="name"
-				class:active={$soundStore[data.id].active}
-			>{data.name}</div>
-			<div class="producer"><div></div>{data.producer}</div>
+			<div class="name" class:active={$soundStore[data.id].active}>{data.name}</div>
+			<div class="producer">
+				<div></div>
+				{data.producer}
+			</div>
 			<SoundControls
 				volume={$soundStore[data.id].volume}
 				speed={$soundStore[data.id].speed}
@@ -143,7 +140,7 @@
 
 		display: flex;
 		justify-content: end;
-		gap:4px;
+		gap: 4px;
 		align-items: center;
 		margin-bottom: 20px;
 		color: #ccc;
@@ -152,5 +149,5 @@
 		width: 16px;
 		height: 1px;
 		background-color: #ccc;
-	} 
+	}
 </style>

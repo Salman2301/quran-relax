@@ -1,12 +1,10 @@
 declare namespace svelteHTML {
   // enhance elements
-  interface IntrinsicElements {
-      'my-custom-element': { someattribute: string; 'on:event': (e: CustomEvent<any>) => void };
-  }
+  interface IntrinsicElements { }
   // enhance attributes
-  interface HTMLAttributes<T> {
+  interface HTMLAttributes<> {
       // If you want to use on:beforeinstallprompt
-      'on:outsideclick'?: (event: any) => any;
+      'on:outsideclick'?: (event: MouseEvent) => void;
       // If you want to use myCustomAttribute={..} (note: all lowercase)
       // mycustomattribute?: any;
       // You can replace any with something more specific if you like

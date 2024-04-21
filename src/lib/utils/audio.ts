@@ -1,21 +1,26 @@
+import { isContentLoading } from "$lib/stores/player.store";
+import { soundEffects } from "$lib/stores/soundEffects.store";
+
 class AudioMixer {
   audioContext: AudioContext;
   masterGainNode: GainNode;
-  audioFiles: { [key: string]: AudioBuffer };
-  audioGains: { [key: string]: GainNode };
-  sources: { [key: string]: AudioBufferSourceNode };
+  soundEffectsFile: { [key: string]: AudioBuffer };
+  soundEffectGains: { [key: string]: GainNode };
+  sourceSoundEffects: { [key: string]: AudioBufferSourceNode };
 
 	constructor() {
 		this.audioContext = this.createAndResumeAudioContext() as AudioContext;
+    if (!this.audioContext) throw new Error("Failed to init Audio");
 		this.masterGainNode = this.audioContext.createGain();
 		this.masterGainNode.gain.value = 0.5;
 		this.masterGainNode.connect(this.audioContext.destination);
-		this.audioFiles = {};
-		this.audioGains = {};
-		this.sources = {};
-	}
-
-	createAndResumeAudioContext(): AudioContext | null {
+		this.soundEffectsFile = {};
+		this.soundEffectGains = {};
+		this.sourceSoundEffects = {};
+  }
+  
+  createAndResumeAudioContext(): AudioContext | null {
+    if (typeof window === "undefined") return null;
 		const AudioContext = window.AudioContext || window.webkitAudioContext;
 		if (AudioContext) {
 			const audioContext = new AudioContext();
@@ -36,17 +41,19 @@ class AudioMixer {
 		}
 	}
 
-	async loadAudioFiles() {
-		try {
-			this.audioFiles.rain = await loadAudio('rain.mp3', this.audioContext);
-			this.audioFiles.thunder = await loadAudio('thunder.mp3', this.audioContext);
-			this.audioFiles.bird = await loadAudio('bird.mp3', this.audioContext);
-			this.audioFiles.campfire = await loadAudio('campfire.mp3', this.audioContext);
-			this.audioFiles.wind = await loadAudio('wind.mp3', this.audioContext);
-			this.audioFiles.river = await loadAudio('river.mp3', this.audioContext);
-      this.audioFiles.ocean = await loadAudio('ocean.mp3', this.audioContext);
+	async loadSoundEffectsFile() {
+    try {
+      console.time("load")
+      const promiseAudio = soundEffects.map(async soundEffect => {
+        this.soundEffectsFile[soundEffect] = await loadAudio(`${soundEffect}.mp3`, this.audioContext);
+        return;
+      });
+      await Promise.all(promiseAudio);
+
+      isContentLoading.set(false);
       
-    
+      console.timeEnd("load")
+      
 			console.log('Audio files loaded successfully');
 			return true;
 		}
@@ -55,55 +62,59 @@ class AudioMixer {
 			return false;
 		}
 	}
+	
+  setIsPlayingSoundEffect( soundEffect: string, isPlaying: boolean ) {
+    if (isPlaying) this.playSoundEffect(soundEffect);
+    else this.stopSoundEffect(soundEffect)
+  }
 
-	play(sound: string) {
-		if (!this.audioFiles[sound]) {
+	playSoundEffect(soundEffect: string) {
+		if (!this.soundEffectsFile[soundEffect]) {
 			console.log('Audio file not loaded yet');
 			return false;
     }
     
-    console.log("playing sound file...", sound)
+    console.log("playing sound file...", soundEffect)
 		const source = this.audioContext.createBufferSource();
-		source.buffer = this.audioFiles[sound];
+		source.buffer = this.soundEffectsFile[soundEffect];
+		source.loop = true;
+
 		source.connect(this.masterGainNode);
 		source.start();
-		this.sources[sound] = source; // Store the source for stopping later
+		this.sourceSoundEffects[soundEffect] = source;
 		return true;
 	}
 
-	stop(sound: string) {
-		if (!this.sources[sound]) {
+	stopSoundEffect(soundEffect: string) {
+		if (!this.sourceSoundEffects[soundEffect]) {
 			console.log('Audio is not playing');
 			return false;
     }
-    console.log("stopping sound file...", sound)
-		this.sources[sound].stop();
-		delete this.sources[sound];
+    console.log("stopping sound file...", soundEffect)
+		this.sourceSoundEffects[soundEffect].stop();
+		delete this.sourceSoundEffects[soundEffect];
 		return true;
 	}
 
 	setVolume(sound: string, volume: number ) {
-		if (!this.audioFiles[sound]) {
+		if (!this.soundEffectsFile[sound]) {
 			console.log('Audio file not loaded yet');
 			return false;
 		}
-		if (!this.audioGains[sound]) {
-			this.audioGains[sound] = this.audioContext.createGain();
-			this.audioGains[sound].connect(this.masterGainNode);
+		if (!this.soundEffectGains[sound]) {
+			this.soundEffectGains[sound] = this.audioContext.createGain();
+			this.soundEffectGains[sound].connect(this.masterGainNode);
 		}
-		this.audioGains[sound].gain.value = volume;
+		this.soundEffectGains[sound].gain.value = volume;
 		return true;
 	}
-
-  // Add methods for other effects like reverb
-  
 }
 
 let mixer: AudioMixer;
-export async function getMixer() {
+export async function initMixer() {
   if (mixer) return mixer;
 	mixer = new AudioMixer();
-	await mixer.loadAudioFiles();
+	await mixer.loadSoundEffectsFile();
   return mixer;
 	// mixer.play('rain');
 	// mixer.setVolume('rain', 0.8);

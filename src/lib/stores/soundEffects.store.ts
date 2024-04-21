@@ -10,6 +10,8 @@ interface SoundStore {
   };
 }
 
+export const soundEffects: string[] = ["rain", "thunder", "bird", "campfire", "wind", "river", "ocean"];
+
 export const soundStore: Writable<SoundStore> = writable({
   rain: {
     id: "rain",
@@ -61,3 +63,4 @@ export const soundStore: Writable<SoundStore> = writable({
     reverb: 0
   }
 });
+
