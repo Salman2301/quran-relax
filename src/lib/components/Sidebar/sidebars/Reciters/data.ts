@@ -17,7 +17,7 @@ interface ReciterOption {
   mode: string[];
   murattal_id: number | null;
   mujawwad_id: number | null;
-  muallim_id: number | null;
+	muallim_id: number | null;
 }
 
 const data: ReciterOption[] = [
@@ -95,6 +95,19 @@ const data: ReciterOption[] = [
 	}
 ];
 
-
+export const reciterIdMapUrl: Record<string, string> = {
+	1: "https://verses.quran.com/AbdulBaset/Mujawwad/mp3/<id>.mp3",
+	2: "https://verses.quran.com/AbdulBaset/Murattal/mp3/<id>.mp3",
+	3: "https://verses.quran.com/Sudais/mp3/<id>.mp3",
+	4: "https://verses.quran.com/Shatri/mp3/<id>.mp3",
+	5: "https://verses.quran.com/Rifai/mp3/<id>.mp3",
+	6: "https://mirrors.quranicaudio.com/everyayah/Husary_64kbps/<id>.mp3",
+	7: "https://verses.quran.com/Alafasy/mp3/<id>.mp3",
+	8: "https://verses.quran.com/Minshawi/Mujawwad/mp3/<id>.mp3",
+	9: "https://verses.quran.com/Minshawi/Murattal/mp3/<id>.mp3",
+	10: "https://verses.quran.com/Shuraym/mp3/<id>.mp3",
+	11: "https://mirrors.quranicaudio.com/everyayah/Mohammad_al_Tablaway_128kbps/<id>.mp3",
+	12: "https://mirrors.quranicaudio.com/everyayah/Husary_Muallim_128kbps/<id>.mp3"
+}
 
 export default data;

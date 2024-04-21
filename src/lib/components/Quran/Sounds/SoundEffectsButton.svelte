@@ -3,7 +3,6 @@
 	import { createEventDispatcher } from 'svelte';
 	import { initSoundEffectsMixer } from '$lib/utils/soundEffectsMixer';
 
-	import SoundControls from '$lib/components/SoundControls/SoundControls.svelte';
 	import type { SoundsData } from './data';
 	import { masterVolume } from '$lib/stores/player.store';
 

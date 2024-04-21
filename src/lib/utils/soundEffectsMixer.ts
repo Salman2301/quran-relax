@@ -8,7 +8,7 @@ class SoundEffectsMixer {
 	soundEffectsFile: { [key: string]: AudioBuffer };
 	soundEffectGains: { [key: string]: GainNode };
 	sourceLastElapsedTime: { [key: string]: number };
-	sourceSoundEffects: { [key: string]: AudioBufferSourceNode };
+	soundEffectsSource: { [key: string]: AudioBufferSourceNode };
 
 	constructor() {
 		this.audioContext = this.createAndResumeAudioContext() as AudioContext;
@@ -18,7 +18,7 @@ class SoundEffectsMixer {
 		this.soundEffectsContext = {};
 		this.soundEffectGains = {};
 		this.sourceLastElapsedTime = {};
-		this.sourceSoundEffects = {};
+		this.soundEffectsSource = {};
 
 		for (const soundEffect of soundEffects) {
 			this.soundEffectsContext[soundEffect] = this.createAndResumeAudioContext() as AudioContext;
@@ -103,30 +103,30 @@ class SoundEffectsMixer {
 		this.soundEffectGains[soundEffect].connect(this.soundEffectsContext[soundEffect].destination);
 
 		source.connect(this.soundEffectGains[soundEffect]);
-		console.log(this.sourceSoundEffects[soundEffect]);
+		console.log(this.soundEffectsSource[soundEffect]);
 		source.start(0, this.sourceLastElapsedTime[soundEffect]);
-		this.sourceSoundEffects[soundEffect] = source;
+		this.soundEffectsSource[soundEffect] = source;
 
 		return true;
 	}
 
 	stopSoundEffect(soundEffect: string) {
-		if (!this.sourceSoundEffects[soundEffect]) {
+		if (!this.soundEffectsSource[soundEffect]) {
 			console.log('Audio is not playing');
 			return false;
 		}
 		console.log('stopping sound file...', soundEffect);
 		console.log(
 			this.soundEffectsFile[soundEffect].duration,
-			this.sourceSoundEffects[soundEffect].context.currentTime
+			this.soundEffectsSource[soundEffect].context.currentTime
 		);
 		this.sourceLastElapsedTime[soundEffect] =
 			this.soundEffectsContext[soundEffect].currentTime -
-			this.sourceSoundEffects[soundEffect].context.currentTime; // % this.soundEffectsFile[soundEffect].duration);
+			this.soundEffectsSource[soundEffect].context.currentTime; // % this.soundEffectsFile[soundEffect].duration);
 
 		console.log({ elapsedTime: this.sourceLastElapsedTime[soundEffect] });
-		this.sourceSoundEffects[soundEffect].stop();
-		delete this.sourceSoundEffects[soundEffect];
+		this.soundEffectsSource[soundEffect].stop();
+		delete this.soundEffectsSource[soundEffect];
 		return true;
 	}
 
@@ -146,18 +146,18 @@ class SoundEffectsMixer {
 	}
 
 	setVolume(soundEffect: string, volume: number) {
-		this.soundEffectGains[soundEffect].gain.value = volume;
+		const $masterVolume = get(masterVolume);
+
+		this.soundEffectGains[soundEffect].gain.value = volume * $masterVolume;
 		return true;
 	}
 
 	onMasterVolumeChange() {
 		const $soundStore = get(soundStore);
-		const $masterVolume = get(masterVolume);
 
 		for (const soundEffect of soundEffects) {
 			if (this?.soundEffectGains?.[soundEffect]) {
-				this.soundEffectGains[soundEffect].gain.value =
-					$soundStore[soundEffect].volume * $masterVolume;
+				this.setVolume(soundEffect, $soundStore[soundEffect].volume);
 			}
 		}
 	}

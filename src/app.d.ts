@@ -11,6 +11,7 @@ declare global {
 	interface Window {
 		webkitAudioContext: typeof AudioContext;
 		soundEffectsMixer: unknown;
+		quranMixer: unknown;
 	}
 }
 
