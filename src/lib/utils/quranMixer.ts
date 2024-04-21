@@ -94,9 +94,23 @@ class QuranMixer {
 		source.buffer = this.verseFile[id];
 
 		source.connect(this.audioGainNode);
-		source.onended = () => this.nextVerse();
+
+		// source.onended = () => setNextVerse();
 		// console.log(this.sourceSoundEffects[soundEffect]);
 		source.start(0, this.lastElapsedTime);
+
+		
+		let ignoredFirstEnded = false;
+		source.onended = () => {
+			if (!ignoredFirstEnded) {
+				ignoredFirstEnded = true;
+				return;
+			}
+			if (ignoredFirstEnded) {
+				console.log("only ended")
+				setNextVerse();
+			}
+		}
 		this.verseSource[id] = source;
 		this.currentVerseId = id;
 		return true;
@@ -115,9 +129,9 @@ class QuranMixer {
 		return true;
 	}
 
-	nextVerse() {
-		setNextVerse();
-	}
+	// nextVerse() {
+	// 	setNextVerse();
+	// }
 
 	setVolume(volume: number) {
 		const $masterVolume = get(masterVolume);

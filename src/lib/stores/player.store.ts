@@ -1,9 +1,12 @@
 import data, { reciterIdMapUrl } from '$lib/components/Sidebar/sidebars/Reciters/data';
 import { initQuranMixer } from '$lib/utils/quranMixer';
-import surahMaxVerseCount from '$lib/constant/surah-map-data';
 import { derived, get, writable, type Readable, type Writable } from 'svelte/store';
+import surahMaxVerseCount from '$lib/constant/surah-map-verse';
+import surahMapInfo from '$lib/constant/surah-map-info';
+import surahMapVerseAr from "$lib/constant/surah-map-verse-ar";
 
 export const isContentLoading: Writable<boolean> = writable(true);
+
 export const currentReciter: Writable<string> = writable('as-sudais');
 export const currentReciterName: Readable<string> = derived(currentReciter, ($currentReciter) => {
 	return data.find((e) => e.reciter_id === $currentReciter)?.name || '';
@@ -13,6 +16,22 @@ export const currentReciterVolume: Writable<number> = writable(1);
 export const currentRecitationId: Writable<number> = writable(3);
 export const currentVerseId: Writable<number> = writable(1);
 export const currentSurahId: Writable<number> = writable(1);
+
+export const currentSurahName: Readable<string> = derived(currentSurahId, $currentSurahId => {
+  const info = surahMapInfo[$currentSurahId - 1];
+  return `${$currentSurahId} - ${info.title} / 1 Juz`;
+});
+export const currentVerseAr: Readable<string> = derived([currentSurahId, currentVerseId], ([currentSurahId, currentVerseId])=> {
+	return surahMapVerseAr[`${currentSurahId}:${currentVerseId}`];
+});
+export const currentVerseTr: Writable<string> = writable("");
+export const nextVerse: Writable<string> = writable("");
+
+export const isPlaying: Writable<boolean> = writable(false);
+export const masterVolume: Writable<number> = writable(1);
+export const isMute: Writable<boolean> = writable(false);
+export const replayMode: Writable<'surah' | 'verse' | 'off'> = writable('off');
+
 
 export const currentRecitationUrl: Readable<string> = derived(
 	[currentRecitationId, currentVerseId, currentSurahId],
@@ -26,23 +45,23 @@ export const currentRecitationUrl: Readable<string> = derived(
 	}
 );
 
-export const isPlaying: Writable<boolean> = writable(false);
-export const masterVolume: Writable<number> = writable(1);
-export const isMute: Writable<boolean> = writable(false);
-export const replayMode: Writable<'surah' | 'verse' | 'off'> = writable('off');
-
 export function setPrevVerse() {
 
 	const $currentSurahId = get(currentSurahId);
-	const $currentVerseId = get(currentVerseId);
+  const $currentVerseId = get(currentVerseId);
+  
 	// check and get know if surah
   const prevVerse = $currentVerseId - 1;
   
   if (prevVerse < 1) {
-    currentSurahId.set($currentSurahId - 1 || 1);
+    const prevSurah = $currentSurahId - 1 || 1;
+    currentSurahId.set(prevSurah);  
+    const lastVerse = surahMaxVerseCount[prevSurah];
+    currentVerseId.set(lastVerse);
   }
-	currentVerseId.set(prevVerse);
-
+  else {
+    currentVerseId.set(prevVerse);
+  }
 }
 
 export function setNextVerse() {
@@ -51,7 +70,10 @@ export function setNextVerse() {
 	// check and get know if surah
 	let nextVerse = $currentVerseId + 1;
 	const maxVerse = surahMaxVerseCount[$currentSurahId];
-	if (nextVerse > maxVerse) nextVerse = 1;
+  if (nextVerse > maxVerse) {
+    nextVerse = 1;
+    currentSurahId.set($currentSurahId + 1);
+  };
 	currentVerseId.set(nextVerse);
 }
 

@@ -1,22 +1,22 @@
 <script lang="ts">
 	import { showSidebar } from "$lib/components/Sidebar/sidebar.store";
 	import LoaderIcon from "$lib/icons/LoaderIcon.svelte";
-	import { currentReciterName, isContentLoading } from "$lib/stores/player.store";
+	import { currentReciterName, currentSurahName, currentVerseAr, currentVerseId, isContentLoading } from "$lib/stores/player.store";
 
 </script>
 
 <div class="container">
 	<div class="container-body">
     <div class="current-surah">
-      <span>1- The Opening Surah / 1 Juz</span>
+      <span>{$currentSurahName}</span>
       <span>
         {#if $isContentLoading}
           <LoaderIcon />
         {/if}
       </span>
     </div>
-    <div class="verse">بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</div>
-    <div class="translate">1. English translation below</div>
+    <div class="verse">{$currentVerseAr}</div>
+    <div class="translate"><span>{$currentVerseId}.</span> English translation below</div>
     <div class="reciter">
       <button on:click={()=>($showSidebar="reciter")} class="reciter-btn">
         <div class="reciter-dash"></div>
