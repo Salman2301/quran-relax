@@ -10,7 +10,7 @@ declare global {
 	}
 	interface Window {
 		webkitAudioContext: typeof AudioContext;
-		mixer: unknown;
+		soundEffectsMixer: unknown;
 	}
 }
 

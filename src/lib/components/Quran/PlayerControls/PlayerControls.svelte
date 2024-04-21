@@ -9,8 +9,7 @@
 	import ControlVolumeMute from '$lib/icons/ControlVolumeMute.svelte';
 	import ControlVolumeZero from '$lib/icons/ControlVolumeZero.svelte';
 	import { isMute, isPlaying, masterVolume, replayMode } from '$lib/stores/player.store';
-	import { initMixer } from '$lib/utils/audio';
-
+	import { initSoundEffectsMixer } from '$lib/utils/soundEffectsMixer';
 
 	function handlePrev() {}
 	function handleNext() {}
@@ -31,7 +30,7 @@
 
 	async function playToggle() {
 		$isPlaying = !$isPlaying;
-		(await initMixer()).setIsPlaying($isPlaying);
+		(await initSoundEffectsMixer()).setIsPlaying($isPlaying);
 	}
 </script>
 
@@ -48,10 +47,10 @@
 				<ControlVolumeZero />
 			{/if}
 		</button>
-    
-    <div class="container-volume-slider">
-      <input type="range" min="0" max="1" step="0.01" bind:value={$masterVolume} />
-    </div>
+
+		<div class="container-volume-slider">
+			<input type="range" min="0" max="1" step="0.01" bind:value={$masterVolume} />
+		</div>
 	</div>
 
 	<button on:click={handlePrev}>
@@ -91,7 +90,7 @@
 	button {
 		color: #d6d6d6;
 		position: relative;
-    width: 60px;
+		width: 60px;
 	}
 	button:hover {
 		color: white;
@@ -116,25 +115,25 @@
 		border-radius: 4px;
 		color: white;
 	}
-  .volume-controls {
-    display: flex;
-    flex-direction: column;
-    color: #ccc;
-    position: relative;
-  }
-  .container-volume-slider {
-    display: none;
-    position: absolute;
-    top: 40px;
-    left: 20px;
-    margin-top: 10px;
-    width: 100px;
-    /* border: 1px solid #ccc; */
-  }
-  input {
-    width: 100%;
-  }
-  .control-container:hover > .volume-controls > .container-volume-slider {
-    display: block;
-  }
+	.volume-controls {
+		display: flex;
+		flex-direction: column;
+		color: #ccc;
+		position: relative;
+	}
+	.container-volume-slider {
+		display: none;
+		position: absolute;
+		top: 40px;
+		left: 20px;
+		margin-top: 10px;
+		width: 100px;
+		/* border: 1px solid #ccc; */
+	}
+	input {
+		width: 100%;
+	}
+	.control-container:hover > .volume-controls > .container-volume-slider {
+		display: block;
+	}
 </style>

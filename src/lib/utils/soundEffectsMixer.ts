@@ -2,7 +2,7 @@ import { isContentLoading, masterVolume } from '$lib/stores/player.store';
 import { soundEffects, soundStore } from '$lib/stores/soundEffects.store';
 import { get } from 'svelte/store';
 
-class AudioMixer {
+class SoundEffectsMixer {
 	audioContext: AudioContext;
 	soundEffectsContext: { [key: string]: AudioContext };
 	soundEffectsFile: { [key: string]: AudioBuffer };
@@ -20,10 +20,9 @@ class AudioMixer {
 		this.sourceLastElapsedTime = {};
 		this.sourceSoundEffects = {};
 
-		for (const soundEffect of soundEffects) {		
-			this.soundEffectsContext[soundEffect] = this.createAndResumeAudioContext() as AudioContext;	
+		for (const soundEffect of soundEffects) {
+			this.soundEffectsContext[soundEffect] = this.createAndResumeAudioContext() as AudioContext;
 		}
-
 	}
 
 	createAndResumeAudioContext(): AudioContext | null {
@@ -81,11 +80,11 @@ class AudioMixer {
 	}
 
 	toggleSoundEffect(soundEffect: string, isPlaying: boolean) {
-	  if (isPlaying) {
+		if (isPlaying) {
 			this.soundEffectsContext[soundEffect].resume();
-	  } else {
+		} else {
 			this.soundEffectsContext[soundEffect].suspend();
-	  }
+		}
 	}
 
 	playSoundEffect(soundEffect: string, volume?: number) {
@@ -99,11 +98,9 @@ class AudioMixer {
 		source.buffer = this.soundEffectsFile[soundEffect];
 		source.loop = true;
 
-		
 		this.soundEffectGains[soundEffect] = this.soundEffectsContext[soundEffect].createGain();
 		this.soundEffectGains[soundEffect].gain.value = volume || 1;
 		this.soundEffectGains[soundEffect].connect(this.soundEffectsContext[soundEffect].destination);
-
 
 		source.connect(this.soundEffectGains[soundEffect]);
 		console.log(this.sourceSoundEffects[soundEffect]);
@@ -124,7 +121,8 @@ class AudioMixer {
 			this.sourceSoundEffects[soundEffect].context.currentTime
 		);
 		this.sourceLastElapsedTime[soundEffect] =
-		this.soundEffectsContext[soundEffect].currentTime - this.sourceSoundEffects[soundEffect].context.currentTime; // % this.soundEffectsFile[soundEffect].duration);
+			this.soundEffectsContext[soundEffect].currentTime -
+			this.sourceSoundEffects[soundEffect].context.currentTime; // % this.soundEffectsFile[soundEffect].duration);
 
 		console.log({ elapsedTime: this.sourceLastElapsedTime[soundEffect] });
 		this.sourceSoundEffects[soundEffect].stop();
@@ -138,10 +136,9 @@ class AudioMixer {
 			for (const soundEffect of soundEffects) {
 				this.soundEffectsContext[soundEffect].suspend();
 			}
-		}
-		else {
+		} else {
 			this.audioContext.resume();
-			
+
 			for (const soundEffect of soundEffects) {
 				this.soundEffectsContext[soundEffect].resume();
 			}
@@ -157,24 +154,23 @@ class AudioMixer {
 		const $soundStore = get(soundStore);
 		const $masterVolume = get(masterVolume);
 
-		for (const soundEffect of soundEffects) {			
+		for (const soundEffect of soundEffects) {
 			if (this?.soundEffectGains?.[soundEffect]) {
-				this.soundEffectGains[soundEffect].gain.value = $soundStore[soundEffect].volume * $masterVolume;
-				
+				this.soundEffectGains[soundEffect].gain.value =
+					$soundStore[soundEffect].volume * $masterVolume;
 			}
 		}
-
 	}
 }
 
-let mixer: AudioMixer;
-export async function initMixer() {
-	if (mixer) return mixer;
-	mixer = new AudioMixer();
-	window.mixer = mixer;
-	await mixer.loadSoundEffectsFile();
-	masterVolume.subscribe(()=>mixer.onMasterVolumeChange());
-	return mixer;
+let soundEffectsMixer: SoundEffectsMixer;
+export async function initSoundEffectsMixer() {
+	if (soundEffectsMixer) return soundEffectsMixer;
+	soundEffectsMixer = new SoundEffectsMixer();
+	window.soundEffectsMixer = soundEffectsMixer;
+	await soundEffectsMixer.loadSoundEffectsFile();
+	masterVolume.subscribe(() => soundEffectsMixer.onMasterVolumeChange());
+	return soundEffectsMixer;
 }
 
 async function loadAudio(url: string, context: AudioContext) {

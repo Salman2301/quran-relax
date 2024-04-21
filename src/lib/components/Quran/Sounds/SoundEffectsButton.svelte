@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { soundStore } from '$lib/stores/soundEffects.store';
 	import { createEventDispatcher } from 'svelte';
-	import { initMixer } from '$lib/utils/audio';
+	import { initSoundEffectsMixer } from '$lib/utils/soundEffectsMixer';
 
 	import SoundControls from '$lib/components/SoundControls/SoundControls.svelte';
 	import type { SoundsData } from './data';
@@ -16,7 +16,11 @@
 	async function toggle() {
 		if (!data) return;
 		$soundStore[data.id].active = !$soundStore[data.id].active;
-		(await initMixer()).setIsPlayingSoundEffect(data.id, $soundStore[data.id].active, volume * $masterVolume);
+		(await initSoundEffectsMixer()).setIsPlayingSoundEffect(
+			data.id,
+			$soundStore[data.id].active,
+			volume * $masterVolume
+		);
 	}
 
 	function handleMouseEnter() {
@@ -29,7 +33,7 @@
 	}
 
 	async function onVolumeChange() {
-		(await initMixer()).setVolume(data?.id as string, volume);
+		(await initSoundEffectsMixer()).setVolume(data?.id as string, volume);
 	}
 </script>
 
@@ -53,10 +57,7 @@
 		>
 			<div class="header">
 				<span>{data.id}</span>
-				<button
-					on:click={toggle}
-					class:active={$soundStore[data.id].active}
-				>
+				<button on:click={toggle} class:active={$soundStore[data.id].active}>
 					{$soundStore[data.id].active ? 'DISABLE' : 'ENABLE'}
 				</button>
 			</div>
@@ -179,22 +180,22 @@
 		background-color: #ccc;
 	}
 
-  .range-input {
+	.range-input {
 		width: 100%;
-    border: 0px;
-    outline: 0px;
+		border: 0px;
+		outline: 0px;
 	}
-  .label {
-    font-size: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-  }
-  .label span {
-    font-size: 14px;
-  }
-  .control-value {
-    font-size: 12px;
-    font-weight: semibold;
-  }
+	.label {
+		font-size: 16px;
+		display: flex;
+		justify-content: space-between;
+		align-items: end;
+	}
+	.label span {
+		font-size: 14px;
+	}
+	.control-value {
+		font-size: 12px;
+		font-weight: semibold;
+	}
 </style>
