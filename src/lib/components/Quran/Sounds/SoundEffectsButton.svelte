@@ -7,6 +7,7 @@
 	import type { SoundsData } from './data';
 
 	export let data: SoundsData | null = null;
+	export let volume: number = 1;
 	export let hover: boolean = false;
 
 	const dispatch = createEventDispatcher();
@@ -14,7 +15,7 @@
 	async function toggle() {
 		if (!data) return;
 		$soundStore[data.id].active = !$soundStore[data.id].active;
-		(await initMixer()).setIsPlayingSoundEffect(data.id, $soundStore[data.id].active);
+		(await initMixer()).setIsPlayingSoundEffect(data.id, $soundStore[data.id].active, volume);
 	}
 
 	function handleMouseEnter() {
@@ -24,6 +25,10 @@
 
 	function handleMouseLeave() {
 		hover = false;
+	}
+
+	async function onVolumeChange() {
+		(await initMixer()).setVolume(data?.id as string, volume);
 	}
 </script>
 
@@ -47,18 +52,36 @@
 		>
 			<div class="header">
 				<span>{data.id}</span>
-				<button on:click={toggle}>{$soundStore[data.id].active ? 'ON' : 'MUTE'}</button>
+				<button
+					on:click={toggle}
+					class:active={$soundStore[data.id].active}
+				>
+					{$soundStore[data.id].active ? 'DISABLE' : 'ENABLE'}
+				</button>
 			</div>
 			<div class="name" class:active={$soundStore[data.id].active}>{data.name}</div>
 			<div class="producer">
 				<div></div>
 				{data.producer}
 			</div>
-			<SoundControls
-				volume={$soundStore[data.id].volume}
-				speed={$soundStore[data.id].speed}
-				reverb={$soundStore[data.id].reverb}
-			/>
+
+			<div class="sound-controls">
+				<div class="volume-container">
+					<div class="label">
+						<span>Volume</span>
+						<span class="control-value">{Math.round(volume * 10000) / 100}%</span>
+					</div>
+					<input
+						type="range"
+						bind:value={volume}
+						min="0"
+						max="1"
+						step="0.01"
+						on:input={onVolumeChange}
+						class="range-input"
+					/>
+				</div>
+			</div>
 		</div>
 	{:else}
 		<button class="button" />
@@ -117,9 +140,13 @@
 		background-color: #4c7eff;
 		color: white;
 		font-size: 10px;
-		width: 40px;
+		/* width: 40px; */
 		padding: 4px 8px;
 		border-radius: 4px;
+	}
+
+	.header button.active {
+		background-color: #ccc;
 	}
 	.name {
 		color: #ccc;
@@ -150,4 +177,23 @@
 		height: 1px;
 		background-color: #ccc;
 	}
+
+  .range-input {
+		width: 100%;
+    border: 0px;
+    outline: 0px;
+	}
+  .label {
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+  }
+  .label span {
+    font-size: 14px;
+  }
+  .control-value {
+    font-size: 12px;
+    font-weight: semibold;
+  }
 </style>

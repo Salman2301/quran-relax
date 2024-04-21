@@ -8,6 +8,7 @@
 	import ControlVolumeLow from '$lib/icons/ControlVolumeLow.svelte';
 	import ControlVolumeMute from '$lib/icons/ControlVolumeMute.svelte';
 	import ControlVolumeZero from '$lib/icons/ControlVolumeZero.svelte';
+	import { initMixer } from '$lib/utils/audio';
 
 	const controlPlayer = {
 		playing: false,
@@ -31,6 +32,11 @@
 
 	function handleToggleMute() {
 		controlPlayer.isMute = !controlPlayer.isMute;
+	}
+
+	async function playToggle() {
+		controlPlayer.playing = !controlPlayer.playing;
+		(await initMixer()).setIsPlaying(controlPlayer.playing);
 	}
 </script>
 
@@ -56,8 +62,8 @@
 	<button on:click={handlePrev}>
 		<ControlPrev />
 	</button>
-	<button on:click={() => (controlPlayer.playing = !controlPlayer.playing)}>
-		{#if controlPlayer.playing}
+	<button on:click={playToggle}>
+		{#if !controlPlayer.playing}
 			<ControlPause />
 		{:else}
 			<ControlPlay />
