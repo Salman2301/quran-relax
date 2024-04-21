@@ -8,3 +8,7 @@ export const currentReciterName: Readable<string> = derived(currentReciter, ($cu
 });
 export const currentRecitationId: Writable<number> = writable(3);
 export const isPlaying: Writable<boolean> = writable(false);
+export const masterVolume: Writable<number> = writable(1);
+export const isMute: Writable<boolean> = writable(false);
+export const replayMode: Writable<"surah" | "verse" | "off"> = writable("off");
+

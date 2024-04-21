@@ -5,6 +5,7 @@
 
 	import SoundControls from '$lib/components/SoundControls/SoundControls.svelte';
 	import type { SoundsData } from './data';
+	import { masterVolume } from '$lib/stores/player.store';
 
 	export let data: SoundsData | null = null;
 	export let volume: number = 1;
@@ -15,7 +16,7 @@
 	async function toggle() {
 		if (!data) return;
 		$soundStore[data.id].active = !$soundStore[data.id].active;
-		(await initMixer()).setIsPlayingSoundEffect(data.id, $soundStore[data.id].active, volume);
+		(await initMixer()).setIsPlayingSoundEffect(data.id, $soundStore[data.id].active, volume * $masterVolume);
 	}
 
 	function handleMouseEnter() {

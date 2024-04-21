@@ -1,5 +1,6 @@
-import { isContentLoading } from '$lib/stores/player.store';
-import { soundEffects } from '$lib/stores/soundEffects.store';
+import { isContentLoading, masterVolume } from '$lib/stores/player.store';
+import { soundEffects, soundStore } from '$lib/stores/soundEffects.store';
+import { get } from 'svelte/store';
 
 class AudioMixer {
 	audioContext: AudioContext;
@@ -108,11 +109,6 @@ class AudioMixer {
 		console.log(this.sourceSoundEffects[soundEffect]);
 		source.start(0, this.sourceLastElapsedTime[soundEffect]);
 		this.sourceSoundEffects[soundEffect] = source;
-		
-		// window.soundEffectsFile = this.soundEffectsFile;
-		// window.sourceSoundEffects = this.sourceSoundEffects;
-		// window.soundEffectsContext = this.soundEffectsContext;
-		// window.soundEffectGains = this.soundEffectGains;
 
 		return true;
 	}
@@ -156,6 +152,19 @@ class AudioMixer {
 		this.soundEffectGains[soundEffect].gain.value = volume;
 		return true;
 	}
+
+	onMasterVolumeChange() {
+		const $soundStore = get(soundStore);
+		const $masterVolume = get(masterVolume);
+
+		for (const soundEffect of soundEffects) {			
+			if (this?.soundEffectGains?.[soundEffect]) {
+				this.soundEffectGains[soundEffect].gain.value = $soundStore[soundEffect].volume * $masterVolume;
+				
+			}
+		}
+
+	}
 }
 
 let mixer: AudioMixer;
@@ -164,13 +173,8 @@ export async function initMixer() {
 	mixer = new AudioMixer();
 	window.mixer = mixer;
 	await mixer.loadSoundEffectsFile();
+	masterVolume.subscribe(()=>mixer.onMasterVolumeChange());
 	return mixer;
-	// mixer.play('rain');
-	// mixer.setVolume('rain', 0.8);
-	// // Stop the rain after some time
-	// setTimeout(() => {
-	// 	mixer.stop('rain');
-	// }, 5000);
 }
 
 async function loadAudio(url: string, context: AudioContext) {

@@ -8,46 +8,41 @@
 	import ControlVolumeLow from '$lib/icons/ControlVolumeLow.svelte';
 	import ControlVolumeMute from '$lib/icons/ControlVolumeMute.svelte';
 	import ControlVolumeZero from '$lib/icons/ControlVolumeZero.svelte';
+	import { isMute, isPlaying, masterVolume, replayMode } from '$lib/stores/player.store';
 	import { initMixer } from '$lib/utils/audio';
 
-	const controlPlayer = {
-		playing: false,
-		volume: 0.2,
-		isMute: false,
-		replay_mode: 'surah'
-	};
 
 	function handlePrev() {}
 	function handleNext() {}
 
 	function handleReplay() {
-		if (controlPlayer.replay_mode == 'off') {
-			controlPlayer.replay_mode = 'surah';
-		} else if (controlPlayer.replay_mode == 'surah') {
-			controlPlayer.replay_mode = 'verse';
+		if ($replayMode == 'off') {
+			$replayMode = 'surah';
+		} else if ($replayMode == 'surah') {
+			$replayMode = 'verse';
 		} else {
-			controlPlayer.replay_mode = 'off';
+			$replayMode = 'off';
 		}
 	}
 
 	function handleToggleMute() {
-		controlPlayer.isMute = !controlPlayer.isMute;
+		$isMute = !$isMute;
 	}
 
 	async function playToggle() {
-		controlPlayer.playing = !controlPlayer.playing;
-		(await initMixer()).setIsPlaying(controlPlayer.playing);
+		$isPlaying = !$isPlaying;
+		(await initMixer()).setIsPlaying($isPlaying);
 	}
 </script>
 
 <div class="control-container">
 	<div class="volume-controls">
 		<button on:click={handleToggleMute} class="volume">
-			{#if controlPlayer.isMute}
+			{#if $isMute}
 				<ControlVolumeMute />
-			{:else if controlPlayer.volume > 0.8}
+			{:else if $masterVolume > 0.8}
 				<ControlVolumeFull />
-			{:else if controlPlayer.volume > 0.3}
+			{:else if $masterVolume > 0.3}
 				<ControlVolumeLow />
 			{:else}
 				<ControlVolumeZero />
@@ -55,7 +50,7 @@
 		</button>
     
     <div class="container-volume-slider">
-      <input type="range" min="0" max="1" step="0.01" bind:value={controlPlayer.volume} />
+      <input type="range" min="0" max="1" step="0.01" bind:value={$masterVolume} />
     </div>
 	</div>
 
@@ -63,7 +58,7 @@
 		<ControlPrev />
 	</button>
 	<button on:click={playToggle}>
-		{#if !controlPlayer.playing}
+		{#if !$isPlaying}
 			<ControlPause />
 		{:else}
 			<ControlPlay />
@@ -74,10 +69,10 @@
 		<ControlNext />
 	</button>
 
-	<button on:click={handleReplay} class="replay" class:active={controlPlayer.replay_mode !== 'off'}>
+	<button on:click={handleReplay} class="replay" class:active={$replayMode !== 'off'}>
 		<ControlReplay />
-		{#if controlPlayer.replay_mode !== 'off'}
-			<div class="indicator">{controlPlayer.replay_mode}</div>
+		{#if $replayMode !== 'off'}
+			<div class="indicator">{$replayMode}</div>
 		{/if}
 	</button>
 </div>
