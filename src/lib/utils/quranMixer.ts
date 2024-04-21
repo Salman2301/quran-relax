@@ -1,5 +1,9 @@
-import { reciterIdMapUrl } from '$lib/components/Sidebar/sidebars/Reciters/data';
-import { isContentLoading, masterVolume } from '$lib/stores/player.store';
+import {
+	currentRecitationUrl,
+	setNextVerse,
+	isContentLoading,
+	masterVolume
+} from '$lib/stores/player.store';
 import { get } from 'svelte/store';
 
 class QuranMixer {
@@ -12,17 +16,22 @@ class QuranMixer {
 	verseSource: { [key: string]: AudioBufferSourceNode };
 
 	constructor() {
+		// if (typeof Window === "undefined") return;
 		this.audioContext = this.createAndResumeAudioContext() as AudioContext;
 		if (!this.audioContext) throw new Error('Failed to init Audio');
 
 		this.audioGainNode = this.audioContext.createGain();
-		this.audioGainNode.gain.value = 1;
+		this.audioGainNode.gain.value = 0.5;
 		this.audioGainNode.connect(this.audioContext.destination);
 
 		this.currentVerseId = '003-001-001';
 		this.lastElapsedTime = 0;
 		this.verseFile = {};
 		this.verseSource = {};
+
+		this.audioContext.onstatechange = () => {
+			console.log('c', this.audioContext.state);
+		};
 	}
 
 	createAndResumeAudioContext(): AudioContext | null {
@@ -50,13 +59,10 @@ class QuranMixer {
 	async loadVerseFile(id: string) {
 		try {
 			console.time('load');
-
-			const [recitationId, surahId, verseId] = id.split('-');
-			const recitationIdNum = String(Number(recitationId));
-			let url = reciterIdMapUrl[recitationIdNum];
-			url = url.replace('<id>', `${surahId}${verseId}`);
-
-			this.verseFile[id] = await loadAudio(url, this.audioContext) as AudioBuffer;
+			this.verseFile[id] = (await loadAudio(
+				get(currentRecitationUrl),
+				this.audioContext
+			)) as AudioBuffer;
 			this.lastElapsedTime = 0;
 
 			isContentLoading.set(false);
@@ -76,26 +82,28 @@ class QuranMixer {
 		else this.audioContext.suspend();
 	}
 
-	play(id: string) {
+	async play(id: string) {
 		if (!this.verseFile[id]) {
-			console.log('Audio file not loaded yet');
-			return false;
+			await this.loadVerseFile(id);
+			console.log('Missing Audio downloading current verse');
 		}
+
+		this.stop();
 
 		const source = this.audioContext.createBufferSource();
 		source.buffer = this.verseFile[id];
-		source.loop = true;
 
 		source.connect(this.audioGainNode);
+		source.onended = () => this.nextVerse();
 		// console.log(this.sourceSoundEffects[soundEffect]);
 		source.start(0, this.lastElapsedTime);
 		this.verseSource[id] = source;
 		this.currentVerseId = id;
-
 		return true;
 	}
 
 	stop() {
+		if (!this.verseFile[this.currentVerseId]) return;
 		console.log('stopping verse file...', this.currentVerseId);
 		console.log(this.verseFile[this.currentVerseId].duration, this.audioContext.currentTime);
 		this.lastElapsedTime =
@@ -105,6 +113,10 @@ class QuranMixer {
 		this.verseSource[this.currentVerseId].stop();
 		delete this.verseSource[this.currentVerseId];
 		return true;
+	}
+
+	nextVerse() {
+		setNextVerse();
 	}
 
 	setVolume(volume: number) {
@@ -117,10 +129,11 @@ class QuranMixer {
 let quranMixer: QuranMixer;
 export async function initQuranMixer() {
 	if (quranMixer) return quranMixer;
+	if (typeof window === 'undefined') return;
 	quranMixer = new QuranMixer();
 	window.quranMixer = quranMixer;
-	await quranMixer.loadVerseFile("001-001-001");
-	quranMixer.play("001-001-001")
+	// await quranMixer.loadVerseFile('001-001-001');
+	// quranMixer.play("001-001-001")
 	// masterVolume.subscribe(() => soundEffectsMixer.onMasterVolumeChange());
 	return quranMixer;
 }
@@ -130,10 +143,9 @@ async function loadAudio(url: string, context: AudioContext) {
 		const response = await fetch(url);
 		const arrayBuffer = await response.arrayBuffer();
 		return await context.decodeAudioData(arrayBuffer);
-	}
-	catch (e) {
+	} catch (e) {
 		console.error(e);
 		console.error(url);
-		throw new Error("Failed to load verse");
+		throw new Error('Failed to load verse');
 	}
 }

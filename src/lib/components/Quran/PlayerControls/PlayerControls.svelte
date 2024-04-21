@@ -8,11 +8,22 @@
 	import ControlVolumeLow from '$lib/icons/ControlVolumeLow.svelte';
 	import ControlVolumeMute from '$lib/icons/ControlVolumeMute.svelte';
 	import ControlVolumeZero from '$lib/icons/ControlVolumeZero.svelte';
-	import { isMute, isPlaying, masterVolume, replayMode } from '$lib/stores/player.store';
+	import {
+		setNextVerse,
+		setPrevVerse,
+		isMute,
+		isPlaying,
+		masterVolume,
+		replayMode,
+	} from '$lib/stores/player.store';
 	import { initSoundEffectsMixer } from '$lib/utils/soundEffectsMixer';
 
-	function handlePrev() {}
-	function handleNext() {}
+	function handlePrev() {
+		setPrevVerse();
+	}
+	function handleNext() {
+		setNextVerse();
+	}
 
 	function handleReplay() {
 		if ($replayMode == 'off') {
