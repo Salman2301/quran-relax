@@ -2,7 +2,7 @@
 	import Quran from "$lib/components/Quran/Quran.svelte";  
 	import { showSidebar } from "$lib/components/Sidebar/sidebar.store";
 	import Reciters from "$lib/components/Sidebar/sidebars/Reciters.svelte";
-
+	
 	function handleKeydown(event: KeyboardEvent) {
 		if (event.key === "Escape") {
 			$showSidebar = null;

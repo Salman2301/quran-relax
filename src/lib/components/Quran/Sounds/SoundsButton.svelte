@@ -4,15 +4,18 @@
 	import SoundControls from '$lib/components/SoundControls/SoundControls.svelte';
 
 	import type { SoundsData } from './data';
+	import { getMixer } from '$lib/utils/audio';
 
 	export let data: SoundsData | null = null;
 	export let hover: boolean = false;
 
 	const dispatch = createEventDispatcher();
 
-	function toggle() {
+	let mixer;
+	async function toggle() {
 		if (!data) return;
 		$soundStore[data.id].active = !$soundStore[data.id].active;
+		(await getMixer())[$soundStore[data.id].active ? "play" : "stop"](data.id);
 	}
 
 	function handleMouseEnter() {
@@ -23,6 +26,7 @@
 	function handleMouseLeave() {
 		hover = false;
 	}
+	
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->

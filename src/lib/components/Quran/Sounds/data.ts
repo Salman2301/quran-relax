@@ -19,9 +19,9 @@ const data: SoundsData[] = [
     id: "thunder"
   },
   {
-    name: "Evening birds singing in spring. Background sounds of nature",
-    producer: "White_Records",
-    duration: "1:33",
+    name: "Voices Of Nature_Birds_Nature Sound",
+    producer: "NickyPe",
+    duration: "0:50",
     id: "bird"
   },
   {
