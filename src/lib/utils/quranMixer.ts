@@ -2,7 +2,8 @@ import {
 	currentRecitationUrl,
 	setNextVerse,
 	isContentLoading,
-	masterVolume
+	masterVolume,
+	isPlaying
 } from '$lib/stores/player.store';
 import { get } from 'svelte/store';
 
@@ -59,8 +60,11 @@ class QuranMixer {
 	async loadVerseFile(id: string) {
 		try {
 			console.time('load');
+			const $currentRecitationUrl = get(currentRecitationUrl);
+			if (!$currentRecitationUrl) return;
+
 			this.verseFile[id] = (await loadAudio(
-				get(currentRecitationUrl),
+				$currentRecitationUrl,
 				this.audioContext
 			)) as AudioBuffer;
 			this.lastElapsedTime = 0;
@@ -83,47 +87,38 @@ class QuranMixer {
 	}
 
 	async play(id: string) {
+		if (!get(isPlaying)) return;
 		if (!this.verseFile[id]) {
 			await this.loadVerseFile(id);
 			console.log('Missing Audio downloading current verse');
 		}
 
-		this.stop();
+		// this.stop();
 
 		const source = this.audioContext.createBufferSource();
 		source.buffer = this.verseFile[id];
 
 		source.connect(this.audioGainNode);
+		source.start();
 
-		// source.onended = () => setNextVerse();
-		// console.log(this.sourceSoundEffects[soundEffect]);
-		source.start(0, this.lastElapsedTime);
-
-		
-		let ignoredFirstEnded = false;
+		console.log("Playing : ", id);
 		source.onended = () => {
-			if (!ignoredFirstEnded) {
-				ignoredFirstEnded = true;
-				return;
-			}
-			if (ignoredFirstEnded) {
-				console.log("only ended")
-				setNextVerse();
-			}
-		}
+			console.log({ source })
+			setNextVerse();
+		};
 		this.verseSource[id] = source;
 		this.currentVerseId = id;
 		return true;
 	}
 
 	stop() {
+		
+		console.log("Playing : ", this.currentVerseId);
 		if (!this.verseFile[this.currentVerseId]) return;
 		console.log('stopping verse file...', this.currentVerseId);
-		console.log(this.verseFile[this.currentVerseId].duration, this.audioContext.currentTime);
 		this.lastElapsedTime =
-			this.audioContext.currentTime - this.verseSource[this.currentVerseId].context.currentTime; // % this.soundEffectsFile[soundEffect].duration);
+			this.audioContext.currentTime - this.verseSource[this.currentVerseId].context.currentTime;
 
-		console.log({ elapsedTime: this.lastElapsedTime });
 		this.verseSource[this.currentVerseId].stop();
 		delete this.verseSource[this.currentVerseId];
 		return true;
@@ -146,9 +141,6 @@ export async function initQuranMixer() {
 	if (typeof window === 'undefined') return;
 	quranMixer = new QuranMixer();
 	window.quranMixer = quranMixer;
-	// await quranMixer.loadVerseFile('001-001-001');
-	// quranMixer.play("001-001-001")
-	// masterVolume.subscribe(() => soundEffectsMixer.onMasterVolumeChange());
 	return quranMixer;
 }
 

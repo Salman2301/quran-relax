@@ -93,7 +93,6 @@ class SoundEffectsMixer {
 			return false;
 		}
 
-		console.log('playing sound file...', soundEffect);
 		const source = this.soundEffectsContext[soundEffect].createBufferSource();
 		source.buffer = this.soundEffectsFile[soundEffect];
 		source.loop = true;
@@ -103,7 +102,6 @@ class SoundEffectsMixer {
 		this.soundEffectGains[soundEffect].connect(this.soundEffectsContext[soundEffect].destination);
 
 		source.connect(this.soundEffectGains[soundEffect]);
-		console.log(this.soundEffectsSource[soundEffect]);
 		source.start(0, this.sourceLastElapsedTime[soundEffect]);
 		this.soundEffectsSource[soundEffect] = source;
 
@@ -115,16 +113,10 @@ class SoundEffectsMixer {
 			console.log('Audio is not playing');
 			return false;
 		}
-		console.log('stopping sound file...', soundEffect);
-		console.log(
-			this.soundEffectsFile[soundEffect].duration,
-			this.soundEffectsSource[soundEffect].context.currentTime
-		);
 		this.sourceLastElapsedTime[soundEffect] =
 			this.soundEffectsContext[soundEffect].currentTime -
-			this.soundEffectsSource[soundEffect].context.currentTime; // % this.soundEffectsFile[soundEffect].duration);
-
-		console.log({ elapsedTime: this.sourceLastElapsedTime[soundEffect] });
+			this.soundEffectsSource[soundEffect].context.currentTime;
+		
 		this.soundEffectsSource[soundEffect].stop();
 		delete this.soundEffectsSource[soundEffect];
 		return true;

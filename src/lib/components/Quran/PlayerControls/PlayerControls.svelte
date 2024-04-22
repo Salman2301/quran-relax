@@ -68,7 +68,7 @@
 		<ControlPrev />
 	</button>
 	<button on:click={playToggle}>
-		{#if !$isPlaying}
+		{#if $isPlaying}
 			<ControlPause />
 		{:else}
 			<ControlPlay />
