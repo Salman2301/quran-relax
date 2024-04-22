@@ -99,6 +99,7 @@ class QuranMixer {
 			await this.loadVerseFile(id);
 			console.log('Missing Audio downloading current verse');
 		}
+		console.log("id : ", id);
 
 		const source = this.audioContext.createBufferSource();
 		source.buffer = this.verseFile[id];

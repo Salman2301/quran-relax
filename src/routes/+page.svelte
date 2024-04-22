@@ -5,29 +5,53 @@
 	import { showSidebar } from '$lib/components/Sidebar/sidebar.store';
 	import { initQuranMixer } from '$lib/utils/quranMixer';
 	import { initSoundEffectsMixer } from '$lib/utils/soundEffectsMixer';
-	import { onMount } from 'svelte';
-	import { isPlaying, setUrlFromId } from '$lib/stores/player.store';
+	import {
+		isMute,
+		isPlaying,
+		setNextSurah,
+		setNextVerse,
+		setPrevSurah,
+		setPrevVerse,
+		setUrlFromId,
+		toggleReplay
+	} from '$lib/stores/player.store';
 
 	function handleKeydown(event: KeyboardEvent) {
-		if (event.key === 'Escape') {
-			$showSidebar = null;
+		if (event.key === 'Escape') $showSidebar = null;
+		
+		if (event.key.toLowerCase() === 'n') {
+			if( event.shiftKey ) setNextSurah();
+			else setNextVerse()
+		}
+		if (event.key.toLowerCase() === 'p') {
+			if( event.shiftKey ) setPrevSurah();
+			else setPrevVerse();
+		}
+		
+		if (event.key.toLowerCase() === 'r') toggleReplay();
+		if (event.key.toLowerCase() === 'm') $isMute = !$isMute;
+
+		if (event.code === 'Space') {
+			$isPlaying = !$isPlaying;
+			event.preventDefault();
 		}
 	}
 
-	onMount(async ()=>{
+	async function playOnClick() {
+		$isPlaying = true;
+
 		initSoundEffectsMixer();
 		const mixer = await initQuranMixer();
-		// mixer?.resume();
-	});
-
-
+		mixer?.resume();
+		setUrlFromId();
+	}
 </script>
-<svelte:document on:click|once={()=>{
-	$isPlaying = true;
-	setUrlFromId();
-	}}></svelte:document>
+
+<svelte:document on:click|once={playOnClick} />
+
 <Quran />
 {#if $showSidebar === 'reciter'}
 	<Reciters />
 {/if}
+
 <svelte:window on:keydown={handleKeydown} />

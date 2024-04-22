@@ -15,6 +15,7 @@
 		isPlaying,
 		masterVolume,
 		replayMode,
+		toggleReplay,
 	} from '$lib/stores/player.store';
 	import { initSoundEffectsMixer } from '$lib/utils/soundEffectsMixer';
 
@@ -26,13 +27,7 @@
 	}
 
 	function handleReplay() {
-		if ($replayMode == 'off') {
-			$replayMode = 'surah';
-		} else if ($replayMode == 'surah') {
-			$replayMode = 'verse';
-		} else {
-			$replayMode = 'off';
-		}
+		toggleReplay();
 	}
 
 	function handleToggleMute() {

@@ -47,24 +47,11 @@ export const replayMode: Writable<'surah' | 'verse' | 'off'> = writable('off');
 
 export const currentRecitationUrl: Writable<string|null> = writable(null);
 
-export function setUrlFromId() {
-	const [$currentRecitationId, $currentVerseId, $currentSurahId] =
-		[currentRecitationId, currentVerseId, currentSurahId].map(get);
-	
-	const padZero = (num: number) => String(num).padStart(3, '0');
-	const surahVerseId = `${padZero($currentSurahId)}${padZero($currentVerseId)}`;
-
-	let url = reciterIdMapUrl[$currentRecitationId];
-	url = url.replace('<id>', surahVerseId);
-	currentRecitationUrl.set(url);
-}
-
 export async function setPrevVerse() {
 	(await initQuranMixer())?.suspend();
 	const $currentSurahId = get(currentSurahId);
 	const $currentVerseId = get(currentVerseId);
 
-	// check and get know if surah
 	const prevVerse = $currentVerseId - 1;
 
 	if (prevVerse < 1) {
@@ -79,10 +66,18 @@ export async function setPrevVerse() {
 	setUrlFromId();
 }
 
+export async function setPrevSurah() {
+	(await initQuranMixer())?.suspend();
+	const $currentSurahId = get(currentSurahId);
 
-currentReciter.subscribe(() => {
+	const prevSurah = $currentSurahId - 1 || 114;
+
+	currentSurahId.set(prevSurah);
+	currentVerseId.set(1);
+
+	(await initQuranMixer())?.resume();
 	setUrlFromId();
-})
+}
 
 export async function setNextVerse() {
 	(await initQuranMixer())?.suspend();
@@ -93,9 +88,25 @@ export async function setNextVerse() {
 	const maxVerse = surahMaxVerseCount[$currentSurahId];
 	if (nextVerse > maxVerse) {
 		nextVerse = 1;
-		currentSurahId.set($currentSurahId + 1);
+		let nextSurah = $currentSurahId + 1;
+		nextSurah = nextSurah <= 114 ? nextSurah : 1;
+		currentSurahId.set(nextSurah);
 	}
 	currentVerseId.set(nextVerse);
+	(await initQuranMixer())?.resume();
+	setUrlFromId();
+}
+
+export async function setNextSurah() {
+	(await initQuranMixer())?.suspend();
+	const $currentSurahId = get(currentSurahId);
+
+	let nextSurah = $currentSurahId + 1;
+	nextSurah = nextSurah <= 114 ? nextSurah : 1;
+	
+	currentSurahId.set(nextSurah);
+	currentVerseId.set(1);
+
 	(await initQuranMixer())?.resume();
 	setUrlFromId();
 }
@@ -116,11 +127,39 @@ async function getTransTxt(translationId: string) {
 	return translationArr;
 }
 
+export function toggleReplay() {
+	const $replayMode = get(replayMode);
+	if ($replayMode === 'off') {
+		replayMode.set('surah');
+	} else if ($replayMode === 'surah') {
+		replayMode.set('verse');
+	} else {
+		replayMode.set('off');
+	}
+}
+
+export function setUrlFromId() {
+	const [$currentRecitationId, $currentVerseId, $currentSurahId] =
+		[currentRecitationId, currentVerseId, currentSurahId].map(get);
+	
+	const padZero = (num: number) => String(num).padStart(3, '0');
+	const surahVerseId = `${padZero($currentSurahId)}${padZero($currentVerseId)}`;
+
+	let url = reciterIdMapUrl[$currentRecitationId];
+	url = url.replace('<id>', surahVerseId);
+	currentRecitationUrl.set(url);
+}
+
+currentReciter.subscribe(() => {
+	setUrlFromId();
+})
+
 isPlaying.subscribe(async ($isPlaying) => {
 	(await initQuranMixer())?.setIsPlaying($isPlaying);
 });
 
 currentRecitationUrl.subscribe(async ($currentRecitationUrl) => {
 	const quranMixer = await initQuranMixer();
+	console.log("trying to play?...", $currentRecitationUrl, quranMixer)
 	$currentRecitationUrl && quranMixer?.play($currentRecitationUrl);
 });
