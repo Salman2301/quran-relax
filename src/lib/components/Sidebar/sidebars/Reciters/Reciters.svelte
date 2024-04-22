@@ -53,7 +53,7 @@
 	<div class="label">
 		<span>Reciters</span>
 		<span>
-			<select bind:value={$currentRecitationId}>
+			<select bind:value={$currentRecitationId} disabled={modes.length <= 1}>
 				{#each modes as mode}
 					<option value={mode.recitation_id}>{mode.reciter_mode}</option>
 				{/each}

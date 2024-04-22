@@ -6,6 +6,7 @@
 	import { initQuranMixer } from '$lib/utils/quranMixer';
 	import { initSoundEffectsMixer } from '$lib/utils/soundEffectsMixer';
 	import { onMount } from 'svelte';
+	import { isPlaying, setUrlFromId } from '$lib/stores/player.store';
 
 	function handleKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape') {
@@ -13,12 +14,18 @@
 		}
 	}
 
-	onMount(()=>{
+	onMount(async ()=>{
 		initSoundEffectsMixer();
-		initQuranMixer();
+		const mixer = await initQuranMixer();
+		// mixer?.resume();
 	});
-</script>
 
+
+</script>
+<svelte:document on:click|once={()=>{
+	$isPlaying = true;
+	setUrlFromId();
+	}}></svelte:document>
 <Quran />
 {#if $showSidebar === 'reciter'}
 	<Reciters />

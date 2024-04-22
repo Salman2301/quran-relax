@@ -82,8 +82,15 @@ class QuranMixer {
 	}
 
 	setIsPlaying(isPlaying: boolean) {
-		if (isPlaying) this.audioContext.resume();
-		else this.audioContext.suspend();
+		if (isPlaying) this.resume();
+		else this.suspend();
+	}
+
+	resume() {
+		if(get(isPlaying)) this.audioContext.resume();
+	}
+	suspend() {
+		this.audioContext.suspend();
 	}
 
 	async play(id: string) {
@@ -92,7 +99,7 @@ class QuranMixer {
 			await this.loadVerseFile(id);
 			console.log('Missing Audio downloading current verse');
 		}
-
+		console.log("trying play: ", id)
 		// this.stop();
 
 		const source = this.audioContext.createBufferSource();
@@ -123,10 +130,6 @@ class QuranMixer {
 		delete this.verseSource[this.currentVerseId];
 		return true;
 	}
-
-	// nextVerse() {
-	// 	setNextVerse();
-	// }
 
 	setVolume(volume: number) {
 		const $masterVolume = get(masterVolume);
