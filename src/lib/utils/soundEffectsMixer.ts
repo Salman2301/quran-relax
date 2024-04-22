@@ -66,10 +66,9 @@ class SoundEffectsMixer {
 
 			console.timeEnd('load');
 
-			console.log('Audio files loaded successfully');
 			return true;
 		} catch (error) {
-			console.log('Error loading audio files', error);
+			console.error('Error loading audio files', error);
 			return false;
 		}
 	}
@@ -90,7 +89,7 @@ class SoundEffectsMixer {
 	playSoundEffect(soundEffect: string, volume?: number) {
 
 		if (!this.soundEffectsFile[soundEffect]) {
-			console.log('Audio file not loaded yet');
+			console.info('Audio file not loaded yet');
 			return false;
 		}
 
@@ -111,7 +110,7 @@ class SoundEffectsMixer {
 
 	stopSoundEffect(soundEffect: string) {
 		if (!this.soundEffectsSource[soundEffect]) {
-			console.log('Audio is not playing');
+			console.info('Audio is not playing');
 			return false;
 		}
 		this.sourceLastElapsedTime[soundEffect] =
@@ -169,7 +168,6 @@ export async function initSoundEffectsMixer() {
 
 isPlaying.subscribe(async $isPlaying => {
 	if (typeof window === "undefined") return;
-	console.log("sus : ", $isPlaying);
 	(await initSoundEffectsMixer())?.setIsPlaying?.($isPlaying);
 })
 

@@ -23,8 +23,8 @@
 		</div>
 		<div class="verse">{$currentVerseAr}</div>
 		<div class="translate">
-			<span>{$currentVerseId}.</span>
 			{#await $currentVerseTr then translated}
+				<span>{$currentVerseId}.</span>
 				<span style="text-transform:capitalize">
 					{translated}
 				</span>

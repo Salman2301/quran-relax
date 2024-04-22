@@ -56,7 +56,6 @@ export function setUrlFromId() {
 
 	let url = reciterIdMapUrl[$currentRecitationId];
 	url = url.replace('<id>', surahVerseId);
-	console.log("set url: ", url);
 	currentRecitationUrl.set(url);
 }
 
@@ -80,6 +79,10 @@ export async function setPrevVerse() {
 	setUrlFromId();
 }
 
+
+currentReciter.subscribe(() => {
+	setUrlFromId();
+})
 
 export async function setNextVerse() {
 	(await initQuranMixer())?.suspend();
@@ -114,7 +117,6 @@ async function getTransTxt(translationId: string) {
 }
 
 isPlaying.subscribe(async ($isPlaying) => {
-	console.log("updating playing mode");
 	(await initQuranMixer())?.setIsPlaying($isPlaying);
 });
 
