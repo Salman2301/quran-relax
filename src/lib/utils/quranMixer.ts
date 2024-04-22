@@ -31,7 +31,7 @@ class QuranMixer {
 		this.verseSource = {};
 
 		this.audioContext.onstatechange = () => {
-			console.log('c', this.audioContext.state);
+			console.log('state changed:', this.audioContext.state);
 		};
 	}
 

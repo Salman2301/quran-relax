@@ -6,6 +6,7 @@
 	import { initQuranMixer } from '$lib/utils/quranMixer';
 	import { initSoundEffectsMixer } from '$lib/utils/soundEffectsMixer';
 	import {
+	currentRecitationUrl,
 		isMute,
 		isPlaying,
 		setNextSurah,
@@ -41,9 +42,10 @@
 		$isPlaying = true;
 
 		initSoundEffectsMixer();
-		const mixer = await initQuranMixer();
-		mixer?.resume();
-		setUrlFromId();
+		const quranMixer = await initQuranMixer();
+		quranMixer?.resume();
+		// setUrlFromId();
+		$currentRecitationUrl && quranMixer?.play($currentRecitationUrl);
 	}
 </script>
 

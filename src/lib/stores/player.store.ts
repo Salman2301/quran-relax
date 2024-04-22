@@ -9,13 +9,13 @@ import surahMapInfo from '$lib/constant/surah-map-info';
 
 export const isContentLoading: Writable<boolean> = writable(true);
 
-export const currentReciter: Writable<string> = writable('as-sudais');
+export const currentReciter: Writable<string> = writable('al-afasy'); // Also update currentRecitationId
 export const currentReciterName: Readable<string> = derived(currentReciter, ($currentReciter) => {
 	return data.find((e) => e.reciter_id === $currentReciter)?.name || '';
 });
 export const currentReciterVolume: Writable<number> = writable(1);
 
-export const currentRecitationId: Writable<number> = writable(3);
+export const currentRecitationId: Writable<number> = writable(7);
 export const currentVerseId: Writable<number> = writable(1);
 export const currentSurahId: Writable<number> = writable(1);
 export const currentJuz: Readable<number> = derived([currentSurahId, currentVerseId],
