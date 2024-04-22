@@ -27,19 +27,32 @@
 	}
 </script>
 
-<div class="sound-effects-container" use:clickOutside on:outsideclick={hideAll}>
-	{#each data as item}
-		<SoundEffectsButton
-			data={item}
-			bind:hover={hoverSound[item.id]}
-			on:hover={() => hideRest(item.id)}
-		/>
-	{/each}
+<div class="container">
+	<div class="sound-effects-container" use:clickOutside on:outsideclick={hideAll}>
+		{#each data as item}
+			<SoundEffectsButton
+				data={item}
+				bind:hover={hoverSound[item.id]}
+				on:hover={() => hideRest(item.id)}
+			/>
+		{/each}
+	</div>
 </div>
 
 <style lang="postcss">
+	.container {
+		display: flex;
+		justify-content: center;
+
+		padding: 0 40px;
+		width: 100vw;
+	}
 	.sound-effects-container {
 		display: flex;
-		justify-content: space-evenly;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 4px;
+		width: 100%;
+		max-width: 720px;
 	}
 </style>

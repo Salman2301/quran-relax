@@ -94,16 +94,19 @@
 		position: relative;
 	}
 	.button {
-		width: 40px;
-		height: 40px;
+		width: 50px;
+		height: 50px;
 		background-color: #343434;
 		border-radius: 100%;
 		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 	img {
 		width: 40px;
 		height: 40px;
-		scale: 0.6;
+		scale: 0.8;
+		/* border: 1px solid red; */
 	}
 	button.active {
 		background-color: #4c7eff;

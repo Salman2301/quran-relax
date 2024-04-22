@@ -95,9 +95,12 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		position: fixed;
+		bottom: 0;
+		z-index: 100;
 	}
 	.control-container {
-		/* min-width: 620px; */
 		display: flex;
 		justify-content: space-between;
 		align-items: center;

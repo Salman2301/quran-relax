@@ -12,6 +12,7 @@
 		<div class="player-container">
 			<Player />
 		</div>
+    <div class="gap-bottom"></div>
 	</div>
 	<div class="player-control-container">
 		<PlayerControls />
@@ -39,10 +40,15 @@
 		justify-content: center;
 		align-items: center;
 	}
+  .gap-bottom {
+    height: 100px;
+    width: 100vw;
+  }
 	.player-control-container {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		margin-top: 20px;
+    height: 100px;
 	}
 </style>
