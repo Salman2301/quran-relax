@@ -2,6 +2,7 @@
 	import { showSidebar } from '$lib/components/Sidebar/sidebar.store';
 	import LoaderIcon from '$lib/icons/LoaderIcon.svelte';
 	import {
+	currentJuz,
 		currentReciterName,
 		currentSurahName,
 		currentVerseAr,
@@ -14,7 +15,7 @@
 <div class="container">
 	<div class="container-body">
 		<div class="current-surah">
-			<span>{$currentSurahName}</span>
+			<span>{$currentSurahName} / {$currentJuz} Juz</span>
 			<span>
 				{#if $isContentLoading}
 					<LoaderIcon />

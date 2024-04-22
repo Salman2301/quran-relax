@@ -1,10 +1,11 @@
 import data, { reciterIdMapUrl } from '$lib/components/Sidebar/sidebars/Reciters/data';
 import { initQuranMixer } from '$lib/utils/quranMixer';
+import { findJuz } from '$lib/utils/juz';
 import { derived, get, writable, type Readable, type Writable } from 'svelte/store';
-import surahMaxVerseCount from '$lib/constant/surah-map-verse';
-import surahMapInfo from '$lib/constant/surah-map-info';
 
+import surahMaxVerseCount from '$lib/constant/surah-map-verse';
 import surahMapVerseAr from '$lib/constant/surah-map-verse-ar';
+import surahMapInfo from '$lib/constant/surah-map-info';
 
 export const isContentLoading: Writable<boolean> = writable(true);
 
@@ -17,12 +18,15 @@ export const currentReciterVolume: Writable<number> = writable(1);
 export const currentRecitationId: Writable<number> = writable(3);
 export const currentVerseId: Writable<number> = writable(1);
 export const currentSurahId: Writable<number> = writable(1);
+export const currentJuz: Readable<number> = derived([currentSurahId, currentVerseId],
+	([$currentSurahId, $currentVerseId])=>findJuz($currentSurahId, $currentVerseId)
+)
 
 export const currentTranslationId: Writable<string> = writable('en.arberry');
 
 export const currentSurahName: Readable<string> = derived(currentSurahId, ($currentSurahId) => {
 	const info = surahMapInfo[$currentSurahId - 1];
-	return `${$currentSurahId} - ${info.title} / 1 Juz`;
+	return `${$currentSurahId} - ${info.title}`;
 });
 
 export const currentVerseAr: Readable<string> = derived(
