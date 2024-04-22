@@ -1,4 +1,4 @@
-import { isContentLoading, masterVolume } from '$lib/stores/player.store';
+import { isContentLoading, masterVolume, isPlaying } from '$lib/stores/player.store';
 import { soundEffects, soundStore } from '$lib/stores/soundEffects.store';
 import { get } from 'svelte/store';
 
@@ -88,6 +88,7 @@ class SoundEffectsMixer {
 	}
 
 	playSoundEffect(soundEffect: string, volume?: number) {
+
 		if (!this.soundEffectsFile[soundEffect]) {
 			console.log('Audio file not loaded yet');
 			return false;
@@ -124,15 +125,16 @@ class SoundEffectsMixer {
 
 	setIsPlaying(isPlaying: boolean) {
 		if (isPlaying) {
-			this.audioContext.suspend();
-			for (const soundEffect of soundEffects) {
-				this.soundEffectsContext[soundEffect].suspend();
-			}
-		} else {
 			this.audioContext.resume();
 
 			for (const soundEffect of soundEffects) {
 				this.soundEffectsContext[soundEffect].resume();
+			}
+		} else {
+			
+			this.audioContext.suspend();
+			for (const soundEffect of soundEffects) {
+				this.soundEffectsContext[soundEffect].suspend();
 			}
 		}
 	}
@@ -164,6 +166,12 @@ export async function initSoundEffectsMixer() {
 	masterVolume.subscribe(() => soundEffectsMixer.onMasterVolumeChange());
 	return soundEffectsMixer;
 }
+
+isPlaying.subscribe(async $isPlaying => {
+	if (typeof window === "undefined") return;
+	console.log("sus : ", $isPlaying);
+	(await initSoundEffectsMixer())?.setIsPlaying?.($isPlaying);
+})
 
 async function loadAudio(url: string, context: AudioContext) {
 	const response = await fetch(`/sounds/${url}`);

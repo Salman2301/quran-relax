@@ -3,6 +3,7 @@ import { initQuranMixer } from '$lib/utils/quranMixer';
 import { derived, get, writable, type Readable, type Writable } from 'svelte/store';
 import surahMaxVerseCount from '$lib/constant/surah-map-verse';
 import surahMapInfo from '$lib/constant/surah-map-info';
+
 import surahMapVerseAr from '$lib/constant/surah-map-verse-ar';
 
 export const isContentLoading: Writable<boolean> = writable(true);
