@@ -16,8 +16,8 @@ export const currentReciterName: Readable<string> = derived(currentReciter, ($cu
 export const currentReciterVolume: Writable<number> = writable(1);
 
 export const currentRecitationId: Writable<number> = writable(7);
-export const currentVerseId: Writable<number> = writable(1);
-export const currentSurahId: Writable<number> = writable(1);
+export const currentVerseId: Writable<number> = writable(102);
+export const currentSurahId: Writable<number> = writable(2);
 export const currentJuz: Readable<number> = derived([currentSurahId, currentVerseId],
 	([$currentSurahId, $currentVerseId])=>findJuz($currentSurahId, $currentVerseId)
 )

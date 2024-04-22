@@ -15,7 +15,7 @@
 		isPlaying,
 		masterVolume,
 		replayMode,
-		toggleReplay,
+		toggleReplay
 	} from '$lib/stores/player.store';
 	import { initSoundEffectsMixer } from '$lib/utils/soundEffectsMixer';
 
@@ -40,55 +40,71 @@
 	}
 </script>
 
-<div class="control-container">
-	<div class="volume-controls">
-		<button on:click={handleToggleMute} class="volume">
-			{#if $isMute}
-				<ControlVolumeMute />
-			{:else if $masterVolume > 0.8}
-				<ControlVolumeFull />
-			{:else if $masterVolume > 0.3}
-				<ControlVolumeLow />
+<div class="container">
+	<div class="control-container">
+		<div class="volume-controls">
+			<button on:click={handleToggleMute} class="volume">
+				{#if $isMute}
+					<ControlVolumeMute />
+				{:else if $masterVolume > 0.8}
+					<ControlVolumeFull />
+				{:else if $masterVolume > 0.3}
+					<ControlVolumeLow />
+				{:else}
+					<ControlVolumeZero />
+				{/if}
+			</button>
+
+			<div class="container-volume-slider">
+				<input type="range" min="0" max="1" step="0.01" bind:value={$masterVolume} />
+			</div>
+		</div>
+
+		<button on:click={handlePrev}>
+			<ControlPrev />
+		</button>
+		<button on:click={playToggle}>
+			{#if $isPlaying}
+				<ControlPause />
 			{:else}
-				<ControlVolumeZero />
+				<ControlPlay />
 			{/if}
 		</button>
 
-		<div class="container-volume-slider">
-			<input type="range" min="0" max="1" step="0.01" bind:value={$masterVolume} />
-		</div>
+		<button on:click={handleNext}>
+			<ControlNext />
+		</button>
+
+		<button on:click={handleReplay} class="replay" class:active={$replayMode !== 'off'}>
+			<ControlReplay />
+			{#if $replayMode !== 'off'}
+				<div class="indicator">{$replayMode}</div>
+			{/if}
+		</button>
 	</div>
-
-	<button on:click={handlePrev}>
-		<ControlPrev />
-	</button>
-	<button on:click={playToggle}>
-		{#if $isPlaying}
-			<ControlPause />
-		{:else}
-			<ControlPlay />
-		{/if}
-	</button>
-
-	<button on:click={handleNext}>
-		<ControlNext />
-	</button>
-
-	<button on:click={handleReplay} class="replay" class:active={$replayMode !== 'off'}>
-		<ControlReplay />
-		{#if $replayMode !== 'off'}
-			<div class="indicator">{$replayMode}</div>
-		{/if}
-	</button>
 </div>
 
 <style lang="postcss">
+	.container {
+		background-color: #343434;
+		width: 100%;
+		max-width: 100%;
+		overflow: hidden;
+		padding: 0 40px;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 	.control-container {
-		width: 580px;
+		/* min-width: 620px; */
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		color: #d6d6d6;
+		padding: 10px 0px;
+		width: 100%;
+		max-width: 720px;
 	}
 	.control-container:hover {
 		color: white;

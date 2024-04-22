@@ -2,7 +2,7 @@
 	import { showSidebar } from '$lib/components/Sidebar/sidebar.store';
 	import LoaderIcon from '$lib/icons/LoaderIcon.svelte';
 	import {
-	currentJuz,
+		currentJuz,
 		currentReciterName,
 		currentSurahName,
 		currentVerseAr,
@@ -45,9 +45,11 @@
 	.container {
 		background-color: #343434;
 		border-radius: 8px;
-		width: 640px;
+		width: 100vw;
 
 		min-height: 350px;
+		max-width: 720px;
+		margin: 0px 40px;
 		padding: 10px 20px;
 		padding-bottom: 20px;
 		display: flex;
