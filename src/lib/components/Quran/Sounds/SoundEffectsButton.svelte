@@ -29,7 +29,6 @@
 	function handleMouseLeave() {
 		hover = false;
 	}
-
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -66,7 +65,9 @@
 				<div class="volume-container">
 					<div class="label">
 						<span>Volume</span>
-						<span class="control-value">{Math.round($soundStore[data.id].volume * 10000) / 100}%</span>
+						<span class="control-value">
+							{Math.round($soundStore[data.id].volume * 10000) / 100}%
+						</span>
 					</div>
 					<input
 						type="range"
@@ -98,12 +99,12 @@
 		align-items: center;
 	}
 	img {
-			scale: 0.6;
-			width: 30px;
-			height: 30px;
+		scale: 0.6;
+		width: 30px;
+		height: 30px;
 		/* border: 1px solid red; */
 	}
-	
+
 	@media only screen and (min-width: 400px) {
 		img {
 			scale: 0.8;
@@ -129,10 +130,25 @@
 		margin-top: 10px;
 		border: 1px solid white;
 		box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+		z-index: 100;
 	}
 	.left-shift {
 		margin-left: -230px;
 	}
+
+	@media only screen and (max-width: 400px) {
+		.button-container {
+			position: inherit;
+		}
+		.hover-container {
+			left: 50%;
+			transform: translateX(-50%);
+		}
+		.left-shift {
+			margin-left: 0px;
+		}
+	}
+
 	.hover-container.hidden {
 		display: none;
 	}
@@ -156,7 +172,6 @@
 		padding: 4px 8px;
 		border-radius: 4px;
 	}
-
 
 	.header button.active {
 		background-color: #ccc;

@@ -4,10 +4,10 @@
 
 <button class="overlay" on:click={() => ($showSidebar = null)}></button>
 
-<div class="sidebar-container" >
-  <div class="scroll">
-    <slot></slot>
-  </div>
+<div class="sidebar-container">
+	<div class="scroll">
+		<slot></slot>
+	</div>
 </div>
 
 <style lang="postcss">
@@ -23,7 +23,8 @@
 		position: fixed;
 		top: 0;
 		right: 0px;
-		width: 400px;
+		min-width: 320px;
+		max-width: 380px;
 		height: 100vh;
 		background-color: #1b1c21;
 		padding: 10px 20px;
@@ -33,8 +34,12 @@
 	}
 
 	@keyframes slide {
-		0% { right: -400px; }
-		100% { right: 0; }
+		0% {
+			right: -400px;
+		}
+		100% {
+			right: 0;
+		}
 	}
 	.scroll {
 		overflow-y: auto;
