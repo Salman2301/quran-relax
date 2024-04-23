@@ -107,7 +107,6 @@ class SoundEffectsMixer {
 	}
 
 	async playSoundEffect(soundEffect: string) {
-		console.info(this.soundEffectsSource[soundEffect]);
 		if (!this.soundEffectsInit[soundEffect]) {
 			this.soundEffectsSource[soundEffect].start();	
 		}
@@ -122,14 +121,9 @@ class SoundEffectsMixer {
 
 	stopSoundEffect(soundEffect: string) {
 		if (!this.soundEffectsSource[soundEffect]) {
-			console.info('Audio is not playing');
 			return false;
 		}
-
-		// this.soundEffectsSource[soundEffect].suspend();
-
 		this.soundEffectsContext[soundEffect].suspend();
-		// delete this.soundEffectsSource[soundEffect];
 		return true;
 	}
 

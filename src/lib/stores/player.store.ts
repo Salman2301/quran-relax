@@ -93,7 +93,7 @@ export async function setNextVerse(skipReplay=true) {
 	const maxVerse = surahMaxVerseCount[$currentSurahId];
 	if (nextVerse > maxVerse) {
 		nextVerse = 1;
-		if (!skipReplay && $replayMode !== "surah") {
+		if (skipReplay || $replayMode !== "surah" ) {
 			let nextSurah = $currentSurahId + 1;
 			nextSurah = nextSurah <= 114 ? nextSurah : 1;
 			currentSurahId.set(nextSurah);

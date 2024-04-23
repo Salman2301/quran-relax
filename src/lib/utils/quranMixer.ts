@@ -14,6 +14,7 @@ class QuranMixer {
 	audioGainNode: GainNode;
 	lastElapsedTime: number;
 
+	lastSourceNode: AudioBufferSourceNode | null;
 	currentVerseId: string;
 	verseFile: { [key: string]: AudioBuffer };
 	verseSource: { [key: string]: AudioBufferSourceNode };
@@ -26,15 +27,12 @@ class QuranMixer {
 		this.audioGainNode = this.audioContext.createGain();
 		this.audioGainNode.gain.value = 0.5;
 		this.audioGainNode.connect(this.audioContext.destination);
+		this.lastSourceNode = null;
 
 		this.currentVerseId = '007-001-001';
 		this.lastElapsedTime = 0;
 		this.verseFile = {};
 		this.verseSource = {};
-
-		this.audioContext.onstatechange = () => {
-			console.log('state changed:', this.audioContext.state);
-		};
 	}
 
 	createAndResumeAudioContext(): AudioContext | null {
@@ -75,7 +73,6 @@ class QuranMixer {
 
 			console.timeEnd('load');
 
-			console.log('Audio files loaded successfully');
 			return true;
 		} catch (error) {
 			console.log('Error loading audio files', error);
@@ -102,16 +99,22 @@ class QuranMixer {
 			console.log('Missing Audio downloading current verse');
 		}
 
+		if (this.lastSourceNode) {
+			this.lastSourceNode.onended = null;
+			this.lastSourceNode.stop(0);
+			this.lastSourceNode.disconnect();
+		}
+
 		const source = this.audioContext.createBufferSource();
 		source.buffer = this.verseFile[id];
-
 		source.connect(this.audioGainNode);
 		source.start();
 
 		source.onended = () => {
-			console.log("ended triggered!");
 			setNextVerse(false);
 		};
+
+		this.lastSourceNode = source;
 		this.verseSource[id] = source;
 		this.currentVerseId = id;
 		return true;
