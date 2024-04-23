@@ -15,7 +15,11 @@
 <div class="container">
 	<div class="container-body">
 		<div class="current-surah">
-			<span class="surah-juz-title">{$currentSurahName} / {$currentJuz} Juz</span>
+			<button on:click={() => ($showSidebar = 'surah-selector')}>
+				<span class="surah-juz-title">
+					{$currentSurahName} / {$currentJuz} Juz
+				</span>
+			</button>
 			<span class="reciter-title">
 				{#if $isContentLoading}
 					<LoaderIcon />
@@ -95,6 +99,13 @@
 		justify-content: space-between;
 		align-items: center;
 	}
+	.surah-juz-title {
+		color: white;
+	}
+	.surah-juz-title:hover {
+		color: #4c7eff;
+	}
+
 	@media only screen and (max-width: 400px) {
 		.current-surah {
 			flex-direction: column;

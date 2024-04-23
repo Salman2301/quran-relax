@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Quran from '$lib/components/Quran/Quran.svelte';
 	import Reciters from '$lib/components/Sidebar/sidebars/Reciters/Reciters.svelte';
+	import SurahSelector from '$lib/components/Sidebar/sidebars/SurahSelector/SurahSelector.svelte';
 
 	import { showSidebar } from '$lib/components/Sidebar/sidebar.store';
 	import { initQuranMixer } from '$lib/utils/quranMixer';
@@ -13,7 +14,6 @@
 		setNextVerse,
 		setPrevSurah,
 		setPrevVerse,
-		setUrlFromId,
 		toggleReplay
 	} from '$lib/stores/player.store';
 
@@ -44,7 +44,6 @@
 		initSoundEffectsMixer();
 		const quranMixer = await initQuranMixer();
 		quranMixer?.resume();
-		// setUrlFromId();
 		$currentRecitationUrl && quranMixer?.play($currentRecitationUrl);
 	}
 </script>
@@ -54,6 +53,8 @@
 <Quran />
 {#if $showSidebar === 'reciter'}
 	<Reciters />
+{:else if $showSidebar === "surah-selector"}
+	<SurahSelector />
 {/if}
 
 <svelte:window on:keydown={handleKeydown} />

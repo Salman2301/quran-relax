@@ -1,4 +1,15 @@
-const data = [
+export interface SurahInfo {
+	place: string;
+	type: string;
+	count: number;
+	title: string;
+	titleAr: string;
+	index: string;
+	pages: string;
+	juz: { index: string, verse: { start: string, end: string } }[];
+	meaning: { ar: string, en: string, id: string }
+}
+const data: SurahInfo[] = [
 	{
 		place: 'Mecca',
 		type: 'Makkiyah',

@@ -1,3 +1,3 @@
 import { writable, type Writable } from "svelte/store";
 
-export const showSidebar: Writable<"reciter" | null > = writable(null);
+export const showSidebar: Writable<"reciter" | "surah-selector"| null> = writable("surah-selector");

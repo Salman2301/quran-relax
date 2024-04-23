@@ -27,9 +27,8 @@
 		max-width: 380px;
 		height: 100vh;
 		background-color: #1b1c21;
-		padding: 10px 20px;
 		z-index: 1000;
-		border-left: 1px solid white;
+		border-left: 1px solid #2e3039;
 		animation: slide 0.4s ease;
 	}
 
@@ -45,6 +44,6 @@
 		overflow-y: auto;
 		height: 100%;
 		width: 100%;
-		padding: 0px 10px;
+		padding: 10px 20px;
 	}
 </style>
