@@ -12,7 +12,6 @@ import { get } from 'svelte/store';
 class QuranMixer {
 	audioContext: AudioContext;
 	audioGainNode: GainNode;
-	lastElapsedTime: number;
 
 	lastSourceNode: AudioBufferSourceNode | null;
 	currentVerseId: string;
@@ -30,7 +29,6 @@ class QuranMixer {
 		this.lastSourceNode = null;
 
 		this.currentVerseId = '007-001-001';
-		this.lastElapsedTime = 0;
 		this.verseFile = {};
 		this.verseSource = {};
 	}
@@ -67,7 +65,6 @@ class QuranMixer {
 				$currentRecitationUrl,
 				this.audioContext
 			)) as AudioBuffer;
-			this.lastElapsedTime = 0;
 
 			isContentLoading.set(false);
 
@@ -122,9 +119,6 @@ class QuranMixer {
 
 	stop() {
 		if (!this.verseFile[this.currentVerseId]) return;
-		this.lastElapsedTime =
-			this.audioContext.currentTime - this.verseSource[this.currentVerseId].context.currentTime;
-
 		this.verseSource[this.currentVerseId].stop();
 		delete this.verseSource[this.currentVerseId];
 		return true;
