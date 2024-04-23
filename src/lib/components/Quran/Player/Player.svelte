@@ -19,6 +19,13 @@
 			<span>
 				{#if $isContentLoading}
 					<LoaderIcon />
+				{:else}
+					<div class="reciter">
+						<button on:click={() => ($showSidebar = 'reciter')} class="reciter-btn">
+							<div class="reciter-dash"></div>
+							<span>{$currentReciterName}</span>
+						</button>
+					</div>
 				{/if}
 			</span>
 		</div>
@@ -30,12 +37,6 @@
 					{translated}
 				</span>
 			{/await}
-		</div>
-		<div class="reciter">
-			<button on:click={() => ($showSidebar = 'reciter')} class="reciter-btn">
-				<div class="reciter-dash"></div>
-				<span>{$currentReciterName}</span>
-			</button>
 		</div>
 	</div>
 </div>
