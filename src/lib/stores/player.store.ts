@@ -90,19 +90,24 @@ export async function setNextVerse(skipReplay=true) {
 	const $replayMode = get(replayMode);
 
 	let nextVerse = $currentVerseId + 1;
+	let nextSurah = $currentSurahId;
 	const maxVerse = surahMaxVerseCount[$currentSurahId];
 	if (nextVerse > maxVerse) {
 		nextVerse = 1;
 		if (skipReplay || $replayMode !== "surah" ) {
-			let nextSurah = $currentSurahId + 1;
+			nextSurah = $currentSurahId + 1;
 			nextSurah = nextSurah <= 114 ? nextSurah : 1;
-			currentSurahId.set(nextSurah);
 		}
 	}
 
-	if (!skipReplay && $replayMode === "verse") nextVerse--;
+	if (!skipReplay && $replayMode === "verse") {
+		nextVerse = $currentVerseId;
+		nextSurah = $currentSurahId;
+	};
 
 	currentVerseId.set(nextVerse);
+	currentSurahId.set(nextSurah);
+	console.log({ $currentVerseId, $currentSurahId, nextVerse });
 	(await initQuranMixer())?.resume();
 	setUrlFromId();
 }
