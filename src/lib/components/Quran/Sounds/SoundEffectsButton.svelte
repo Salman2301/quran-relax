@@ -89,8 +89,8 @@
 		position: relative;
 	}
 	.button {
-		width: 50px;
-		height: 50px;
+		width: 40px;
+		height: 40px;
 		background-color: #343434;
 		border-radius: 100%;
 		display: flex;
@@ -98,11 +98,24 @@
 		align-items: center;
 	}
 	img {
-		width: 40px;
-		height: 40px;
-		scale: 0.8;
+			scale: 0.6;
+			width: 30px;
+			height: 30px;
 		/* border: 1px solid red; */
 	}
+	
+	@media only screen and (min-width: 400px) {
+		img {
+			scale: 0.8;
+			width: 40px;
+			height: 40px;
+		}
+		.button {
+			width: 50px;
+			height: 50px;
+		}
+	}
+
 	button.active {
 		background-color: #4c7eff;
 	}
@@ -143,6 +156,7 @@
 		padding: 4px 8px;
 		border-radius: 4px;
 	}
+
 
 	.header button.active {
 		background-color: #ccc;

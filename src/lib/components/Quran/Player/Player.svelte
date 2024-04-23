@@ -15,8 +15,8 @@
 <div class="container">
 	<div class="container-body">
 		<div class="current-surah">
-			<span>{$currentSurahName} / {$currentJuz} Juz</span>
-			<span>
+			<span class="surah-juz-title">{$currentSurahName} / {$currentJuz} Juz</span>
+			<span class="reciter-title">
 				{#if $isContentLoading}
 					<LoaderIcon />
 				{:else}
@@ -49,13 +49,20 @@
 
 		min-height: 350px;
 		max-width: 720px;
-		margin: 0px 40px;
+		margin: 0px 20px;
 		padding: 10px 20px;
 		padding-bottom: 20px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 	}
+
+	@media only screen and (min-width: 400px) {
+		.container {
+			margin: 0px 40px;
+		}
+	}
+
 	.reciter {
 		display: flex;
 		justify-content: end;
@@ -88,6 +95,18 @@
 		justify-content: space-between;
 		align-items: center;
 	}
+	@media only screen and (max-width: 400px) {
+		.current-surah {
+			flex-direction: column;
+		}
+
+		.surah-juz-title {
+			align-self: flex-start;
+		}
+		.reciter-title {
+			align-self: flex-end;
+		}
+	}
 	.reciter-btn:hover > .reciter-dash {
 		background-color: #4c7eff;
 	}
@@ -96,7 +115,7 @@
 	}
 	.verse {
 		text-align: center;
-		font-size: 48px;
+		font-size: 32px;
 		/* font-family: "Amiri Quran"; */
 		/* font-family: "Noto Sans Arabic"; */
 		/* font-family: "Mirza"; */
@@ -104,9 +123,19 @@
 		margin: 30px 0;
 	}
 
+	@media only screen and (min-width: 400px) {
+		.verse {
+			font-size: 48px;
+		}
+		.translate {
+			font-weight: 200;
+			font-size: 22px;
+		}
+	}
+
 	.translate {
 		font-weight: 200;
-		font-size: 22px;
+		font-size: 16px;
 		text-align: center;
 		margin: 10px 0px;
 	}

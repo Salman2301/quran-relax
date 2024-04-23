@@ -90,7 +90,8 @@
 		width: 100%;
 		max-width: 100%;
 		overflow: hidden;
-		padding: 0 40px;
+		padding: 0 10px;
+		padding-bottom: 20px;
 
 		display: flex;
 		justify-content: center;
@@ -102,6 +103,13 @@
 
 		border-top: 1px solid #1E1E1E;
 	}
+
+	@media only screen and (min-width: 400px) {
+		.container {
+			padding: 0px 40px;
+		}
+	}
+
 	.control-container {
 		display: flex;
 		justify-content: space-between;
@@ -157,6 +165,13 @@
 		width: 100px;
 		/* border: 1px solid #ccc; */
 	}
+
+	@media only screen and (max-width: 400px) {
+		.container-volume-slider {
+			display: block;
+		}
+	}
+
 	input {
 		width: 100%;
 	}

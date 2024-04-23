@@ -44,9 +44,17 @@
 		display: flex;
 		justify-content: center;
 
-		padding: 0 40px;
+		padding: 0 20px;
 		width: 100vw;
 	}
+	
+
+	@media only screen and (min-width: 400px) {
+		.container {
+			padding: 0px 40px;
+		}
+	}
+
 	.sound-effects-container {
 		display: flex;
 		justify-content: space-between;
