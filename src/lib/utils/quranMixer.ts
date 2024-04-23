@@ -3,7 +3,9 @@ import {
 	setNextVerse,
 	isContentLoading,
 	masterVolume,
-	isPlaying
+	isPlaying,
+	isMute,
+	currentReciterVolume
 } from '$lib/stores/player.store';
 import { get } from 'svelte/store';
 
@@ -129,9 +131,12 @@ class QuranMixer {
 		return true;
 	}
 
-	setVolume(volume: number) {
+	updateVolume() {
+		const $currentReciterVolume = get(currentReciterVolume);
 		const $masterVolume = get(masterVolume);
-		this.audioGainNode.gain.value = volume * $masterVolume;
+		const $isMute = get(isMute);
+		
+		this.audioGainNode.gain.value = $isMute ? 0 : $currentReciterVolume * $masterVolume;
 		return true;
 	}
 }
@@ -142,6 +147,11 @@ export async function initQuranMixer() {
 	if (typeof window === 'undefined') return;
 	quranMixer = new QuranMixer();
 	window.quranMixer = quranMixer;
+	
+	masterVolume.subscribe(() => quranMixer.updateVolume());
+	currentReciterVolume.subscribe(() => quranMixer.updateVolume());
+	isMute.subscribe(() => quranMixer.updateVolume());
+
 	return quranMixer;
 }
 

@@ -2,12 +2,12 @@
 	import { soundStore } from '$lib/stores/soundEffects.store';
 	import { createEventDispatcher } from 'svelte';
 	import { initSoundEffectsMixer } from '$lib/utils/soundEffectsMixer';
+	import { isPlaying } from '$lib/stores/player.store';
 
 	import type { SoundsData } from './data';
-	import { isPlaying, masterVolume } from '$lib/stores/player.store';
 
 	export let data: SoundsData | null = null;
-	export let volume: number = 1;
+	// export let volume: number = 1;
 	export let hover: boolean = false;
 
 	const dispatch = createEventDispatcher();
@@ -15,10 +15,9 @@
 	async function toggle() {
 		if (!data) return;
 		$soundStore[data.id].active = !$soundStore[data.id].active;
-		(await initSoundEffectsMixer()).setIsPlayingSoundEffect(
+		(await initSoundEffectsMixer()).activateSoundEffect(
 			data.id,
-			$isPlaying && $soundStore[data.id].active,
-			volume * $masterVolume
+			$isPlaying && $soundStore[data.id].active
 		);
 	}
 
@@ -31,9 +30,6 @@
 		hover = false;
 	}
 
-	async function onVolumeChange() {
-		(await initSoundEffectsMixer()).setVolume(data?.id as string, volume);
-	}
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -70,15 +66,14 @@
 				<div class="volume-container">
 					<div class="label">
 						<span>Volume</span>
-						<span class="control-value">{Math.round(volume * 10000) / 100}%</span>
+						<span class="control-value">{Math.round($soundStore[data.id].volume * 10000) / 100}%</span>
 					</div>
 					<input
 						type="range"
-						bind:value={volume}
+						bind:value={$soundStore[data.id].volume}
 						min="0"
 						max="1"
 						step="0.01"
-						on:input={onVolumeChange}
 						class="range-input"
 					/>
 				</div>

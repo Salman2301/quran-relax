@@ -1,27 +1,25 @@
-import { isContentLoading, masterVolume, isPlaying } from '$lib/stores/player.store';
+import { isContentLoading, masterVolume, isPlaying, isMute } from '$lib/stores/player.store';
 import { soundEffects, soundStore } from '$lib/stores/soundEffects.store';
 import { get } from 'svelte/store';
 
 class SoundEffectsMixer {
-	audioContext: AudioContext;
 	soundEffectsContext: { [key: string]: AudioContext };
 	soundEffectsFile: { [key: string]: AudioBuffer };
 	soundEffectGains: { [key: string]: GainNode };
-	sourceLastElapsedTime: { [key: string]: number };
 	soundEffectsSource: { [key: string]: AudioBufferSourceNode };
+	soundEffectsInit: { [key: string]: boolean };
 
 	constructor() {
-		this.audioContext = this.createAndResumeAudioContext() as AudioContext;
-		if (!this.audioContext) throw new Error('Failed to init Audio');
-
 		this.soundEffectsFile = {};
 		this.soundEffectsContext = {};
 		this.soundEffectGains = {};
-		this.sourceLastElapsedTime = {};
 		this.soundEffectsSource = {};
+		this.soundEffectsInit = {};
 
 		for (const soundEffect of soundEffects) {
 			this.soundEffectsContext[soundEffect] = this.createAndResumeAudioContext() as AudioContext;
+			this.soundEffectsContext[soundEffect].suspend();
+			this.soundEffectsInit[soundEffect] = false;
 		}
 	}
 
@@ -56,7 +54,29 @@ class SoundEffectsMixer {
 					`${soundEffect}.mp3`,
 					this.soundEffectsContext[soundEffect]
 				);
-				this.sourceLastElapsedTime[soundEffect] = 0;
+
+				if (!this.soundEffectsFile[soundEffect]) {
+					console.info('Audio file not loaded yet');
+					return false;
+				}
+
+				const source = this.soundEffectsContext[soundEffect].createBufferSource();
+				source.buffer = this.soundEffectsFile[soundEffect];
+				source.loop = true;
+
+				this.soundEffectGains[soundEffect] = this.soundEffectsContext[soundEffect].createGain();
+				this.soundEffectGains[soundEffect].gain.value = 1;
+
+				this.soundEffectGains[soundEffect].connect(
+					this.soundEffectsContext[soundEffect].destination
+				);
+
+				source.connect(this.soundEffectGains[soundEffect]);
+				this.soundEffectsSource[soundEffect] = source;
+				// this.soundEffectsSource[soundEffect].start();
+				// this.soundEffectsContext[soundEffect].suspend();
+				
+
 				return;
 			});
 
@@ -73,8 +93,8 @@ class SoundEffectsMixer {
 		}
 	}
 
-	setIsPlayingSoundEffect(soundEffect: string, isPlaying: boolean, volume?: number) {
-		if (isPlaying) this.playSoundEffect(soundEffect, volume);
+	activateSoundEffect(soundEffect: string, isPlaying: boolean) {
+		if (isPlaying) this.playSoundEffect(soundEffect);
 		else this.stopSoundEffect(soundEffect);
 	}
 
@@ -86,24 +106,16 @@ class SoundEffectsMixer {
 		}
 	}
 
-	playSoundEffect(soundEffect: string, volume?: number) {
-
-		if (!this.soundEffectsFile[soundEffect]) {
-			console.info('Audio file not loaded yet');
-			return false;
+	async playSoundEffect(soundEffect: string) {
+		console.info(this.soundEffectsSource[soundEffect]);
+		if (!this.soundEffectsInit[soundEffect]) {
+			this.soundEffectsSource[soundEffect].start();	
 		}
 
-		const source = this.soundEffectsContext[soundEffect].createBufferSource();
-		source.buffer = this.soundEffectsFile[soundEffect];
-		source.loop = true;
+		this.soundEffectsInit[soundEffect] = true;
+		this.soundEffectGains[soundEffect].gain.value = this.calcVolume(soundEffect);
 
-		this.soundEffectGains[soundEffect] = this.soundEffectsContext[soundEffect].createGain();
-		this.soundEffectGains[soundEffect].gain.value = volume || 1;
-		this.soundEffectGains[soundEffect].connect(this.soundEffectsContext[soundEffect].destination);
-
-		source.connect(this.soundEffectGains[soundEffect]);
-		source.start(0, this.sourceLastElapsedTime[soundEffect]);
-		this.soundEffectsSource[soundEffect] = source;
+		this.soundEffectsContext[soundEffect].resume();
 
 		return true;
 	}
@@ -113,44 +125,40 @@ class SoundEffectsMixer {
 			console.info('Audio is not playing');
 			return false;
 		}
-		this.sourceLastElapsedTime[soundEffect] =
-			this.soundEffectsContext[soundEffect].currentTime -
-			this.soundEffectsSource[soundEffect].context.currentTime;
-		
-		this.soundEffectsSource[soundEffect].stop();
-		delete this.soundEffectsSource[soundEffect];
+
+		// this.soundEffectsSource[soundEffect].suspend();
+
+		this.soundEffectsContext[soundEffect].suspend();
+		// delete this.soundEffectsSource[soundEffect];
 		return true;
 	}
 
-	setIsPlaying(isPlaying: boolean) {
-		if (isPlaying) {
-			this.audioContext.resume();
+	setIsPlaying() {
+		const $soundStore = get(soundStore);
+		const $isPlaying = get(isPlaying);
 
-			for (const soundEffect of soundEffects) {
-				this.soundEffectsContext[soundEffect].resume();
-			}
-		} else {
-			
-			this.audioContext.suspend();
-			for (const soundEffect of soundEffects) {
-				this.soundEffectsContext[soundEffect].suspend();
+		for (const soundEffect of soundEffects) {
+			if ($isPlaying && $soundStore[soundEffect].active) {
+				this.playSoundEffect(soundEffect);
+			} else {
+				this.stopSoundEffect(soundEffect);
 			}
 		}
 	}
 
-	setVolume(soundEffect: string, volume: number) {
+	calcVolume(soundEffect: string) {
 		const $masterVolume = get(masterVolume);
+		const $isMute = get(isMute);
+		const $soundStore = get(soundStore);
 
-		this.soundEffectGains[soundEffect].gain.value = volume * $masterVolume;
-		return true;
+		const currVol = $isMute ? 0 : $soundStore[soundEffect].volume * $masterVolume;
+		return currVol;
 	}
 
 	onMasterVolumeChange() {
-		const $soundStore = get(soundStore);
-
 		for (const soundEffect of soundEffects) {
 			if (this?.soundEffectGains?.[soundEffect]) {
-				this.setVolume(soundEffect, $soundStore[soundEffect].volume);
+				this.soundEffectGains[soundEffect].gain.value = this.calcVolume(soundEffect);
 			}
 		}
 	}
@@ -163,13 +171,15 @@ export async function initSoundEffectsMixer() {
 	window.soundEffectsMixer = soundEffectsMixer;
 	await soundEffectsMixer.loadSoundEffectsFile();
 	masterVolume.subscribe(() => soundEffectsMixer.onMasterVolumeChange());
+	isMute.subscribe(() => soundEffectsMixer.onMasterVolumeChange());
+	soundStore.subscribe(() => soundEffectsMixer.onMasterVolumeChange());
 	return soundEffectsMixer;
 }
 
-isPlaying.subscribe(async $isPlaying => {
-	if (typeof window === "undefined") return;
-	(await initSoundEffectsMixer())?.setIsPlaying?.($isPlaying);
-})
+isPlaying.subscribe(async () => {
+	if (typeof window === 'undefined') return;
+	(await initSoundEffectsMixer())?.setIsPlaying?.();
+});
 
 async function loadAudio(url: string, context: AudioContext) {
 	const response = await fetch(`/sounds/${url}`);

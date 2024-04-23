@@ -38,7 +38,6 @@
 			</button>
 		</div>
 	</div>
-	<div class="next-verse">English translation below</div>
 </div>
 
 <style lang="postcss">
@@ -110,7 +109,7 @@
 		text-align: center;
 		margin: 10px 0px;
 	}
-	.next-verse {
+	/* .next-verse {
 		text-align: center;
 		font-size: 13px;
 		font-weight: 300;
@@ -118,5 +117,5 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-	}
+	} */
 </style>

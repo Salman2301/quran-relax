@@ -36,7 +36,7 @@
 
 	async function playToggle() {
 		$isPlaying = !$isPlaying;
-		(await initSoundEffectsMixer()).setIsPlaying($isPlaying);
+		(await initSoundEffectsMixer()).setIsPlaying();
 	}
 </script>
 
@@ -99,6 +99,8 @@
 		position: fixed;
 		bottom: 0;
 		z-index: 100;
+
+		border-top: 1px solid #1E1E1E;
 	}
 	.control-container {
 		display: flex;

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import SoundControls from '$lib/components/SoundControls/SoundControls.svelte';
-	import { currentRecitationId, currentReciter } from '$lib/stores/player.store';
+	import { currentRecitationId, currentReciter, currentReciterVolume } from '$lib/stores/player.store';
 	import { onMount } from 'svelte';
 	import { showSidebar } from '../../sidebar.store';
 	import Sidebar from '../../Sidebar.svelte';
@@ -49,7 +49,9 @@
 			</svg>
 		</button>
 	</h4>
-	<SoundControls />
+	<SoundControls
+		bind:volume={$currentReciterVolume}
+	/>
 	<div class="label">
 		<span>Reciters</span>
 		<span>
