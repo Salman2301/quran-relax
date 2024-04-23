@@ -27,7 +27,7 @@ class QuranMixer {
 		this.audioGainNode.gain.value = 0.5;
 		this.audioGainNode.connect(this.audioContext.destination);
 
-		this.currentVerseId = '003-001-001';
+		this.currentVerseId = '007-001-001';
 		this.lastElapsedTime = 0;
 		this.verseFile = {};
 		this.verseSource = {};
@@ -101,7 +101,6 @@ class QuranMixer {
 			await this.loadVerseFile(id);
 			console.log('Missing Audio downloading current verse');
 		}
-		console.log("id : ", id);
 
 		const source = this.audioContext.createBufferSource();
 		source.buffer = this.verseFile[id];
@@ -111,7 +110,7 @@ class QuranMixer {
 
 		source.onended = () => {
 			console.log("ended triggered!");
-			setNextVerse();
+			setNextVerse(false);
 		};
 		this.verseSource[id] = source;
 		this.currentVerseId = id;
@@ -119,10 +118,7 @@ class QuranMixer {
 	}
 
 	stop() {
-		
-		console.log("Playing : ", this.currentVerseId);
 		if (!this.verseFile[this.currentVerseId]) return;
-		console.log('stopping verse file...', this.currentVerseId);
 		this.lastElapsedTime =
 			this.audioContext.currentTime - this.verseSource[this.currentVerseId].context.currentTime;
 

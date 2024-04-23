@@ -16,8 +16,8 @@ export const currentReciterName: Readable<string> = derived(currentReciter, ($cu
 export const currentReciterVolume: Writable<number> = writable(1);
 
 export const currentRecitationId: Writable<number> = writable(7);
-export const currentVerseId: Writable<number> = writable(102);
-export const currentSurahId: Writable<number> = writable(2);
+export const currentVerseId: Writable<number> = writable(1);
+export const currentSurahId: Writable<number> = writable(1);
 export const currentJuz: Readable<number> = derived([currentSurahId, currentVerseId],
 	([$currentSurahId, $currentVerseId])=>findJuz($currentSurahId, $currentVerseId)
 )
@@ -83,19 +83,25 @@ export async function setPrevSurah() {
 	setUrlFromId();
 }
 
-export async function setNextVerse() {
+export async function setNextVerse(skipReplay=true) {
 	(await initQuranMixer())?.suspend();
 	const $currentSurahId = get(currentSurahId);
 	const $currentVerseId = get(currentVerseId);
+	const $replayMode = get(replayMode);
 
 	let nextVerse = $currentVerseId + 1;
 	const maxVerse = surahMaxVerseCount[$currentSurahId];
 	if (nextVerse > maxVerse) {
 		nextVerse = 1;
-		let nextSurah = $currentSurahId + 1;
-		nextSurah = nextSurah <= 114 ? nextSurah : 1;
-		currentSurahId.set(nextSurah);
+		if (!skipReplay && $replayMode !== "surah") {
+			let nextSurah = $currentSurahId + 1;
+			nextSurah = nextSurah <= 114 ? nextSurah : 1;
+			currentSurahId.set(nextSurah);
+		}
 	}
+
+	if (!skipReplay && $replayMode === "verse") nextVerse--;
+
 	currentVerseId.set(nextVerse);
 	(await initQuranMixer())?.resume();
 	setUrlFromId();
@@ -151,6 +157,8 @@ export function setUrlFromId() {
 
 	let url = reciterIdMapUrl[$currentRecitationId];
 	url = url.replace('<id>', surahVerseId);
+
+	currentRecitationUrl.set(null);
 	currentRecitationUrl.set(url);
 }
 
