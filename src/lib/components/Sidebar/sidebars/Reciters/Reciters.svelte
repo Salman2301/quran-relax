@@ -6,8 +6,8 @@
 		currentReciterVolume
 	} from '$lib/stores/player.store';
 	import { onMount } from 'svelte';
-	import { showSidebar } from '../../sidebar.store';
-	import Sidebar from '../../Sidebar.svelte';
+	import { showSidebar } from '$sidebar/sidebar.store';
+	import Sidebar from '$sidebar/Sidebar.svelte';
 	import data from './data';
 
 	interface Option {

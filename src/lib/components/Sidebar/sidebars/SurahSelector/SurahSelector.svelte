@@ -1,19 +1,19 @@
 <script lang="ts">
-	import Sidebar from '../../Sidebar.svelte';
+	import Sidebar from '$sidebar/Sidebar.svelte';
 	import SurahSelectorItem from './SurahSelectorItem.svelte';
-	import juzMapSurah from "$lib/constant/juz-map-surah";
+	import juzMapSurah from '$lib/constant/juz-map-surah';
 
-	import { currentSurahId, currentVerseId } from '$lib/stores/player.store';
+	import { showSidebar } from '$sidebar/sidebar.store';
+	import { currentJuz, currentSurahId, currentVerseId } from '$lib/stores/player.store';
 	import surahInfo, { type SurahInfo } from '$lib/constant/surah-map-info';
 	import { writable, type Writable } from 'svelte/store';
-	import { showSidebar } from '../../sidebar.store';
 
-	let currentMode: 'surah' | 'juz' = 'juz';
+	let currentMode: 'surah' | 'juz' = 'surah';
 	let keyword: Writable<string> = writable('');
-		
-	let allJuz: string[] = new Array(30).fill("").map((_,i)=>String(i+1));
 
-	let filteredSurahInfo:SurahInfo[] = [...surahInfo];
+	let allJuz: string[] = new Array(30).fill('').map((_, i) => String(i + 1));
+
+	let filteredSurahInfo: SurahInfo[] = [...surahInfo];
 	let filteredJuzInfo: string[] = [...allJuz];
 
 	keyword.subscribe(($keyword) => {
@@ -34,11 +34,11 @@
 			})
 		];
 
-		filteredJuzInfo = allJuz.filter((item)=>item.includes($keyword))
+		filteredJuzInfo = allJuz.filter((item) => item.includes($keyword));
 	});
 
 	function handleJuzSelect(index: string) {
-		const { surah, verse } = juzMapSurah[Number(index)-1].start;
+		const { surah, verse } = juzMapSurah[Number(index) - 1].start;
 		$currentSurahId = surah;
 		$currentVerseId = verse;
 		$showSidebar = null;
@@ -47,20 +47,37 @@
 
 <Sidebar>
 	<div class="sidebar-content-container">
-		<div class="surah-juz-selector">
+		<div class="sidebar-header">
+			<div class="surah-juz-selector">
+				<button
+					class="selector surah"
+					class:active={currentMode === 'surah'}
+					on:click={() => (currentMode = 'surah')}
+				>
+					Surah
+				</button>
+				<button
+					class="selector juz"
+					class:active={currentMode === 'juz'}
+					on:click={() => (currentMode = 'juz')}
+				>
+					Juz
+				</button>
+			</div>
 			<button
-				class="selector surah"
-				class:active={currentMode === 'surah'}
-				on:click={() => (currentMode = 'surah')}
+				on:click={() => ($showSidebar = null)}
+				class="close-btn"
 			>
-				Surah
-			</button>
-			<button
-				class="selector juz"
-				class:active={currentMode === 'juz'}
-				on:click={() => (currentMode = 'juz')}
-			>
-				Juz
+				<svg
+					width="21"
+					height="21"
+					viewBox="0 0 21 21"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path d="M20 1L1 20" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+					<path d="M1 1L20 20" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
 			</button>
 		</div>
 		<div class="search-container">
@@ -98,11 +115,12 @@
 					expand={$currentSurahId === Number(item.index)}
 				/>
 			{/each}
-		{:else if currentMode === "juz"}
+		{:else if currentMode === 'juz'}
 			{#each filteredJuzInfo as item}
 				<button
 					class="juz-item"
-					on:click={()=>handleJuzSelect(item)}	
+					on:click={() => handleJuzSelect(item)}
+					class:active={$currentJuz === Number(item)}
 				>
 					Juz {item}
 				</button>
@@ -112,6 +130,19 @@
 </Sidebar>
 
 <style lang="postcss">
+	.sidebar-content-container {
+		width: 320px;
+	}
+
+	.sidebar-header {
+		position: relative;
+	}
+	.close-btn {
+		position: absolute;
+		right: 0;
+		top: 4px;
+	}
+
 	.surah-juz-selector {
 		display: flex;
 		justify-content: center;
@@ -164,9 +195,16 @@
 	}
 
 	.juz-item {
-		padding: 4px 0px;
+		/* padding: 10px 0px; */
 		font-size: 14px;
 		display: block;
 		color: white;
+		text-align: left;
+		width: 100%;
+		height: 40px;
+	}
+	.juz-item:hover,
+	.juz-item.active {
+		color: #4c7eff;
 	}
 </style>

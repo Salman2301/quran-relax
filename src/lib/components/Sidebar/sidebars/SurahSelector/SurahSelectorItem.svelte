@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { currentSurahId, currentVerseId } from '$lib/stores/player.store';
-	import { showSidebar } from '../../sidebar.store';
+	import { showSidebar } from '$sidebar/sidebar.store';
 	import type { SurahInfo } from '$lib/constant/surah-map-info';
 
 	export let item: SurahInfo;

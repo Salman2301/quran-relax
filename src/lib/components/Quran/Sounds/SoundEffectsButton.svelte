@@ -128,7 +128,7 @@
 		padding: 20px 10px;
 		border-radius: 10px;
 		margin-top: 10px;
-		border: 1px solid white;
+		border: 1px solid #2e3039;
 		box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
 		z-index: 100;
 	}

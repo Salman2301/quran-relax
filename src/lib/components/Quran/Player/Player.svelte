@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { showSidebar } from '$lib/components/Sidebar/sidebar.store';
+	import { showSidebar } from '$sidebar/sidebar.store';
 	import LoaderIcon from '$lib/icons/LoaderIcon.svelte';
 	import {
 		currentJuz,

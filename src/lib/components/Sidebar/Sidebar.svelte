@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { showSidebar } from './sidebar.store';
+	import { showSidebar } from '$sidebar/sidebar.store';
 </script>
 
 <button class="overlay" on:click={() => ($showSidebar = null)}></button>
