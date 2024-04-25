@@ -10,7 +10,7 @@ interface SoundStore {
 
 export const soundEffects: string[] = ["rain", "thunder", "bird", "campfire", "wind", "river", "ocean"];
 
-export const soundStore: Writable<SoundStore> = writable({
+const fallBackSoundStore = {
   rain: {
     id: "rain",
     active: false,
@@ -46,5 +46,27 @@ export const soundStore: Writable<SoundStore> = writable({
     active: false,
     volume: 1
   }
+}
+
+export const soundStore: Writable<SoundStore> = writable(getSoundStoreFromLocal());
+
+export function getSoundStoreFromLocal() {
+  try {
+    if (localStorage.getItem("store$soundStore")) {
+      const obj = localStorage.getItem("store$soundStore");
+      if (typeof obj === "string" && obj.startsWith("{")) {
+        return JSON.parse(obj);
+      }
+    }
+    return fallBackSoundStore;
+  }
+  catch (e) {
+    return fallBackSoundStore;
+  }
+}
+
+soundStore.subscribe($soundStore => {
+  if( typeof window === "undefined") return;
+  localStorage.setItem("store$soundStore", JSON.stringify($soundStore))
 });
 

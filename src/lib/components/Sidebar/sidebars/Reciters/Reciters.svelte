@@ -26,7 +26,7 @@
 					reciter_mode: mode
 				}));
 
-				$currentRecitationId = modes[0].recitation_id;
+				if( !modes.map(e=>e.recitation_id).includes($currentRecitationId) ) $currentRecitationId = modes[0].recitation_id;
 				break;
 			}
 		}

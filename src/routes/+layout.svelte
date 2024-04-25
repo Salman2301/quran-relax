@@ -1,5 +1,5 @@
 <script lang="ts">
- 	import Reciters from '$lib/components/Sidebar/sidebars/Reciters/Reciters.svelte';
+	import Reciters from '$lib/components/Sidebar/sidebars/Reciters/Reciters.svelte';
 	import SurahSelector from '$lib/components/Sidebar/sidebars/SurahSelector/SurahSelector.svelte';
 	import FontSelector from '$lib/components/Sidebar/sidebars/FontSelector/FontSelector.svelte';
 
@@ -7,29 +7,35 @@
 	import { initQuranMixer } from '$lib/utils/quranMixer';
 	import { initSoundEffectsMixer } from '$lib/utils/soundEffectsMixer';
 	import {
-	currentRecitationUrl,
+		currentRecitationUrl,
 		isMute,
 		isPlaying,
+		// setFromLocalStorage,
 		setNextSurah,
 		setNextVerse,
 		setPrevSurah,
 		setPrevVerse,
 		toggleReplay
 	} from '$lib/stores/player.store';
+	import { onMount } from 'svelte';
+	import { getSoundStoreFromLocal } from '$lib/stores/soundEffects.store';
+
 
 	function handleKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape') $showSidebar = null;
-		
+
 		if (event.key.toLowerCase() === 'n') {
-			if( event.shiftKey ) setNextSurah();
-			else setNextVerse()
+			if (event.shiftKey) setNextSurah();
+			else setNextVerse();
 		}
 		if (event.key.toLowerCase() === 'p') {
-			if( event.shiftKey ) setPrevSurah();
+			if (event.shiftKey) setPrevSurah();
 			else setPrevVerse();
 		}
-		
-		if (event.key.toLowerCase() === 'r') toggleReplay();
+
+		if (event.key.toLowerCase() === 'r') {
+			if( !event.metaKey ) toggleReplay();
+		}
 		if (event.key.toLowerCase() === 'm') $isMute = !$isMute;
 
 		if (event.code === 'Space') {
@@ -38,23 +44,27 @@
 		}
 	}
 
+	onMount(() => {
+		// getSoundStoreFromLocal();
+	});
+
 	async function playOnClick() {
 		$isPlaying = true;
-
 		initSoundEffectsMixer();
 		const quranMixer = await initQuranMixer();
 		quranMixer?.resume();
 		$currentRecitationUrl && quranMixer?.play($currentRecitationUrl);
 	}
+
 </script>
 
 <slot></slot>
 
 {#if $showSidebar === 'reciter'}
 	<Reciters />
-{:else if $showSidebar === "surah-selector"}
+{:else if $showSidebar === 'surah-selector'}
 	<SurahSelector />
-{:else if $showSidebar === "font"}
+{:else if $showSidebar === 'font'}
 	<FontSelector />
 {/if}
 
