@@ -25,9 +25,9 @@
 <div class="container" class:expand>
 	<button class="item-container" on:click={() => (expand = !expand)}>
 		<div class="surah-item-content">
-			<span class="surah-item-title" class:active
-				>{Number(item.index)} - {item.titleAr} ({item.title})</span
-			>
+			<span class="surah-item-title" class:active>
+				{Number(item.index)} - {item.titleAr} ({item.title})
+			</span>
 			<span class="surah-item-count">{item.count} verses</span>
 		</div>
 	</button>

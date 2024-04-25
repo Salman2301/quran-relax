@@ -24,6 +24,10 @@ export const currentJuz: Readable<number> = derived([currentSurahId, currentVers
 
 export const currentTranslationId: Writable<string> = writable('en.arberry');
 
+export const currentArFontFamily: Writable<string> = writable('Rubik');
+export const currentArFontSize: Writable<number> = writable(32);
+export const currentTrFontSize: Writable<number> = writable(16);
+
 export const currentSurahName: Readable<string> = derived(currentSurahId, ($currentSurahId) => {
 	const info = surahMapInfo[$currentSurahId - 1];
 	return `${$currentSurahId} - ${info.title}`;

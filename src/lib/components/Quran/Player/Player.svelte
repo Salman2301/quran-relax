@@ -2,9 +2,12 @@
 	import { showSidebar } from '$sidebar/sidebar.store';
 	import LoaderIcon from '$lib/icons/LoaderIcon.svelte';
 	import {
+	currentArFontFamily,
+		currentArFontSize,
 		currentJuz,
 		currentReciterName,
 		currentSurahName,
+		currentTrFontSize,
 		currentVerseAr,
 		currentVerseId,
 		currentVerseTr,
@@ -33,15 +36,25 @@
 				{/if}
 			</span>
 		</div>
-		<div class="verse">{$currentVerseAr}</div>
-		<div class="translate">
+		<button
+			class="verse"
+			on:click={()=>($showSidebar = 'font')}
+			style="font-family:{$currentArFontFamily};font-size:{$currentArFontSize}px"
+		>
+			{$currentVerseAr}
+		</button>
+		<button
+			class="translate"
+			on:click={()=>($showSidebar = 'font')}
+			style="font-size:{$currentTrFontSize}px"
+		>
 			{#await $currentVerseTr then translated}
 				<span>{$currentVerseId}.</span>
 				<span style="text-transform:capitalize">
 					{translated}
 				</span>
 			{/await}
-		</div>
+		</button>
 	</div>
 </div>
 
@@ -126,12 +139,14 @@
 	}
 	.verse {
 		text-align: center;
-		font-size: 32px;
+		/* font-size: 32px; */
 		/* font-family: "Amiri Quran"; */
 		/* font-family: "Noto Sans Arabic"; */
 		/* font-family: "Mirza"; */
 		font-family: 'Rubik', serif;
+		color: white;
 		margin: 30px 0;
+		width: 100%;
 	}
 
 	@media only screen and (min-width: 400px) {
@@ -140,23 +155,14 @@
 		}
 		.translate {
 			font-weight: 200;
-			font-size: 22px;
 		}
 	}
 
 	.translate {
 		font-weight: 200;
-		font-size: 16px;
 		text-align: center;
 		margin: 10px 0px;
+		color: #ccc;
+		width: 100%;
 	}
-	/* .next-verse {
-		text-align: center;
-		font-size: 13px;
-		font-weight: 300;
-
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	} */
 </style>

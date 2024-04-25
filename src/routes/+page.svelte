@@ -2,6 +2,7 @@
 	import Quran from '$lib/components/Quran/Quran.svelte';
 	import Reciters from '$lib/components/Sidebar/sidebars/Reciters/Reciters.svelte';
 	import SurahSelector from '$lib/components/Sidebar/sidebars/SurahSelector/SurahSelector.svelte';
+	import FontSelector from '$lib/components/Sidebar/sidebars/FontSelector/FontSelector.svelte';
 
 	import { showSidebar } from '$lib/components/Sidebar/sidebar.store';
 	import { initQuranMixer } from '$lib/utils/quranMixer';
@@ -55,6 +56,8 @@
 	<Reciters />
 {:else if $showSidebar === "surah-selector"}
 	<SurahSelector />
+{:else if $showSidebar === "font"}
+	<FontSelector />
 {/if}
 
 <svelte:window on:keydown={handleKeydown} />

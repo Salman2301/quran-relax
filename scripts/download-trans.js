@@ -2,12 +2,12 @@ import fs from 'fs';
 import fetch from 'node-fetch';
 // import indexJson from "../static/quran/index.json";
 
-const jsonData  = fs.readFileSync('./static/quran/index.json', 'utf8');
-const indexJson = JSON.parse(jsonData);
-
 if (!fs.existsSync('./static/quran/trans')) {
 	fs.mkdirSync('./static/quran/trans');
 }
+
+const jsonData  = fs.readFileSync('./static/quran/trans/index.json', 'utf8');
+const indexJson = JSON.parse(jsonData);
 
 for (const surah of indexJson) {
 	const url = surah.dl;
