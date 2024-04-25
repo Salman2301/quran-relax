@@ -12,6 +12,9 @@ import { get } from 'svelte/store';
 class QuranMixer {
 	audioContext: AudioContext;
 	audioGainNode: GainNode;
+	
+	convolverNode: ConvolverNode; // reverb
+	convolverGainNode: GainNode;
 
 	playbackRate: number;
 	lastSourceNode: AudioBufferSourceNode | null;
@@ -27,6 +30,16 @@ class QuranMixer {
 		this.audioGainNode = this.audioContext.createGain();
 		this.audioGainNode.gain.value = 0.5;
 		this.audioGainNode.connect(this.audioContext.destination);
+
+		this.convolverNode = this.audioContext.createConvolver();
+		this.convolverGainNode = this.audioContext.createGain();
+		// this.convolverNode.gain
+		this.convolverGainNode.gain.value = 1;
+		this.convolverNode.connect(this.audioGainNode);
+		this.convolverGainNode.connect(this.audioGainNode);
+		
+		this.loadImpulseResponse('sounds/impulse_response.mp4');
+
 		this.lastSourceNode = null;
 		this.playbackRate = 1;
 
@@ -35,6 +48,17 @@ class QuranMixer {
 		this.verseFile = {};
 		this.verseSource = {};
 	}
+
+	async loadImpulseResponse(url: string) {
+		try {
+				const response = await fetch(url);
+				const arrayBuffer = await response.arrayBuffer();
+				const impulseBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+				this.convolverNode.buffer = impulseBuffer; // Assign impulse response to convolver
+		} catch (e) {
+				console.error('Failed to load impulse response:', e);
+		}
+}
 
 	createAndResumeAudioContext(): AudioContext | null {
 		if (typeof window === 'undefined') return null;
@@ -87,6 +111,10 @@ class QuranMixer {
 		}
 	}
 
+	setReverbLevel(level: number) {
+		this.convolverGainNode.gain.value = level;
+	}
+
 	setIsPlaying(isPlaying: boolean) {
 		if (isPlaying) this.resume();
 		else this.suspend();
@@ -114,7 +142,7 @@ class QuranMixer {
 
 		const source = this.audioContext.createBufferSource();
 		source.buffer = this.verseFile[id];
-		source.connect(this.audioGainNode);
+		source.connect(this.convolverGainNode);
 		source.start();
 
 		source.onended = () => {

@@ -24,7 +24,7 @@
       <span>Reverb</span>
       <span class="control-value">{reverb}</span>
     </div>
-    <input type="range" bind:value={reverb} step="0.1" min="0" max="0.5" />
+    <input type="range" bind:value={reverb} step="1" min="0" max="10" />
   </div>
 </div>
 

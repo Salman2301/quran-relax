@@ -17,6 +17,8 @@ export const currentReciterVolume: Writable<number> = writable(getFromStorage("c
 
 export const currentReciterSpeed: Writable<number> = writable(getFromStorage("currentReciterSpeed", 1, "number") as number);
 
+export const currentReciterReverb: Writable<number> = writable(getFromStorage("currentReciterReverb", 5, "number") as number);
+
 export const currentRecitationId: Writable<number> = writable(getFromStorage("currentRecitationId", 7, "number") as number);
 export const currentVerseId: Writable<number> = writable(getFromStorage("currentVerseId", 1, "number") as number);
 export const currentSurahId: Writable<number> = writable(getFromStorage("currentSurahId", 1, "number") as number);
@@ -189,6 +191,10 @@ currentReciterSpeed.subscribe(async ($currentReciterSpeed) => {
 	(await initQuranMixer())?.setPlaybackRate($currentReciterSpeed);
 });
 
+currentReciterReverb.subscribe(async ($currentReciterReverb) => {
+	(await initQuranMixer())?.setReverbLevel($currentReciterReverb);
+});
+
 currentRecitationUrl.subscribe(async ($currentRecitationUrl) => {
 	const quranMixer = await initQuranMixer();
 	console.log('trying to play?...', $currentRecitationUrl, quranMixer);
@@ -209,6 +215,11 @@ currentReciterVolume.subscribe(($currentReciterVolume) => {
 currentReciterSpeed.subscribe(($currentReciterSpeed) => {
 	if (typeof window === "undefined") return;
 	localStorage.setItem('store$currentReciterSpeed', String($currentReciterSpeed));
+});
+
+currentReciterReverb.subscribe(($currentReciterReverb) => {
+	if (typeof window === "undefined") return;
+	localStorage.setItem('store$currentReciterReverb', String($currentReciterReverb));
 });
 
 currentRecitationId.subscribe(($currentRecitationId) => {
@@ -271,50 +282,3 @@ function getFromStorage(storeId: string, fallbackVal?:string|number|boolean, typ
 	if( type === "boolean") return val === "true";
   return val;
 }
-
-// export function setFromLocalStorage(skipSurah = false, skipVerse = false) {
-	// if (typeof window === "undefined") return;
-	// const $currentReciter = localStorage.getItem('store$currentReciter');
-	// const $currentReciterVolume = localStorage.getItem('store$currentReciterVolume');
-	// const $currentRecitationId = localStorage.getItem('store$currentRecitationId');
-	// const $currentVerseId = localStorage.getItem('store$currentVerseId');
-	// const $currentSurahId = localStorage.getItem('store$currentSurahId');
-	// const $currentTranslationId = localStorage.getItem('store$currentTranslationId');
-	// const $currentArFontFamily = localStorage.getItem('store$currentArFontFamily');
-	// const $currentArFontSize = localStorage.getItem('store$currentArFontSize');
-	// const $currentTrFontSize = localStorage.getItem('store$currentTrFontSize');
-	// const $masterVolume = localStorage.getItem('store$masterVolume');
-	// const $isMute = localStorage.getItem('store$isMute');
-	// const $replayMode = localStorage.getItem('store$replayMode');
-
-	// if ($currentReciter) currentReciter.set($currentReciter);
-
-	// if ($currentReciterVolume && !isNaN(Number($currentReciterVolume)))
-	// 	currentReciterVolume.set(Number($currentReciterVolume));
-
-	// if ($currentRecitationId && !isNaN(Number($currentRecitationId)))
-	// 	currentRecitationId.set(Number($currentRecitationId));
-
-	// if ( !skipVerse && $currentVerseId && !isNaN(Number($currentVerseId)))
-	// 	currentVerseId.set(Number($currentVerseId));
-
-	// if (!skipSurah && $currentSurahId && !isNaN(Number($currentSurahId)))
-	// 	currentSurahId.set(Number($currentSurahId));
-
-	// if ($currentTranslationId) currentTranslationId.set($currentTranslationId);
-
-	// if ($currentArFontFamily) currentArFontFamily.set($currentArFontFamily);
-
-	// if ($currentArFontSize && !isNaN(Number($currentArFontSize)))
-	// 	currentArFontSize.set(Number($currentArFontSize));
-
-	// if ($currentTrFontSize && !isNaN(Number($currentTrFontSize)))
-	// 	currentTrFontSize.set(Number($currentTrFontSize));
-
-	// if ($masterVolume && !isNaN(Number($masterVolume))) masterVolume.set(Number($masterVolume));
-
-	// if ($isMute) isMute.set($isMute === 'true');
-	// if ($replayMode) replayMode.set($replayMode as 'off' | 'surah' | 'verse');
-
-	// console.log("All restored!!")
-// }

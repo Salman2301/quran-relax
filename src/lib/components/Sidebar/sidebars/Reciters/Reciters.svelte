@@ -3,6 +3,7 @@
 	import {
 		currentRecitationId,
 		currentReciter,
+		currentReciterReverb,
 		currentReciterSpeed,
 		currentReciterVolume
 	} from '$lib/stores/player.store';
@@ -57,6 +58,7 @@
 	<SoundControls
 		bind:volume={$currentReciterVolume}
 		bind:speed={$currentReciterSpeed}
+		bind:reverb={$currentReciterReverb}
 	/>
 	<div class="label">
 		<span>Reciters</span>
