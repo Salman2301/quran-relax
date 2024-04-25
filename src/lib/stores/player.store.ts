@@ -15,6 +15,8 @@ export const currentReciterName: Readable<string> = derived(currentReciter, ($cu
 });
 export const currentReciterVolume: Writable<number> = writable(getFromStorage("currentReciterVolume", 1, "number") as number);
 
+export const currentReciterSpeed: Writable<number> = writable(getFromStorage("currentReciterSpeed", 1, "number") as number);
+
 export const currentRecitationId: Writable<number> = writable(getFromStorage("currentRecitationId", 7, "number") as number);
 export const currentVerseId: Writable<number> = writable(getFromStorage("currentVerseId", 1, "number") as number);
 export const currentSurahId: Writable<number> = writable(getFromStorage("currentSurahId", 1, "number") as number);
@@ -183,6 +185,10 @@ isPlaying.subscribe(async ($isPlaying) => {
 	(await initQuranMixer())?.setIsPlaying($isPlaying);
 });
 
+currentReciterSpeed.subscribe(async ($currentReciterSpeed) => {
+	(await initQuranMixer())?.setPlaybackRate($currentReciterSpeed);
+});
+
 currentRecitationUrl.subscribe(async ($currentRecitationUrl) => {
 	const quranMixer = await initQuranMixer();
 	console.log('trying to play?...', $currentRecitationUrl, quranMixer);
@@ -198,6 +204,11 @@ currentReciter.subscribe(($currentReciter) => {
 currentReciterVolume.subscribe(($currentReciterVolume) => {
 	if (typeof window === "undefined") return;
 	localStorage.setItem('store$currentReciterVolume', String($currentReciterVolume));
+});
+
+currentReciterSpeed.subscribe(($currentReciterSpeed) => {
+	if (typeof window === "undefined") return;
+	localStorage.setItem('store$currentReciterSpeed', String($currentReciterSpeed));
 });
 
 currentRecitationId.subscribe(($currentRecitationId) => {

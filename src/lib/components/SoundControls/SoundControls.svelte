@@ -17,7 +17,7 @@
       <span>Speed</span>
       <span class="control-value">{speed}x</span>
     </div>
-    <input type="range" bind:value={speed} step="0.25" min="0.25" max="4" />
+    <input type="range" bind:value={speed} step="0.125" min="0.125" max="2" />
   </div>
   <div class="reverb-container">
     <div class="label">

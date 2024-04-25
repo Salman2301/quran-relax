@@ -13,6 +13,7 @@ class QuranMixer {
 	audioContext: AudioContext;
 	audioGainNode: GainNode;
 
+	playbackRate: number;
 	lastSourceNode: AudioBufferSourceNode | null;
 	currentVerseId: string;
 	verseFile: { [key: string]: AudioBuffer };
@@ -27,6 +28,8 @@ class QuranMixer {
 		this.audioGainNode.gain.value = 0.5;
 		this.audioGainNode.connect(this.audioContext.destination);
 		this.lastSourceNode = null;
+		this.playbackRate = 1;
+
 
 		this.currentVerseId = '007-001-001';
 		this.verseFile = {};
@@ -77,6 +80,13 @@ class QuranMixer {
 		}
 	}
 
+	setPlaybackRate(rate: number) {
+		this.playbackRate = rate;
+		if (this.lastSourceNode) {
+			this.lastSourceNode.playbackRate.value = this.playbackRate;
+		}
+	}
+
 	setIsPlaying(isPlaying: boolean) {
 		if (isPlaying) this.resume();
 		else this.suspend();
@@ -110,6 +120,8 @@ class QuranMixer {
 		source.onended = () => {
 			setNextVerse(false);
 		};
+
+		source.playbackRate.value = this.playbackRate;
 
 		this.lastSourceNode = source;
 		this.verseSource[id] = source;

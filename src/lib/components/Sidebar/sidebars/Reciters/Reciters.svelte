@@ -3,6 +3,7 @@
 	import {
 		currentRecitationId,
 		currentReciter,
+		currentReciterSpeed,
 		currentReciterVolume
 	} from '$lib/stores/player.store';
 	import { onMount } from 'svelte';
@@ -53,7 +54,10 @@
 			</svg>
 		</button>
 	</h4>
-	<SoundControls bind:volume={$currentReciterVolume} />
+	<SoundControls
+		bind:volume={$currentReciterVolume}
+		bind:speed={$currentReciterSpeed}
+	/>
 	<div class="label">
 		<span>Reciters</span>
 		<span>
