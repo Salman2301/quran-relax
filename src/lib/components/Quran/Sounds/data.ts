@@ -7,8 +7,8 @@ export interface SoundsData {
 
 const data: SoundsData[] = [
   {
-    name: "Light Rain Ambient",
-    producer: "SoundsForYou",
+    name: "Heavy Rain",
+    producer: "ahtshamleghari",
     duration: "9:00",
     id: "rain"
   },
