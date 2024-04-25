@@ -63,6 +63,7 @@
         >
 					<option value="Amiri Quran">Amiri Quran</option>
 					<option value="Noto Sans Arabic">Noto Sans Arabic</option>
+					<option value="Lateef">Lateef</option>
 					<option value="Mirza">Mirza</option>
 					<option value="Rubik">Rubik</option>
 				</select>

@@ -139,10 +139,6 @@
 	}
 	.verse {
 		text-align: center;
-		/* font-size: 32px; */
-		/* font-family: "Amiri Quran"; */
-		/* font-family: "Noto Sans Arabic"; */
-		/* font-family: "Mirza"; */
 		font-family: 'Rubik', serif;
 		color: white;
 		margin: 30px 0;
