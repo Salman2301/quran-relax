@@ -90,6 +90,10 @@
 			<FontSize
         bind:value={$currentTrFontSize}
       />
+			<div class="actions">
+				<button class="btn-action" on:click={()=>$showSidebar="reciter"}>Open Reciter setting</button>
+				<button class="btn-action" on:click={()=>$showSidebar="surah-selector"}>Go to Surah / Verse</button>
+			</div>
 		</div>
 	</div>
 </Sidebar>
@@ -133,5 +137,21 @@
 	select {
 		width: 110px;
 		border-radius: 4px;
+	}
+	.actions {
+		margin-top: 50px;
+	}
+	.btn-action {
+		width: 100%;
+		background-color: #ccc;
+		color: black;
+		height: 40px;
+		border-radius: 4px;
+		margin-bottom: 10px;
+	}
+
+	.btn-action:hover {
+		background-color: #333;
+		color: white;
 	}
 </style>
