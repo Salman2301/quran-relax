@@ -4,6 +4,7 @@
 		currentRecitationId,
 		currentReciter,
 		currentReciterReverb,
+		currentReciterUseReverb,
 		currentReciterSpeed,
 		currentReciterVolume
 	} from '$lib/stores/player.store';
@@ -28,7 +29,8 @@
 					reciter_mode: mode
 				}));
 
-				if( !modes.map(e=>e.recitation_id).includes($currentRecitationId) ) $currentRecitationId = modes[0].recitation_id;
+				if (!modes.map((e) => e.recitation_id).includes($currentRecitationId))
+					$currentRecitationId = modes[0].recitation_id;
 				break;
 			}
 		}
@@ -40,47 +42,49 @@
 </script>
 
 <Sidebar>
-	<h4>
-		<span>Recitation setting</span>
-		<button on:click={() => ($showSidebar = null)}>
-			<svg
-				width="21"
-				height="21"
-				viewBox="0 0 21 21"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path d="M20 1L1 20" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-				<path d="M1 1L20 20" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-			</svg>
-		</button>
-	</h4>
-	<SoundControls
-		bind:volume={$currentReciterVolume}
-		bind:speed={$currentReciterSpeed}
-		bind:reverb={$currentReciterReverb}
-	/>
-	<div class="label">
-		<span>Reciters</span>
-		<span>
-			<select bind:value={$currentRecitationId} disabled={modes.length <= 1}>
-				{#each modes as mode}
-					<option value={mode.recitation_id}>{mode.reciter_mode}</option>
-				{/each}
-			</select>
-		</span>
-	</div>
-	<div class="images">
-		{#each data as item}
-			<button on:click={() => selectReciter(item.reciter_id)}>
-				<img
-					src="/images/reciters/{item.reciter_id}.png"
-					alt="quran reciter {item.name}"
-					class:active={$currentReciter === item.reciter_id}
-				/>
-				<p class:active={$currentReciter === item.reciter_id}>{item.name}</p>
+	<div slot="sidebar-content">
+		<h4>
+			<span>Recitation setting</span>
+			<button on:click={() => ($showSidebar = null)}>
+				<svg
+					width="21"
+					height="21"
+					viewBox="0 0 21 21"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path d="M20 1L1 20" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+					<path d="M1 1L20 20" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
 			</button>
-		{/each}
+		</h4>
+		<SoundControls
+			bind:volume={$currentReciterVolume}
+			bind:speed={$currentReciterSpeed}
+			bind:useReverb={$currentReciterUseReverb}
+		/>
+		<div class="label">
+			<span>Reciters</span>
+			<span>
+				<select bind:value={$currentRecitationId} disabled={modes.length <= 1}>
+					{#each modes as mode}
+						<option value={mode.recitation_id}>{mode.reciter_mode}</option>
+					{/each}
+				</select>
+			</span>
+		</div>
+		<div class="images">
+			{#each data as item}
+				<button on:click={() => selectReciter(item.reciter_id)}>
+					<img
+						src="/images/reciters/{item.reciter_id}.png"
+						alt="quran reciter {item.name}"
+						class:active={$currentReciter === item.reciter_id}
+					/>
+					<p class:active={$currentReciter === item.reciter_id}>{item.name}</p>
+				</button>
+			{/each}
+		</div>
 	</div>
 </Sidebar>
 

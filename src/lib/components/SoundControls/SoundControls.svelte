@@ -1,7 +1,10 @@
 <script lang="ts">
+	import Switch from "../Form/Switch.svelte";
+
   export let volume:number = 0.5;
   export let speed:number = 1;
-  export let reverb:number = 0.1;
+  export let useReverb: boolean = false;
+
 </script>
 
 <div class="sound-controls">
@@ -22,10 +25,10 @@
   <div class="reverb-container">
     <div class="label">
       <span>Reverb</span>
-      <span class="control-value">{reverb}</span>
-    </div>
-    <input type="range" bind:value={reverb} step="1" min="0" max="10" />
+    </div> 
+    <Switch bind:checked={useReverb} />
   </div>
+  
 </div>
 
 <style lang="postcss">
@@ -46,5 +49,13 @@
   .control-value {
     font-size: 12px;
     font-weight: semibold;
+  }
+  .reverb-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 18px;
+    margin-bottom: 28px;
   }
 </style>

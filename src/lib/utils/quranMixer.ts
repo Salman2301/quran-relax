@@ -1,5 +1,6 @@
 import {
 	currentRecitationUrl,
+	currentReciterUseReverb,
 	setNextVerse,
 	isContentLoading,
 	masterVolume,
@@ -28,17 +29,17 @@ class QuranMixer {
 		if (!this.audioContext) throw new Error('Failed to init Audio');
 
 		this.audioGainNode = this.audioContext.createGain();
-		this.audioGainNode.gain.value = 0.5;
+		this.audioGainNode.gain.value = 0.8;
 		this.audioGainNode.connect(this.audioContext.destination);
 
 		this.convolverNode = this.audioContext.createConvolver();
 		this.convolverGainNode = this.audioContext.createGain();
-		// this.convolverNode.gain
-		this.convolverGainNode.gain.value = 1;
-		this.convolverNode.connect(this.audioGainNode);
-		this.convolverGainNode.connect(this.audioGainNode);
 		
-		this.loadImpulseResponse('sounds/impulse_response.mp4');
+		this.convolverGainNode.gain.value = 1;
+		this.convolverNode.connect(this.convolverGainNode);
+		this.convolverGainNode.connect(this.audioGainNode);
+
+		this.loadImpulseResponse('sounds/reverb.wav');
 
 		this.lastSourceNode = null;
 		this.playbackRate = 1;
@@ -55,6 +56,7 @@ class QuranMixer {
 				const arrayBuffer = await response.arrayBuffer();
 				const impulseBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
 				this.convolverNode.buffer = impulseBuffer; // Assign impulse response to convolver
+				console.log("buffer set!")
 		} catch (e) {
 				console.error('Failed to load impulse response:', e);
 		}
@@ -113,6 +115,7 @@ class QuranMixer {
 
 	setReverbLevel(level: number) {
 		this.convolverGainNode.gain.value = level;
+		this.audioGainNode.gain.value = level;
 	}
 
 	setIsPlaying(isPlaying: boolean) {
@@ -142,7 +145,26 @@ class QuranMixer {
 
 		const source = this.audioContext.createBufferSource();
 		source.buffer = this.verseFile[id];
-		source.connect(this.convolverGainNode);
+		
+		if (get(currentReciterUseReverb)) {
+			source.connect(this.convolverGainNode);
+			try {
+				source.disconnect(this.audioGainNode);
+			}
+			catch {
+				console.warn("already disconnected");
+			}
+		}
+		else {
+			source.connect(this.audioGainNode);
+			try {
+				source.disconnect(this.convolverGainNode);
+			}
+			catch(err) {
+				console.warn(err)
+			}
+		}
+
 		source.start();
 
 		source.onended = () => {

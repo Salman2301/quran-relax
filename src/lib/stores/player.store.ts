@@ -19,6 +19,8 @@ export const currentReciterSpeed: Writable<number> = writable(getFromStorage("cu
 
 export const currentReciterReverb: Writable<number> = writable(getFromStorage("currentReciterReverb", 5, "number") as number);
 
+export const currentReciterUseReverb: Writable<boolean> = writable(getFromStorage("currentReciterUseReverb", false, "boolean") as boolean);
+
 export const currentRecitationId: Writable<number> = writable(getFromStorage("currentRecitationId", 7, "number") as number);
 export const currentVerseId: Writable<number> = writable(getFromStorage("currentVerseId", 1, "number") as number);
 export const currentSurahId: Writable<number> = writable(getFromStorage("currentSurahId", 1, "number") as number);

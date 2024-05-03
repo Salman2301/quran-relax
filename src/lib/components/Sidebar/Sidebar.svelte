@@ -6,7 +6,7 @@
 
 <div class="sidebar-container">
 	<div class="scroll">
-		<slot></slot>
+		<slot name="sidebar-content"></slot>
 	</div>
 </div>
 
