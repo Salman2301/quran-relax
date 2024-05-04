@@ -70,6 +70,10 @@
 			{/await}
 		</button>
 	</div>
+	<div class="hidden">
+		<span id="surah-id">{$currentSurahId}</span>
+		<span id="verse-id">{$currentVerseId}</span>
+	</div>
 </div>
 
 <style lang="postcss">
@@ -187,5 +191,9 @@
 		width: 100%;
 		
 		text-align: justify;
+	}
+
+	.hidden {
+		display: none;
 	}
 </style>
