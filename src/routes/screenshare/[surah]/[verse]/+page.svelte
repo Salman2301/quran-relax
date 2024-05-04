@@ -126,8 +126,8 @@
 
 <style lang="postcss">
 	:global(body) {
-		background-image: url('/images/bg/bg.png');
-		background-size: cover;
+		background-image: url('/images/bg/bg.png') !important;
+		background-size: cover !important;
 	}
 
 	* > :global(.bg-container) {
