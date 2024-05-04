@@ -39,7 +39,7 @@ class QuranMixer {
 		this.convolverNode.connect(this.convolverGainNode);
 		this.convolverGainNode.connect(this.audioGainNode);
 
-		this.loadImpulseResponse('sounds/reverb.wav');
+		this.loadImpulseResponse('/sounds/reverb.wav');
 
 		this.lastSourceNode = null;
 		this.playbackRate = 1;

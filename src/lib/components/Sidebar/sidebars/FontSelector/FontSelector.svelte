@@ -36,63 +36,65 @@
 </script>
 
 <Sidebar>
-	<h4>
-		<span>Fonts Setting</span>
-		<button on:click={() => ($showSidebar = null)}>
-			<svg
-				width="21"
-				height="21"
-				viewBox="0 0 21 21"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path d="M20 1L1 20" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-				<path d="M1 1L20 20" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
-			</svg>
-		</button>
-	</h4>
-
-	<div class="content-body">
-		<div class="container-body">
-			<div class="header">Arabic font</div>
-			<div class="font-family">
-				<label for="arabic-font-family"> Arabic font family </label>
-				<select
-          id="arabic-font-family"
-          bind:value={$currentArFontFamily}
-        >
-					<option value="Amiri Quran">Amiri Quran</option>
-					<option value="Noto Sans Arabic">Noto Sans Arabic</option>
-					<option value="Lateef">Lateef</option>
-					<option value="Mirza">Mirza</option>
-					<option value="Rubik">Rubik</option>
-				</select>
-			</div>
-			<FontSize 
-        bind:value={$currentArFontSize}
-      />
-			<div class="header">Translation font</div>
-
-			<div class="font-family">
-				{#await optionPromise}
-					<LoaderIcon />
-				{:then options}
+	<div slot="sidebar-content">
+		<h4>
+			<span>Fonts Setting</span>
+			<button on:click={() => ($showSidebar = null)}>
+				<svg
+					width="21"
+					height="21"
+					viewBox="0 0 21 21"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path d="M20 1L1 20" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+					<path d="M1 1L20 20" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
+			</button>
+		</h4>
+	
+		<div class="content-body">
+			<div class="container-body">
+				<div class="header">Arabic font</div>
+				<div class="font-family">
+					<label for="arabic-font-family"> Arabic font family </label>
 					<select
-            class="drop-translation"
-            bind:value={$currentTranslationId}
-          >
-            {#each options as option}
-              <option value={option.value}>{option.label}</option>
-            {/each}
-          </select>
-				{/await}
-			</div>
-			<FontSize
-        bind:value={$currentTrFontSize}
-      />
-			<div class="actions">
-				<button class="btn-action" on:click={()=>$showSidebar="reciter"}>Open Reciter setting</button>
-				<button class="btn-action" on:click={()=>$showSidebar="surah-selector"}>Go to Surah / Verse</button>
+						id="arabic-font-family"
+						bind:value={$currentArFontFamily}
+					>
+						<option value="Amiri Quran">Amiri Quran</option>
+						<option value="Noto Sans Arabic">Noto Sans Arabic</option>
+						<option value="Lateef">Lateef</option>
+						<option value="Mirza">Mirza</option>
+						<option value="Rubik">Rubik</option>
+					</select>
+				</div>
+				<FontSize 
+					bind:value={$currentArFontSize}
+				/>
+				<div class="header">Translation font</div>
+	
+				<div class="font-family">
+					{#await optionPromise}
+						<LoaderIcon />
+					{:then options}
+						<select
+							class="drop-translation"
+							bind:value={$currentTranslationId}
+						>
+							{#each options as option}
+								<option value={option.value}>{option.label}</option>
+							{/each}
+						</select>
+					{/await}
+				</div>
+				<FontSize
+					bind:value={$currentTrFontSize}
+				/>
+				<div class="actions">
+					<button class="btn-action" on:click={()=>$showSidebar="reciter"}>Open Reciter setting</button>
+					<button class="btn-action" on:click={()=>$showSidebar="surah-selector"}>Go to Surah / Verse</button>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -2,10 +2,11 @@
 	import { showSidebar } from '$sidebar/sidebar.store';
 	import LoaderIcon from '$lib/icons/LoaderIcon.svelte';
 	import {
-	currentArFontFamily,
+		currentArFontFamily,
 		currentArFontSize,
 		currentJuz,
 		currentReciterName,
+		currentSurahId,
 		currentSurahName,
 		currentTrFontSize,
 		currentVerseAr,
@@ -13,9 +14,22 @@
 		currentVerseTr,
 		isContentLoading
 	} from '$lib/stores/player.store';
+	import { onMount } from 'svelte';
+
+	export let takeFullWidth: boolean = false;
+
+	onMount(()=>{
+		if(isNaN($currentVerseId)) {
+			$currentVerseId = 1;
+			$currentSurahId = 1;
+		}
+	})
 </script>
 
-<div class="container">
+<div
+	class="container bg-container"
+	class:take-full-width={takeFullWidth}
+>
 	<div class="container-body">
 		<div class="current-surah">
 			<button on:click={() => ($showSidebar = 'surah-selector')}>
@@ -38,14 +52,14 @@
 		</div>
 		<button
 			class="verse"
-			on:click={()=>($showSidebar = 'font')}
+			on:click={() => ($showSidebar = 'font')}
 			style="font-family:{$currentArFontFamily};font-size:{$currentArFontSize}px"
 		>
 			{$currentVerseAr}
 		</button>
 		<button
 			class="translate"
-			on:click={()=>($showSidebar = 'font')}
+			on:click={() => ($showSidebar = 'font')}
 			style="font-size:{$currentTrFontSize}px"
 		>
 			{#await $currentVerseTr then translated}
@@ -65,8 +79,10 @@
 		width: 100vw;
 
 		min-height: 350px;
+		
 		max-width: 720px;
-		margin: 0px 20px;
+		margin: 0 20px;
+
 		padding: 10px 20px;
 		padding-bottom: 20px;
 		display: flex;
@@ -74,10 +90,17 @@
 		justify-content: space-between;
 	}
 
+
 	@media only screen and (min-width: 400px) {
 		.container {
 			margin: 0px 40px;
 		}
+	}
+
+	
+	.container.take-full-width {
+		max-width: none;
+		margin: 0px 20px;
 	}
 
 	.reciter {
@@ -143,6 +166,8 @@
 		color: white;
 		margin: 30px 0;
 		width: 100%;
+		
+		text-align: justify;
 	}
 
 	@media only screen and (min-width: 400px) {
@@ -160,5 +185,7 @@
 		margin: 10px 0px;
 		color: #ccc;
 		width: 100%;
+		
+		text-align: justify;
 	}
 </style>

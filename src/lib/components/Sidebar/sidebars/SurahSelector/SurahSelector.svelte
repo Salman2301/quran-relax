@@ -46,7 +46,7 @@
 </script>
 
 <Sidebar>
-	<div class="sidebar-content-container">
+	<div class="sidebar-content-container" slot="sidebar-content">
 		<div class="sidebar-header">
 			<div class="surah-juz-selector">
 				<button

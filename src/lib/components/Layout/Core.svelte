@@ -18,17 +18,18 @@
 		toggleReplay
 	} from '$lib/stores/player.store';
 	import { onMount } from 'svelte';
-	import { getSoundStoreFromLocal } from '$lib/stores/soundEffects.store';
 
 	let userClicked: boolean = false;
 	function handleKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape') $showSidebar = null;
 
-		if (event.key.toLowerCase() === 'n') {
+		if (event.key.toLowerCase() === 'n' || event.key === 
+  "ArrowRight") {
 			if (event.shiftKey) setNextSurah();
 			else setNextVerse();
 		}
-		if (event.key.toLowerCase() === 'p') {
+		if (event.key.toLowerCase() === 'p' || event.key === 
+  "ArrowLeft") {
 			if (event.shiftKey) setPrevSurah();
 			else setPrevVerse();
 		}
@@ -64,7 +65,7 @@
 		Click anywhere to play the audio
 	</div>
 {/if}
-<slot></slot>
+<slot name="content"></slot>
 
 {#if $showSidebar === 'reciter'}
 	<Reciters />

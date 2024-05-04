@@ -1,4 +1,5 @@
-<script lang="ts">
+<script lang="ts">;
+	import Core from "$lib/components/Layout/Core.svelte";
 	import Quran from '$lib/components/Quran/Quran.svelte';
   import { page } from '$app/stores';
   import { onMount } from "svelte"
@@ -11,4 +12,8 @@
   });
 </script>
 
-<Quran />
+<Core>
+	<div slot="content">
+		<Quran  />
+	</div>
+</Core>
