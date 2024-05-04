@@ -130,7 +130,7 @@
 		background-size: cover !important;
 	}
 
-	* > :global(.bg-container) {
+	:global( * > .bg-container ) {
 		background-color: rgba(0, 0, 0, 0.9) !important;
 	}
 
